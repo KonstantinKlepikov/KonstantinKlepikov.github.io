@@ -1,18 +1,15 @@
 ---
 layout: page
-title: About
+title: Об авторе
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+Привет, меня зовут Клепиков Константин, я живу в г. Калинингрде в России. Я немножко дейта сейнтист и занимаюсь разработкой решений на основе нейронных сетей. Меня интересуют задачи, связанные с компьютерным зрением. Разработку я веду на python с помощью фреймворков PyTorch и TensorFlow.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Найти меня можно так:
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+[telegram](https://t.me/KlepikovKonstantin)
 
+[facebook](https://www.facebook.com/konstatin.klepikov)
 
-[jekyll-organization]: https://github.com/jekyll
+[github](https://github.com/KonstantinKlepikov)

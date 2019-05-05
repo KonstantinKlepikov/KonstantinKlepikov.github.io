@@ -7,7 +7,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; line
 body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure { margin: 0; padding: 0; }
 
 /** Basic styling */
-body { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #181818; background-color: #fff; }
+body { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #2F2323; background-color: #fff; }
 
 p { margin-top: 0; margin-bottom: 0.5em; }
 
@@ -31,8 +31,10 @@ a:hover { text-decoration: underline; }
 
 pre { border-left: 8px solid #ddd; margin: 32px 0; padding-left: 16px; width: 75%; overflow-x: auto; }
 
-code { color: #DC3918; font-size: 16px; padding: 1px 4px; }
+code { color: #CD2DA8; font-size: 16px; padding: 1px 0px; }
 
+.prose a { text-decoration: underline dotted; }
+.prose a:hover { text-decoration: underline; }
 .prose p, .prose ol, .prose ul { font-size: 20px; margin-bottom: 1em; width: 100%; }
 @media (min-width: 52em) { .prose p, .prose ol, .prose ul { width: 83.3333333333%; } }
 .prose ul, .prose ol { padding-left: 40px; }
@@ -44,14 +46,14 @@ code { color: #DC3918; font-size: 16px; padding: 1px 4px; }
 .prose blockquote p { font-size: 24px; }
 @media (min-width: 52em) { .prose blockquote { padding-left: 32px; margin: 64px 0 64px -40px; max-width: 110%; }
   .prose blockquote p { font-size: 32px; } }
-.prose hr { color: #181818; border-style: solid; border-width: thin; margin-top: 0.5em; margin-bottom: 0.5em; }
+.prose hr { color: #2F2323; border-style: solid; border-width: thin; margin-top: 0.5em; margin-bottom: 0.5em; }
 .prose dt { font-weight: bold; font-style: italic; line-height: 1.25; }
 .prose dd { font-style: italic; margin-bottom: 0.5em; }
 .prose table { border-collapse: collapse; display: block; width: 100%; margin-bottom: 1.5em; overflow: auto; word-break: normal; word-break: keep-all; }
 .prose table th { font-weight: bold; text-align: left; }
-.prose table th, .prose table td { padding: 16px 32px 16px 2px; border-top: 1px solid #181818; border-bottom: 1px solid #181818; }
-.prose table tr { background-color: #fff; border-top: 1px solid #181818; }
-.prose table tr th { border-top: 2px solid #181818; border-bottom: 2px solid #181818; }
+.prose table th, .prose table td { padding: 16px 32px 16px 2px; border-top: 1px solid #2F2323; border-bottom: 1px solid #2F2323; }
+.prose table tr { background-color: #fff; border-top: 1px solid #2F2323; }
+.prose table tr th { border-top: 2px solid #2F2323; border-bottom: 2px solid #2F2323; }
 
 /* Type utilities */
 .h0 { font-size: 64px; line-height: 1.0125; margin-top: 0.85em; word-wrap: break-word; }
@@ -60,7 +62,7 @@ code { color: #DC3918; font-size: 16px; padding: 1px 4px; }
 .text-right { text-align: right; }
 
 .no-underline { text-decoration: none !important; }
-.no-underline:hover { text-decoration: no-underline !important; }
+.no-underline:hover { text-decoration: none !important; }
 
 .bold { font-weight: bold; }
 
@@ -82,21 +84,21 @@ code { color: #DC3918; font-size: 16px; padding: 1px 4px; }
 .border-0 { border: 0; }
 
 /* Theme color utilities */
-.header-background { background-color: #E74727; }
+.header-background { background-color: #cd57eb; }
 
-.header-border { border-color: #181818; }
+.header-border { border-color: #fff; }
 
 .header-title { color: #fff; }
 
-.header-text { color: #181818; }
+.header-text { color: #fff; }
 
-.header-social { fill: #181818; }
+.header-social { fill: #fff; }
 
-.header-social-accent { fill: #181818; }
+.header-social-accent { fill: #2F2323; }
 
-.header-link:hover { color: #fff !important; }
+.header-link:hover { color: #2F2323 !important; }
 
-.text-accent { color: #DC3918; }
+.text-accent { color: #1977ca; }
 
 /* Layout utilities */
 .container { max-width: 64em; }
@@ -230,5 +232,5 @@ code { color: #DC3918; font-size: 16px; padding: 1px 4px; }
 .link-social { text-decoration: none; font-weight: bold; line-height: 1; }
 .link-social:hover { text-decoration: none !important; }
 
-.link-primary { font-weight: bold; text-decoration: none; }
-.link-primary:hover { color: #E74727; text-decoration: none; }
+.link-primary { font-weight: bold; text-decoration: none !important; }
+.link-primary:hover { color: #1977ca; text-decoration: none !important; }
