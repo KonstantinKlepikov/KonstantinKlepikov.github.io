@@ -2,10 +2,11 @@
 layout: post
 title: "Старт"
 date: 2019-05-05
-tags: 
+tags: blog-development
+keywords: 
 ---
 
-**Что сделано?**
+## Что сделано?
 
 * собрал шаблон на Jekyll
 * добавил sitemap

@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<article class="container mx-auto px-2 mt2 mb4">
+    <header>
+        <h1 class="h1 py-4 mt-3">Тег: {{ page.tag }}</h3>
+    </header>
+    <div class="col-4 sm-width-full border-top-thin">
+    </div>
+    <div class="prose mb-4 py-4">
+        <ul>
+            {% for post in site.tags[page.tag] %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
+                {{ post.description }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</article>

@@ -7,7 +7,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; line
 body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure { margin: 0; padding: 0; }
 
 /** Basic styling */
-body { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #2F2323; background-color: #fff; }
+body { font-family: "Open Sans", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #2F2323; background-color: #fff; }
 
 p { margin-top: 0; margin-bottom: 0.5em; }
 
@@ -234,3 +234,6 @@ code { color: #CD2DA8; font-size: 16px; padding: 1px 0px; }
 
 .link-primary { font-weight: bold; text-decoration: none !important; }
 .link-primary:hover { color: #1977ca; text-decoration: none !important; }
+
+.link-secondary { text-decoration: none !important; }
+.link-secondary:hover { color: #1977ca; text-decoration: none !important; }

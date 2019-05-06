@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-05-05T02:11:45+02:00</updated><id>/feed.xml</id><title type="html">Machine &amp;amp; deep learning</title><subtitle>Блог про нейронные сети и машинное обучение.</subtitle><entry><title type="html">Старт</title><link href="/2019/05/05/first-post.html" rel="alternate" type="text/html" title="Старт" /><published>2019-05-05T00:00:00+02:00</published><updated>2019-05-05T00:00:00+02:00</updated><id>/2019/05/05/first-post</id><content type="html" xml:base="/2019/05/05/first-post.html">&lt;p&gt;&lt;strong&gt;Что сделано?&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-05-07T00:33:54+02:00</updated><id>/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Допилена структура</title><link href="/2019/05/06/blog-development.html" rel="alternate" type="text/html" title="Допилена структура" /><published>2019-05-06T00:00:00+02:00</published><updated>2019-05-06T00:00:00+02:00</updated><id>/2019/05/06/blog-development</id><content type="html" xml:base="/2019/05/06/blog-development.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;добавлен трекинг в google analitics&lt;/li&gt;
+  &lt;li&gt;добавлен трекинг в yandex&lt;/li&gt;
+  &lt;li&gt;добавлено тегирование страниц и вывод списка тегов&lt;/li&gt;
+  &lt;li&gt;доработана перелинковка&lt;/li&gt;
+  &lt;li&gt;прикручен Open Sands&lt;/li&gt;
+  &lt;li&gt;исправлены ошибки с отображением ссылок в хедере&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Все теги:&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;/tag/blog-development&quot; class=&quot;link-secondary text-accent h5&quot;&gt;blog-development&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry><entry><title type="html">Старт</title><link href="/2019/05/05/first-post.html" rel="alternate" type="text/html" title="Старт" /><published>2019-05-05T00:00:00+02:00</published><updated>2019-05-05T00:00:00+02:00</updated><id>/2019/05/05/first-post</id><content type="html" xml:base="/2019/05/05/first-post.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;собрал шаблон на Jekyll&lt;/li&gt;
@@ -7,4 +20,4 @@
   &lt;li&gt;убрал неопубликованные статьи&lt;/li&gt;
   &lt;li&gt;подтвердил домен на yandex&lt;/li&gt;
   &lt;li&gt;подтвердил домен в google&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Что сделано?</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry></feed>

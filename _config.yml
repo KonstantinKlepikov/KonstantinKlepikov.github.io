@@ -13,10 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Machine & deep learning
+title: My deep learning
 email: oformleno@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Блог про нейронные сети и машинное обучение.
+  Блог про нейронные сети и машинное обучение
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
 # twitter_username: 
