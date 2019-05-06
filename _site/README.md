@@ -1,5 +1,7 @@
 # My deep learning
 
-This is simple and responsible template for my oportunity in world of neural science
+This is simple and redy to start template of static blog for my discoveries in world of neural science
 
-Based on Jekyll and template Swiss
+Based on Jekyll Swiss theme
+
+Language: russian
