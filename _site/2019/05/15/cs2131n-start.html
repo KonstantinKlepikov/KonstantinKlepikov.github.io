@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</title>
+  <meta name="description" content="О чем курс и почему он актуален?">
+  <meta name="keywords" content="cs231n CNN компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://github.com/pages/KonstantinKlepikov/myblog/assets/style.css">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+
+  <link rel="canonical" href="/2019/05/15/cs2131n-start.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin ">
+    <p class="py-2 bold h4"><time datetime="2019-05-15T00:00:00+02:00" itemprop="datePublished">May 15, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/cs231n" class="link-secondary text-accent">cs231n&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <h2 id="о-чем-курс-и-почему-он-актуален">О чем курс и почему он актуален?</h2>
+
+<p>Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу <a href="/tag/cs231n">cs231n</a>.</p>
+
+<p>Курс целиком посвящен вопросам детектирования, распознавания и другим проблемам, связанным с компьютерным зрением. Программа обновляется каждый год, т.к. данная область знаний не стоит на месте. У курса довольно объемный и подробный бекграунд, а задачи подымаются от низкоуровневых решений к работе с фреймворками. В общем, если вас интересует компьютерное зрение — курс полностью себя оправдывает.</p>
+
+<p>Вся актуальная информация содержится на <a href="http://cs231n.stanford.edu/">страничке</a> Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.</p>
+
+<p>Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на <a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv">youtube</a>. Практическая часть курса изложена на <a href="http://cs231n.github.io/">странице с заданиями</a>. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments">доступна</a> вся практика за 2015-2019 годы.</p>
+
+<h2 id="подготовка-к-работе-над-курсом">Подготовка к работе над курсом</h2>
+
+<ol>
+  <li>
+    <p>Необходимо установить python и библиотеки для исследований. Описание этого процесса <a href="http://cs231n.github.io/setup-instructions/">изложено тут</a>. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.</p>
+  </li>
+  <li>
+    <p>В сетапе дополнительно предлагается работать с <a href="https://github.com/cs231n/gcloud/">Google Cloud</a>. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.</p>
+  </li>
+  <li>
+    <p>Если Вы незнакомы с python и библиотекой numpy, можно пройти <a href="http://cs231n.github.io/python-numpy-tutorial/">туториал</a>. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.</p>
+  </li>
+  <li>
+    <p>Необходимо установить jupyter notebook. Половина задач решается в нем. Приложение есть в пакете anaconda.</p>
+  </li>
+</ol>
+
+<p>С сетапом вроде всё.</p>
+
+<h2 id="что-в-курсе">Что в курсе?</h2>
+
+<p>Задачи разбиты на два модуля. В первом модуле объясняется фундаментальная работа нейронных сетей и даются практические примеры построения. Второй модуль полностью посвящен сверточным сетям.</p>
+
+<p>Для каждого блока задач дано <a href="http://cs231n.github.io/">подробное описание и бекграунд</a>. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.</p>
+
+<h3 id="module-1-neural-networks">Module 1: Neural Networks</h3>
+
+<ol>
+  <li>
+    <p>в первом блоке задач предлагается классифицировать изображения дата-сета CIFAR10 с помощью метода k-ближайших соседей. Это можно было бы проигнорировать, т.к. алгоритм не используется для задач компьютерного зрения. На самом деле задача полезная. В ней разбирается производительность различных методов вычислений.</p>
+  </li>
+  <li>
+    <p>во втором и третьем блоке строим SVM и softmax-классификаторы. Решения отсюда и дальше начнут двигаться от задачи к задаче, что формирует отличную практику работы с готовыми сборками.</p>
+  </li>
+  <li>
+    <p>в дальнейшем надо будет построить классификатор на основе простой двухслойной нейронной сети. По сути весь блок построен на том, чтобы дать понятие о принципах классификации изображений и научить сравнивать методы и принимать решения об оптимизации алгоритмов.</p>
+  </li>
+  <li>
+    <p>дальнейшие задачи по нейронкам вынесены в <a href="http://cs231n.github.io/assignments2019/assignment2/">отдельную группу</a> модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.</p>
+  </li>
+</ol>
+
+<h3 id="module-2-convolutional-neural-networks">Module 2: Convolutional Neural Networks</h3>
+
+<p>Задачи модуля полностью посвящены сверточным сетям. Разбираются RNN, LSTM, GAN сетки, а также методы разработки и конкретные задачи (например, перенос стилей изображений). Вся работа ведется уже с фреймворками.</p>
+
+<h2 id="в-итоге">В итоге</h2>
+
+<p>В дальнейших статьях я постараюсь зафиксировать свое понимание теоретической части курса и то, как применяя теорию, необходимо решать практическую. Готового кода одним куском не будет - это можно нагуглить самостоятельно. Задача данных статей - прожевать теоретический курс на практике и закрепить усвоенный материал.</p>
+
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://github.com/pages/KonstantinKlepikov/myblog/2019/05/06/blog-development.html">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Допилена структура</p>
+      <p>Что сделано? добавлен трекинг в google analitics добавлен трекинг в yandex добавлено тегирование страниц и вывод списка тегов доработана перелинковка...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

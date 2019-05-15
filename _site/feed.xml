@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-05-07T00:33:54+02:00</updated><id>/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Допилена структура</title><link href="/2019/05/06/blog-development.html" rel="alternate" type="text/html" title="Допилена структура" /><published>2019-05-06T00:00:00+02:00</published><updated>2019-05-06T00:00:00+02:00</updated><id>/2019/05/06/blog-development</id><content type="html" xml:base="/2019/05/06/blog-development.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-05-15T22:56:40+02:00</updated><id>/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</title><link href="/2019/05/15/cs2131n-start.html" rel="alternate" type="text/html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части" /><published>2019-05-15T00:00:00+02:00</published><updated>2019-05-15T00:00:00+02:00</updated><id>/2019/05/15/cs2131n-start</id><content type="html" xml:base="/2019/05/15/cs2131n-start.html">&lt;h2 id=&quot;о-чем-курс-и-почему-он-актуален&quot;&gt;О чем курс и почему он актуален?&lt;/h2&gt;
+
+&lt;p&gt;Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу &lt;a href=&quot;/tag/cs231n&quot;&gt;cs231n&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Курс целиком посвящен вопросам детектирования, распознавания и другим проблемам, связанным с компьютерным зрением. Программа обновляется каждый год, т.к. данная область знаний не стоит на месте. У курса довольно объемный и подробный бекграунд, а задачи подымаются от низкоуровневых решений к работе с фреймворками. В общем, если вас интересует компьютерное зрение — курс полностью себя оправдывает.&lt;/p&gt;
+
+&lt;p&gt;Вся актуальная информация содержится на &lt;a href=&quot;http://cs231n.stanford.edu/&quot;&gt;страничке&lt;/a&gt; Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.&lt;/p&gt;
+
+&lt;p&gt;Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на &lt;a href=&quot;https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv&quot;&gt;youtube&lt;/a&gt;. Практическая часть курса изложена на &lt;a href=&quot;http://cs231n.github.io/&quot;&gt;странице с заданиями&lt;/a&gt;. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments&quot;&gt;доступна&lt;/a&gt; вся практика за 2015-2019 годы.&lt;/p&gt;
+
+&lt;h2 id=&quot;подготовка-к-работе-над-курсом&quot;&gt;Подготовка к работе над курсом&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Необходимо установить python и библиотеки для исследований. Описание этого процесса &lt;a href=&quot;http://cs231n.github.io/setup-instructions/&quot;&gt;изложено тут&lt;/a&gt;. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;В сетапе дополнительно предлагается работать с &lt;a href=&quot;https://github.com/cs231n/gcloud/&quot;&gt;Google Cloud&lt;/a&gt;. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Если Вы незнакомы с python и библиотекой numpy, можно пройти &lt;a href=&quot;http://cs231n.github.io/python-numpy-tutorial/&quot;&gt;туториал&lt;/a&gt;. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Необходимо установить jupyter notebook. Половина задач решается в нем. Приложение есть в пакете anaconda.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;С сетапом вроде всё.&lt;/p&gt;
+
+&lt;h2 id=&quot;что-в-курсе&quot;&gt;Что в курсе?&lt;/h2&gt;
+
+&lt;p&gt;Задачи разбиты на два модуля. В первом модуле объясняется фундаментальная работа нейронных сетей и даются практические примеры построения. Второй модуль полностью посвящен сверточным сетям.&lt;/p&gt;
+
+&lt;p&gt;Для каждого блока задач дано &lt;a href=&quot;http://cs231n.github.io/&quot;&gt;подробное описание и бекграунд&lt;/a&gt;. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.&lt;/p&gt;
+
+&lt;h3 id=&quot;module-1-neural-networks&quot;&gt;Module 1: Neural Networks&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;в первом блоке задач предлагается классифицировать изображения дата-сета CIFAR10 с помощью метода k-ближайших соседей. Это можно было бы проигнорировать, т.к. алгоритм не используется для задач компьютерного зрения. На самом деле задача полезная. В ней разбирается производительность различных методов вычислений.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;во втором и третьем блоке строим SVM и softmax-классификаторы. Решения отсюда и дальше начнут двигаться от задачи к задаче, что формирует отличную практику работы с готовыми сборками.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;в дальнейшем надо будет построить классификатор на основе простой двухслойной нейронной сети. По сути весь блок построен на том, чтобы дать понятие о принципах классификации изображений и научить сравнивать методы и принимать решения об оптимизации алгоритмов.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;дальнейшие задачи по нейронкам вынесены в &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment2/&quot;&gt;отдельную группу&lt;/a&gt; модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;module-2-convolutional-neural-networks&quot;&gt;Module 2: Convolutional Neural Networks&lt;/h3&gt;
+
+&lt;p&gt;Задачи модуля полностью посвящены сверточным сетям. Разбираются RNN, LSTM, GAN сетки, а также методы разработки и конкретные задачи (например, перенос стилей изображений). Вся работа ведется уже с фреймворками.&lt;/p&gt;
+
+&lt;h2 id=&quot;в-итоге&quot;&gt;В итоге&lt;/h2&gt;
+
+&lt;p&gt;В дальнейших статьях я постараюсь зафиксировать свое понимание теоретической части курса и то, как применяя теорию, необходимо решать практическую. Готового кода одним куском не будет - это можно нагуглить самостоятельно. Задача данных статей - прожевать теоретический курс на практике и закрепить усвоенный материал.&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><summary type="html">О чем курс и почему он актуален?</summary></entry><entry><title type="html">Допилена структура</title><link href="/2019/05/06/blog-development.html" rel="alternate" type="text/html" title="Допилена структура" /><published>2019-05-06T00:00:00+02:00</published><updated>2019-05-06T00:00:00+02:00</updated><id>/2019/05/06/blog-development</id><content type="html" xml:base="/2019/05/06/blog-development.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;добавлен трекинг в google analitics&lt;/li&gt;
@@ -11,7 +69,9 @@
 
 &lt;h3&gt;Все теги:&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&quot;/tag/blog-development&quot; class=&quot;link-secondary text-accent h5&quot;&gt;blog-development&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry><entry><title type="html">Старт</title><link href="/2019/05/05/first-post.html" rel="alternate" type="text/html" title="Старт" /><published>2019-05-05T00:00:00+02:00</published><updated>2019-05-05T00:00:00+02:00</updated><id>/2019/05/05/first-post</id><content type="html" xml:base="/2019/05/05/first-post.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/tag/blog-development&quot; class=&quot;link-secondary text-accent h5&quot;&gt;blog-development&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/tag/cs231n&quot; class=&quot;link-secondary text-accent h5&quot;&gt;cs231n&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry><entry><title type="html">Старт</title><link href="/2019/05/05/first-post.html" rel="alternate" type="text/html" title="Старт" /><published>2019-05-05T00:00:00+02:00</published><updated>2019-05-05T00:00:00+02:00</updated><id>/2019/05/05/first-post</id><content type="html" xml:base="/2019/05/05/first-post.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;собрал шаблон на Jekyll&lt;/li&gt;
