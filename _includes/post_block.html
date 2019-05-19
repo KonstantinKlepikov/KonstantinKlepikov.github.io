@@ -4,5 +4,13 @@
   <h2 class="h1 lh-condensed col-9 mt-0">
     <a class="link-primary" title="{{ post.url | prepend: site.baseurl }}" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
   </h2>
-  <p>{{ post.content | strip_html | truncatewords:30 }}</p>
+  <p class="mb-3 h5">Теги: 
+    {% for tag in post.tags %}
+      {% capture tag_name %}{{ tag }}{% endcapture %}
+      <a href="/tag/{{ tag_name }}">{{ tag_name }}&nbsp;</a>
+    {% endfor %}
+  </p>
+  <p>{{ post.content | strip_html | truncatewords:30 }}
+  <a class="no-underline h5 text-accent" title="{{ post.url | prepend: site.baseurl }}" href="{{ post.url | prepend: site.baseurl }}">читать дальше</a>
+  </p>
 </div>

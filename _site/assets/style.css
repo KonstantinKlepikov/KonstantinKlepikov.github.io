@@ -237,3 +237,6 @@ code { color: #CD2DA8; font-size: 16px; padding: 1px 0px; }
 
 .link-secondary { text-decoration: none !important; }
 .link-secondary:hover { color: #1977ca; text-decoration: none !important; }
+
+.link-tags { text-decoration: underline dotted; }
+.link-tags:hover { text-decoration: underline; }

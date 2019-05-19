@@ -190,3 +190,11 @@
     text-decoration: none !important;
   }
 }
+
+// Link styles for tags
+.link-tags {
+  text-decoration: underline dotted;
+  &:hover {
+    text-decoration: underline;
+  }
+}

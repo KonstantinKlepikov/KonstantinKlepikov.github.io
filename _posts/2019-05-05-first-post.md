@@ -3,6 +3,7 @@ layout: post
 title: "Старт"
 date: 2019-05-05
 tags: blog-development
+tag-for-sollecting: blog-development
 keywords: 
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title: "Допилена структура"
 date: 2019-05-06
 tags: blog-development
+tag-for-sollecting: blog-development
 keywords: 
 ---
 
@@ -14,5 +15,3 @@ keywords:
 * доработана перелинковка
 * прикручен Open Sands
 * исправлены ошибки с отображением ссылок в хедере
-
-{% include archive.html %}
