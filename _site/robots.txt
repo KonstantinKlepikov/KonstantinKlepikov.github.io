@@ -1,1 +1,1 @@
-Sitemap: https://github.com/pages/KonstantinKlepikov/myblog/sitemap.xml
+Sitemap: https://konstantinklepikov.github.io/sitemap.xml
