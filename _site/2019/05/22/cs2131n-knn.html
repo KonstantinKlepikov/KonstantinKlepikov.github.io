@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS231n: k-Nearest Neighbor classifier assignment</title>
+  <meta name="description" content="Постановка задачи и подготовка">
+  <meta name="keywords" content="cs231n компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science k-nearest neighbors">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: k-Nearest Neighbor classifier assignment</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-05-22T00:00:00+02:00" itemprop="datePublished">May 22, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/cs231n" class="link-tags">cs231n&nbsp;</a>
+    
+      
+      <a href="/tag/knn" class="link-tags">knn&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <h2 id="постановка-задачи-и-подготовка">Постановка задачи и подготовка</h2>
+
+<p>Итак, мы перешли к практике для курса cs231n и первый пул задач <a href="http://cs231n.github.io/assignments2019/assignment1/">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a>. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».</p>
+
+<p>Давайте взглянем на структуру учебного проекта.</p>
+
+<p><img src="../../../assets/img/220519-1.jpg" alt="Структура проекта" /></p>
+
+<p>В корневом каталоге находятся jupyter блокноты, в которых вызываются функции из соответствующих классов для расчетов классификатора на предварительно обработанном наборе данных. В папке classifiers находятся модули, в которых определенны классы для расчета классификаторов. В папке datasets находится датасет CIFAR-10. Собственно в текущей задаче надо править knn.ipynb и k_nearest_neighbor.py</p>
+
+<p>Обратите внимание, что перед началом нужно самостоятельно загрузить датасет. Чтоб не ходить кругами по интернетам, сделать это можно через лоадер непосредственно в папке datasets вот таким вот способом:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd cs231n/datasets
+./get_datasets.sh
+</code></pre></div></div>
+
+<p>Кроме того, там, где это необходимо в блокнотах я рекомендую выносить наверх ячейки вот эту строку кода, чтобы избегать неявных ошибок</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+</code></pre></div></div>
+
+<h2 id="итак-что-же-нам-необходимо-сделать">Итак, что же нам необходимо сделать?</h2>
+
+<ol>
+  <li>
+    <p>разобраться с принципами обработки данных для задач классификации изображений</p>
+  </li>
+  <li>
+    <p>разобраться в том, как реализуются обучение и прогнозирование</p>
+  </li>
+  <li>
+    <p>понять зачем и как данные делятся на обучающие, валидационные и тестовые выборки и как использовать валидационную выборку для тюнинга гиперапараметров</p>
+  </li>
+  <li>
+    <p>разработать эффективное (с точки зрения вычислительной сложности) решение</p>
+  </li>
+</ol>
+
+<p>В первой же ячейке в knn.ipynb импортируется load_CIFAR10 из cs231n.data_utils. В нем задан основные инструменты обработки данных датасета. Советую внимательно изучить модуль — тут собираются тренинг/тестовые выборки для всех задач курса.</p>
+
+<h2 id="немного-теории">Немного теории</h2>
+
+<p>Для начала авторы курса предлагают разобраться, что из себя представляет <a href="http://cs231n.github.io/classification/">задача классификации изображений</a>. В первом задании рассматриваем хрестоматийную классификацию на основе алгоритма обучения с учителем nearest neighbor classifier, который на самом деле редко используется для классификации изображений. Ну нам повезло :)</p>
+
+<p>Для начала, как сравнивать два различных изображения, например, изображения из CIFAR10 размерностью 32х32х3? В качестве простейшего способа используется вычисление разницы между векторами двух изображений, взятая по модулю. Сильно упрощая, для каждого пикселя первого и второго изображения считается разница, а затем результат суммируется. Собственно эта штука называется L1 distance.</p>
+
+<p><img src="../../../assets/img/220519-2.jpg" alt="L1 distance" /></p>
+
+<p>В итоге задача формулируется предельно просто — нам нужно найти K изображений, которые по L1 будут ближе всего к исследуемому. Ну т.е. определить k «ближайших соседей». В данном случае, очевидно, что k — это параметр, который определяет точность классификации. Чем больше это значение, тем больше «ближайших соседей» будет «захвачено» классификатором.</p>
+
+<p>Для того, что бы реализовать эту концепцию, необходимо разделить данные на тренировочные, валидационные и тестовые. Часть данных послужит для обучения алгоритма, а на другой части мы будем тестировать результат обучения. По сути <strong>всё сводится к разбиению данных на выборки, подбору параметров, обучению модели, валидации и проверке результатов на тесте</strong>.</p>
+
+<p>Вот как препроцессинг данных реализован в курсе:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_CIFAR10_data</span><span class="p">(</span><span class="n">num_training</span><span class="o">=</span><span class="mi">49000</span><span class="p">,</span> <span class="n">num_validation</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num_test</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                     <span class="n">subtract_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+
+    <span class="c"># Load the raw CIFAR-10 data</span>
+    <span class="n">cifar10_dir</span> <span class="o">=</span> <span class="s">'cs231n/datasets/cifar-10-batches-py'</span> 
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span> <span class="c"># 1</span>
+        
+    <span class="c"># Subsample the data</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">))</span> <span class="c"># 2</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">))</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">))</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c"># Normalize the data: subtract the mean image</span>
+    <span class="k">if</span> <span class="n">subtract_mean</span><span class="p">:</span> <span class="c"># 3</span>
+      <span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">X_train</span> <span class="o">-=</span> <span class="n">mean_image</span>
+      <span class="n">X_val</span> <span class="o">-=</span> <span class="n">mean_image</span>
+      <span class="n">X_test</span> <span class="o">-=</span> <span class="n">mean_image</span>
+    
+    <span class="c"># Transpose so that channels come first</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c"># 4</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c"># Package data into a dictionary</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s">'X_train'</span><span class="p">:</span> <span class="n">X_train</span><span class="p">,</span> <span class="s">'y_train'</span><span class="p">:</span> <span class="n">y_train</span><span class="p">,</span>
+      <span class="s">'X_val'</span><span class="p">:</span> <span class="n">X_val</span><span class="p">,</span> <span class="s">'y_val'</span><span class="p">:</span> <span class="n">y_val</span><span class="p">,</span>
+      <span class="s">'X_test'</span><span class="p">:</span> <span class="n">X_test</span><span class="p">,</span> <span class="s">'y_test'</span><span class="p">:</span> <span class="n">y_test</span><span class="p">,</span>
+    <span class="p">}</span> <span class="c"># 5</span>
+</code></pre></div></div>
+
+<p>Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируется массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.</p>
+
+<p>В общем это такая фундаментальная процедура, которая в дальнейшем будет встречаться 100500 раз, поэтому разобратьс ней стоит. Все классификаторы в задачах компьютерного зрения сводятся к построению функции train(X,y), которая работает с данными изображения и метками и функции predict(X), которая получает новые данные и предсказывает метки.</p>
+
+<p>Собственно как это сделать для knn? Реализация приводится в статье к задаче:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">():</span> <span class="c"># 1</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="c"># 2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span> <span class="c"># 3</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># 4</span>
+      <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c"># 5</span>
+      <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c"># 6</span>
+
+    <span class="k">return</span> <span class="n">Ypred</span>
+</code></pre></div></div>
+
+<p>Здесь задан класс NearestNeighbor (1) и в нем две функции. Функция train (2) принимает изображения и метки, а функция predict (3) обходит всю тестовую выборку, чтобы вычислить L1 дистанцию (4), находит индекс объекта с наименьшей дистанцией (5) и возвращает предсказанную метку (6). Естественно, этот код не заработает в задаче :)</p>
+
+<h2 id="задача">Задача</h2>
+
+<p>Вместо чего-то типа sklearn.neighbors.KNeighborsClassifier нам предлагается в classifiers/k_nearest_neighbor.py самостоятельно написать три функции:</p>
+
+<ul>
+  <li>compute_distances_no_loops()</li>
+  <li>compute_distances_one_loop()</li>
+  <li>compute_distances_two_loops()</li>
+</ul>
+
+<p>Зачем такое разнообразие? Авторы курса хотят продемонстрировать множество разных подходов и их влияние на сложность вычислений. Окей. Первую функцию, которую необходимо реализовать — это compute_distances_two_loops(). Тут идея в следующем: мы пишем два цикла, один вложен в другой. Во внешнем цикле мы обходим тренировочный сет на глубину тестового сета, во внутреннем на глубину тренировочного. Считаем дистанцию между тренировочными изображениями и искомым.</p>
+
+<p>Обратите внимание, что в задаче требуют посчитать не L1 distance, а L2 distance. В лекции об этом подробно рассказывается. О чем идет речь? L2 distance - это геометрическая интерпретация евклидового расстояния между двумя векторами. Более простым языком:</p>
+
+<p><img src="../../../assets/img/220519-3.jpg" alt="L2 distance" /></p>
+
+<p>L2 более строго оценивает расстояние между двумя векторами. Почему это так в курсе объясняется позже, я соответственно тоже разберу этот аспект в других статьях.</p>
+
+<p>Далее, построив функцию в два цикла, строим compute_distances_one_loop(). Она ничем не отличается от функции в два цикла. Разница лишь в том, что мы обходим в один цикл на глубину тестового сета.</p>
+
+<p>И, наконец, в функции compute_distances_no_loops() необходимо посчитать дистанцию без циклов, используя инструменты numpy. Чтобы решить эту задачу, надо знать, как расписать формулу L2 дистанции, и немного покрутить с размерностью массивов :) Можно как-то так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> 
+        <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Всё, осталось добавить в наш k_nearest_neighbor.py функцию predict_labels. Для этого надо проитерировать по всей тестовой выборке и вернуть индексы ближайшего k-го соседа i-го изображения. В комментарии к задаче прямо пишут как это сделать (Hint: Look up the function numpy.argsort). Предсказываем метку, а затем возвращаем количество успешных предсказаний для каждой метки.</p>
+
+<p>Запускаем ячейки, смотрим визуализации и через import time считаем время исполнения функций. Oneloop должен получиться где-то примерно в два раза дольше twoloop и в 100 раз хуже, чем noloop.</p>
+
+<p>Про валидацию в задаче вопросов нет, зато есть про кроссвалидацию. Авторы курса объясняют этот метод следующим образом: вместо того, чтобы проходить валидацию по одному сету, можно сделать несколько, пройти по ним, а затем усреднить результат. Это долго, зато менее шумно. Ок.</p>
+
+<p>Что надо сделать? В knn.ipynb необходимо разделить тренировочный сет на 5 сабсетов. Затем нужно прогнать по каждому сабсету наш алгоритм.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_choices</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_folds</span><span class="p">):</span> <span class="c"># 1</span>
+        <span class="n">X_train_cross</span> <span class="o">=</span> 
+        <span class="n">X_test_cross</span> <span class="o">=</span> 
+        <span class="n">y_train_cross</span> <span class="o">=</span> 
+        <span class="n">y_test_cross</span> <span class="o">=</span>  <span class="c">#2</span>
+        <span class="o">...</span>
+        <span class="n">dists_cross</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">compute_distances_no_loops</span><span class="p">(</span><span class="n">X_test_cross</span><span class="p">)</span> <span class="c">#3</span>
+        <span class="o">...</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">num_cross_correct</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_test</span> <span class="c">#4</span>
+        <span class="n">k_to_accuracies</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span> <span class="c">#5</span>
+</code></pre></div></div>
+
+<p>Мы будем прогонять цикл j раз (в задаче num_folds = 5) для каждого значения k из списка (в задаче k_choices = [1, 3, 5, 8, 10, 12, 15, 20, 50, 100]) (1). Построим тестовые и валидационные сабсеты (2), применим к ним наш самописный knn-классификатор (я обращался к самому быстрому classifier.compute_distances_no_loops()) (3), получим метки, посчитаем количество правильных (4) и вернем список по всему сету (5).</p>
+
+<p>Дальше получаем вот такой график:</p>
+
+<p><img src="../../../assets/img/220519-4.jpg" alt="crossvalidation" /></p>
+
+<p>Вот и вся задача. Делаем вывод, что у нас k = 10 — зебест, выпиваем бокал шампанского и надуваем шарики.</p>
+
+<p>Какой вывод делают авторы курса? KNN медленный, он перебирает весь сет попиксельно. В случае с изображениями данные многоразмерные и обработка алгоритма затратна. К тому же расстояния основанные на пикселях, не справляются с поврежденными изображениями. Поэтому переходим к следующим задачам курса :)</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/cs231n" class="link-tags">cs231n</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/05/22/cs2131n-knn.html">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/15/cs2131n-start.html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/18/blog-development.html">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Еще немного доработок по блогу</p>
+      <p>Это финальные правки по блогу. Дальше мелкие багфиксы и доработки в виде постов выносить не буду. Что сделано? добавлена ссылка...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
