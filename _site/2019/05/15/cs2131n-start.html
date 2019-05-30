@@ -18,7 +18,9 @@
   
   
   <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
-  <!-- Yandex.Metrika counter -->
+
+  
+      <!-- Yandex.Metrika counter -->
   <script type="text/javascript" >
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -31,9 +33,8 @@
     });
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -42,6 +43,7 @@
 
     gtag('config', 'UA-139620627-1');
   </script>
+  
 
   <link rel="canonical" href="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html">
   <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
@@ -76,6 +78,14 @@
         <li class="inline-block">
           <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
             Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
           </a>
         </li>
         
@@ -117,7 +127,7 @@
     <p class="mb-3 h5">Теги: 
     
       
-      <a href="/tag/cs231n" class="link-tags">cs231n&nbsp;</a>
+      <a href="/tag/cs231n" title="cs231n" class="link-tags">cs231n&nbsp;</a>
     
     </p>
   </div>
@@ -125,25 +135,25 @@
   <div class="prose" itemprop="articleBody">
       <h2 id="о-чем-курс-и-почему-он-актуален">О чем курс и почему он актуален?</h2>
 
-<p>Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу <a href="/tag/cs231n">cs231n</a>.</p>
+<p>Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу <a href="/tag/cs231n" title="cs231n">cs231n</a>.</p>
 
 <p>Курс целиком посвящен вопросам детектирования, распознавания и другим проблемам, связанным с компьютерным зрением. Программа обновляется каждый год, т.к. данная область знаний не стоит на месте. У курса довольно объемный и подробный бекграунд, а задачи подымаются от низкоуровневых решений к работе с фреймворками. В общем, если вас интересует компьютерное зрение — курс полностью себя оправдывает.</p>
 
-<p>Вся актуальная информация содержится на <a href="http://cs231n.stanford.edu/">страничке</a> Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.</p>
+<p>Вся актуальная информация содержится на <a href="http://cs231n.stanford.edu/" title="cs231n.stanford">страничке</a> Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.</p>
 
-<p>Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на <a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv">youtube</a>. Практическая часть курса изложена на <a href="http://cs231n.github.io/">странице с заданиями</a>. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments">доступна</a> вся практика за 2015-2019 годы.</p>
+<p>Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на <a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv" title="лекции на youtube">youtube</a>. Практическая часть курса изложена на <a href="http://cs231n.github.io/" title="cs231n.github.io">странице с заданиями</a>. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments" title="cs231n.github.io assignments">доступна</a> вся практика за 2015-2019 годы.</p>
 
 <h2 id="подготовка-к-работе-над-курсом">Подготовка к работе над курсом</h2>
 
 <ol>
   <li>
-    <p>Необходимо установить python и библиотеки для исследований. Описание этого процесса <a href="http://cs231n.github.io/setup-instructions/">изложено тут</a>. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.</p>
+    <p>Необходимо установить python и библиотеки для исследований. Описание этого процесса <a href="http://cs231n.github.io/setup-instructions/" title="установка зависимостей">изложено тут</a>. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.</p>
   </li>
   <li>
-    <p>В сетапе дополнительно предлагается работать с <a href="https://github.com/cs231n/gcloud/">Google Cloud</a>. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.</p>
+    <p>В сетапе дополнительно предлагается работать с <a href="https://github.com/cs231n/gcloud/" title="про Google Cloud">Google Cloud</a>. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.</p>
   </li>
   <li>
-    <p>Если Вы незнакомы с python и библиотекой numpy, можно пройти <a href="http://cs231n.github.io/python-numpy-tutorial/">туториал</a>. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.</p>
+    <p>Если Вы незнакомы с python и библиотекой numpy, можно пройти <a href="http://cs231n.github.io/python-numpy-tutorial/" title="про Numpy">туториал</a>. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.</p>
   </li>
   <li>
     <p>Необходимо установить jupyter notebook. Половина задач решается в нем. Приложение есть в пакете anaconda.</p>
@@ -156,7 +166,7 @@
 
 <p>Задачи разбиты на два модуля. В первом модуле объясняется фундаментальная работа нейронных сетей и даются практические примеры построения. Второй модуль полностью посвящен сверточным сетям.</p>
 
-<p>Для каждого блока задач дано <a href="http://cs231n.github.io/">подробное описание и бекграунд</a>. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.</p>
+<p>Для каждого блока задач дано <a href="http://cs231n.github.io/" title="весь бекграунд курса">подробное описание и бекграунд</a>. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.</p>
 
 <h3 id="module-1-neural-networks">Module 1: Neural Networks</h3>
 
@@ -171,7 +181,7 @@
     <p>в дальнейшем надо будет построить классификатор на основе простой двухслойной нейронной сети. По сути весь блок построен на том, чтобы дать понятие о принципах классификации изображений и научить сравнивать методы и принимать решения об оптимизации алгоритмов.</p>
   </li>
   <li>
-    <p>дальнейшие задачи по нейронкам вынесены в <a href="http://cs231n.github.io/assignments2019/assignment2/">отдельную группу</a> модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.</p>
+    <p>дальнейшие задачи по нейронкам вынесены в <a href="http://cs231n.github.io/assignments2019/assignment2/" title="задачи по нейронным сетям">отдельную группу</a> модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.</p>
   </li>
 </ol>
 
@@ -189,11 +199,11 @@
   <div class="prose mb-4">
     <ul>
         
-        <li><a href="/2019/05/22/cs2131n-knn.html">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
+        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor classifier assignment">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
             
         </li>
         
-        <li><a href="/2019/05/15/cs2131n-start.html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
+        <li><a href="/2019/05/15/cs2131n-start.html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
             
         </li>
         
@@ -207,20 +217,12 @@
 
 
 
-  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
-    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/06/blog-development.html">
-      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
-      <p class="bold h3 link-primary mb-1">Допилена структура</p>
-      <p>Что сделано? добавлен трекинг в google analitics добавлен трекинг в yandex добавлено тегирование страниц и вывод списка тегов доработана перелинковка...</p>
-    </a>
-  </div>
-  
   
   <div class="col-4 sm-width-full left mt-3">
-    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/18/blog-development.html">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor classifier assignment">
       <span class="h5 link-secondary text-accent">Следующая запись</span>
-      <p class="bold h3 link-primary mb-1">Еще немного доработок по блогу</p>
-      <p>Это финальные правки по блогу. Дальше мелкие багфиксы и доработки в виде постов выносить не буду. ## Что сделано? *...</p>
+      <p class="bold h3 link-primary mb-1">CS231n: k-Nearest Neighbor classifier assignment</p>
+      <p>## Постановка задачи и подготовка Итак, мы перешли к практике для курса cs231n и первый пул задач [Assignment #1: Image...</p>
     </a>
   </div>
 

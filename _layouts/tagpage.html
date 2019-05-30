@@ -10,7 +10,7 @@ layout: default
     <div class="prose mb-4 py-4">
         <ul>
             {% for post in site.tags[page.tag] %}
-            <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
+            <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
                 {{ post.description }}
             </li>
             {% endfor %}

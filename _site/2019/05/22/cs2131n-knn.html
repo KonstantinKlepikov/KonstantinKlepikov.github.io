@@ -18,7 +18,9 @@
   
   
   <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
-  <!-- Yandex.Metrika counter -->
+
+  
+      <!-- Yandex.Metrika counter -->
   <script type="text/javascript" >
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -31,9 +33,8 @@
     });
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -42,6 +43,7 @@
 
     gtag('config', 'UA-139620627-1');
   </script>
+  
 
   <link rel="canonical" href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html">
   <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
@@ -76,6 +78,14 @@
         <li class="inline-block">
           <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
             Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
           </a>
         </li>
         
@@ -117,10 +127,10 @@
     <p class="mb-3 h5">Теги: 
     
       
-      <a href="/tag/cs231n" class="link-tags">cs231n&nbsp;</a>
+      <a href="/tag/cs231n" title="cs231n" class="link-tags">cs231n&nbsp;</a>
     
       
-      <a href="/tag/knn" class="link-tags">knn&nbsp;</a>
+      <a href="/tag/knn" title="knn" class="link-tags">knn&nbsp;</a>
     
     </p>
   </div>
@@ -128,11 +138,11 @@
   <div class="prose" itemprop="articleBody">
       <h2 id="постановка-задачи-и-подготовка">Постановка задачи и подготовка</h2>
 
-<p>Итак, мы перешли к практике для курса cs231n и первый пул задач <a href="http://cs231n.github.io/assignments2019/assignment1/">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a>. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».</p>
+<p>Итак, мы перешли к практике для курса cs231n и первый пул задач <a href="http://cs231n.github.io/assignments2019/assignment1/" title="Assignment #1">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a>. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».</p>
 
 <p>Давайте взглянем на структуру учебного проекта.</p>
 
-<p><img src="../../../assets/img/220519-1.jpg" alt="Структура проекта" /></p>
+<p><img src="../../../assets/img/220519-1.jpg" alt="Структура проекта" title="Структура проекта" /></p>
 
 <p>В корневом каталоге находятся jupyter блокноты, в которых вызываются функции из соответствующих классов для расчетов классификатора на предварительно обработанном наборе данных. В папке classifiers находятся модули, в которых определенны классы для расчета классификаторов. В папке datasets находится датасет CIFAR-10. Собственно в текущей задаче надо править knn.ipynb и k_nearest_neighbor.py</p>
 
@@ -168,7 +178,7 @@
 
 <h2 id="немного-теории">Немного теории</h2>
 
-<p>Для начала авторы курса предлагают разобраться, что из себя представляет <a href="http://cs231n.github.io/classification/">задача классификации изображений</a>. В первом задании рассматриваем хрестоматийную классификацию на основе алгоритма обучения с учителем nearest neighbor classifier, который на самом деле редко используется для классификации изображений. Ну нам повезло :)</p>
+<p>Для начала авторы курса предлагают разобраться, что из себя представляет <a href="http://cs231n.github.io/classification/" title="задача классификации изображений">задача классификации изображений</a>. В первом задании рассматриваем хрестоматийную классификацию на основе алгоритма обучения с учителем nearest neighbor classifier, который на самом деле редко используется для классификации изображений. Ну нам повезло :)</p>
 
 <p>Для начала, как сравнивать два различных изображения, например, изображения из CIFAR10 размерностью 32х32х3? В качестве простейшего способа используется вычисление разницы между векторами двух изображений, взятая по модулю. Сильно упрощая, для каждого пикселя первого и второго изображения считается разница, а затем результат суммируется. Собственно эта штука называется L1 distance.</p>
 
@@ -218,9 +228,9 @@
     <span class="p">}</span> <span class="c"># 5</span>
 </code></pre></div></div>
 
-<p>Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируется массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.</p>
+<p>Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируются массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.</p>
 
-<p>В общем это такая фундаментальная процедура, которая в дальнейшем будет встречаться 100500 раз, поэтому разобратьс ней стоит. Все классификаторы в задачах компьютерного зрения сводятся к построению функции train(X,y), которая работает с данными изображения и метками и функции predict(X), которая получает новые данные и предсказывает метки.</p>
+<p>В общем это такая фундаментальная процедура, которая в дальнейшем будет встречаться 100500 раз, поэтому разобраться ней стоит. Все классификаторы в задачах компьютерного зрения сводятся к построению функции train(X,y), которая работает с данными изображения и метками и функции predict(X), которая получает новые данные и предсказывает метки.</p>
 
 <p>Собственно как это сделать для knn? Реализация приводится в статье к задаче:</p>
 
@@ -311,11 +321,11 @@
   <div class="prose mb-4">
     <ul>
         
-        <li><a href="/2019/05/22/cs2131n-knn.html">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
+        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor classifier assignment">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
             
         </li>
         
-        <li><a href="/2019/05/15/cs2131n-start.html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
+        <li><a href="/2019/05/15/cs2131n-start.html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
             
         </li>
         
@@ -330,10 +340,10 @@
 
 
   <div class="col-4 sm-width-full left mr-lg-4 mt-3">
-    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/18/blog-development.html">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части">
       <span class="h5 link-secondary text-accent">Предыдущая запись</span>
-      <p class="bold h3 link-primary mb-1">Еще немного доработок по блогу</p>
-      <p>Это финальные правки по блогу. Дальше мелкие багфиксы и доработки в виде постов выносить не буду. Что сделано? добавлена ссылка...</p>
+      <p class="bold h3 link-primary mb-1">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</p>
+      <p>О чем курс и почему он актуален? Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось...</p>
     </a>
   </div>
   

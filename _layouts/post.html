@@ -8,7 +8,7 @@ layout: default
     <p class="mb-3 h5">Теги: 
     {% for tag in page.tags %}
       {% capture tag_name %}{{ tag }}{% endcapture %}
-      <a href="/tag/{{ tag_name }}" class="link-tags">{{ tag_name }}&nbsp;</a>
+      <a href="/tag/{{ tag_name }}" title="{{ tag_name }}" class="link-tags">{{ tag_name }}&nbsp;</a>
     {% endfor %}
     </p>
   </div>
@@ -21,7 +21,7 @@ layout: default
   <div class="prose mb-4">
     <ul>
         {% for post in site.tags[page.tag-for-sollecting] %}
-        <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
+        <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
             {{ post.description }}
         </li>
         {% endfor %}

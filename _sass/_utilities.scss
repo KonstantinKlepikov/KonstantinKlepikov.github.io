@@ -198,3 +198,11 @@
     text-decoration: underline;
   }
 }
+
+// Additional styles for top menu
+@media (max-width: $breakpoint-lg) {
+  .small-left { 
+    float: left;
+    margin-left: $spacer-1;
+  }
+}

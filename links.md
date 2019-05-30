@@ -4,10 +4,12 @@ title: Ссылки
 permalink: /links/
 ---
 
-[Пит Варден](https://petewarden.com/)
+## Data science блоги
 
-[Лукас Биевальд](https://lukasbiewald.com/)
+[Пит Варден](https://petewarden.com/ "Пит Варден")
 
-[Джастин Френсис](https://www.oreilly.com/people/justin-francis)
+[Лукас Биевальд](https://lukasbiewald.com/ "Лукас Биевальд")
 
-[Дэвид Анджиевский](http://www.david-andrzejewski.com/)
+[Джастин Френсис](https://www.oreilly.com/people/justin-francis "Джастин Френсис")
+
+[Дэвида Анджиевский](http://www.david-andrzejewski.com/ "Дэвида Анджиевский")

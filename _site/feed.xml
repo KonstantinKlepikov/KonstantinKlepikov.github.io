@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-05-24T15:41:14+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">CS231n: k-Nearest Neighbor classifier assignment</title><link href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html" rel="alternate" type="text/html" title="CS231n: k-Nearest Neighbor classifier assignment" /><published>2019-05-22T00:00:00+02:00</published><updated>2019-05-22T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html">&lt;h2 id=&quot;постановка-задачи-и-подготовка&quot;&gt;Постановка задачи и подготовка&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-05-30T19:57:03+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">CS231n: k-Nearest Neighbor classifier assignment</title><link href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html" rel="alternate" type="text/html" title="CS231n: k-Nearest Neighbor classifier assignment" /><published>2019-05-22T00:00:00+02:00</published><updated>2019-05-22T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html">&lt;h2 id=&quot;постановка-задачи-и-подготовка&quot;&gt;Постановка задачи и подготовка&lt;/h2&gt;
 
-&lt;p&gt;Итак, мы перешли к практике для курса cs231n и первый пул задач &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment1/&quot;&gt;Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network&lt;/a&gt;. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».&lt;/p&gt;
+&lt;p&gt;Итак, мы перешли к практике для курса cs231n и первый пул задач &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment1/&quot; title=&quot;Assignment #1&quot;&gt;Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network&lt;/a&gt;. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».&lt;/p&gt;
 
 &lt;p&gt;Давайте взглянем на структуру учебного проекта.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/220519-1.jpg&quot; alt=&quot;Структура проекта&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/220519-1.jpg&quot; alt=&quot;Структура проекта&quot; title=&quot;Структура проекта&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;В корневом каталоге находятся jupyter блокноты, в которых вызываются функции из соответствующих классов для расчетов классификатора на предварительно обработанном наборе данных. В папке classifiers находятся модули, в которых определенны классы для расчета классификаторов. В папке datasets находится датасет CIFAR-10. Собственно в текущей задаче надо править knn.ipynb и k_nearest_neighbor.py&lt;/p&gt;
 
@@ -40,7 +40,7 @@
 
 &lt;h2 id=&quot;немного-теории&quot;&gt;Немного теории&lt;/h2&gt;
 
-&lt;p&gt;Для начала авторы курса предлагают разобраться, что из себя представляет &lt;a href=&quot;http://cs231n.github.io/classification/&quot;&gt;задача классификации изображений&lt;/a&gt;. В первом задании рассматриваем хрестоматийную классификацию на основе алгоритма обучения с учителем nearest neighbor classifier, который на самом деле редко используется для классификации изображений. Ну нам повезло :)&lt;/p&gt;
+&lt;p&gt;Для начала авторы курса предлагают разобраться, что из себя представляет &lt;a href=&quot;http://cs231n.github.io/classification/&quot; title=&quot;задача классификации изображений&quot;&gt;задача классификации изображений&lt;/a&gt;. В первом задании рассматриваем хрестоматийную классификацию на основе алгоритма обучения с учителем nearest neighbor classifier, который на самом деле редко используется для классификации изображений. Ну нам повезло :)&lt;/p&gt;
 
 &lt;p&gt;Для начала, как сравнивать два различных изображения, например, изображения из CIFAR10 размерностью 32х32х3? В качестве простейшего способа используется вычисление разницы между векторами двух изображений, взятая по модулю. Сильно упрощая, для каждого пикселя первого и второго изображения считается разница, а затем результат суммируется. Собственно эта штука называется L1 distance.&lt;/p&gt;
 
@@ -90,9 +90,9 @@
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 5&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируется массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.&lt;/p&gt;
+&lt;p&gt;Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируются массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.&lt;/p&gt;
 
-&lt;p&gt;В общем это такая фундаментальная процедура, которая в дальнейшем будет встречаться 100500 раз, поэтому разобратьс ней стоит. Все классификаторы в задачах компьютерного зрения сводятся к построению функции train(X,y), которая работает с данными изображения и метками и функции predict(X), которая получает новые данные и предсказывает метки.&lt;/p&gt;
+&lt;p&gt;В общем это такая фундаментальная процедура, которая в дальнейшем будет встречаться 100500 раз, поэтому разобраться ней стоит. Все классификаторы в задачах компьютерного зрения сводятся к построению функции train(X,y), которая работает с данными изображения и метками и функции predict(X), которая получает новые данные и предсказывает метки.&lt;/p&gt;
 
 &lt;p&gt;Собственно как это сделать для knn? Реализация приводится в статье к задаче:&lt;/p&gt;
 
@@ -175,39 +175,27 @@
 
 &lt;p&gt;Вот и вся задача. Делаем вывод, что у нас k = 10 — зебест, выпиваем бокал шампанского и надуваем шарики.&lt;/p&gt;
 
-&lt;p&gt;Какой вывод делают авторы курса? KNN медленный, он перебирает весь сет попиксельно. В случае с изображениями данные многоразмерные и обработка алгоритма затратна. К тому же расстояния основанные на пикселях, не справляются с поврежденными изображениями. Поэтому переходим к следующим задачам курса :)&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><category term="knn" /><summary type="html">Постановка задачи и подготовка</summary></entry><entry><title type="html">Еще немного доработок по блогу</title><link href="https://konstantinklepikov.github.io/2019/05/18/blog-development.html" rel="alternate" type="text/html" title="Еще немного доработок по блогу" /><published>2019-05-18T00:00:00+02:00</published><updated>2019-05-18T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/18/blog-development</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/18/blog-development.html">&lt;p&gt;Это финальные правки по блогу. Дальше мелкие багфиксы и доработки в виде постов выносить не буду.&lt;/p&gt;
+&lt;p&gt;Какой вывод делают авторы курса? KNN медленный, он перебирает весь сет попиксельно. В случае с изображениями данные многоразмерные и обработка алгоритма затратна. К тому же расстояния основанные на пикселях, не справляются с поврежденными изображениями. Поэтому переходим к следующим задачам курса :)&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><category term="knn" /><summary type="html">Постановка задачи и подготовка</summary></entry><entry><title type="html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</title><link href="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html" rel="alternate" type="text/html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части" /><published>2019-05-15T00:00:00+02:00</published><updated>2019-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/15/cs2131n-start</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html">&lt;h2 id=&quot;о-чем-курс-и-почему-он-актуален&quot;&gt;О чем курс и почему он актуален?&lt;/h2&gt;
 
-&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;добавлена ссылка “читать дальше” в превью постов на главной страницу&lt;/li&gt;
-  &lt;li&gt;добавлен показ тегов в превью постов на главной странице&lt;/li&gt;
-  &lt;li&gt;добавлен вывод всех статей по ключевому тегу внизу каждой статьи&lt;/li&gt;
-  &lt;li&gt;добавлены стили для тегов&lt;/li&gt;
-  &lt;li&gt;изменена иконка сайта, добавлено фото в раздел “об авторе”&lt;/li&gt;
-  &lt;li&gt;пофикшена ошибка с атрибуции гитхаба&lt;/li&gt;
-  &lt;li&gt;пофикшена проблема с robor.txt и sitemap&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Это финальные правки по блогу. Дальше мелкие багфиксы и доработки в виде постов выносить не буду.</summary></entry><entry><title type="html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</title><link href="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html" rel="alternate" type="text/html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части" /><published>2019-05-15T00:00:00+02:00</published><updated>2019-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/15/cs2131n-start</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html">&lt;h2 id=&quot;о-чем-курс-и-почему-он-актуален&quot;&gt;О чем курс и почему он актуален?&lt;/h2&gt;
-
-&lt;p&gt;Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу &lt;a href=&quot;/tag/cs231n&quot;&gt;cs231n&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу &lt;a href=&quot;/tag/cs231n&quot; title=&quot;cs231n&quot;&gt;cs231n&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Курс целиком посвящен вопросам детектирования, распознавания и другим проблемам, связанным с компьютерным зрением. Программа обновляется каждый год, т.к. данная область знаний не стоит на месте. У курса довольно объемный и подробный бекграунд, а задачи подымаются от низкоуровневых решений к работе с фреймворками. В общем, если вас интересует компьютерное зрение — курс полностью себя оправдывает.&lt;/p&gt;
 
-&lt;p&gt;Вся актуальная информация содержится на &lt;a href=&quot;http://cs231n.stanford.edu/&quot;&gt;страничке&lt;/a&gt; Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.&lt;/p&gt;
+&lt;p&gt;Вся актуальная информация содержится на &lt;a href=&quot;http://cs231n.stanford.edu/&quot; title=&quot;cs231n.stanford&quot;&gt;страничке&lt;/a&gt; Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.&lt;/p&gt;
 
-&lt;p&gt;Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на &lt;a href=&quot;https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv&quot;&gt;youtube&lt;/a&gt;. Практическая часть курса изложена на &lt;a href=&quot;http://cs231n.github.io/&quot;&gt;странице с заданиями&lt;/a&gt;. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments&quot;&gt;доступна&lt;/a&gt; вся практика за 2015-2019 годы.&lt;/p&gt;
+&lt;p&gt;Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на &lt;a href=&quot;https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv&quot; title=&quot;лекции на youtube&quot;&gt;youtube&lt;/a&gt;. Практическая часть курса изложена на &lt;a href=&quot;http://cs231n.github.io/&quot; title=&quot;cs231n.github.io&quot;&gt;странице с заданиями&lt;/a&gt;. Я решал задачи 2018-года и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments&quot; title=&quot;cs231n.github.io assignments&quot;&gt;доступна&lt;/a&gt; вся практика за 2015-2019 годы.&lt;/p&gt;
 
 &lt;h2 id=&quot;подготовка-к-работе-над-курсом&quot;&gt;Подготовка к работе над курсом&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Необходимо установить python и библиотеки для исследований. Описание этого процесса &lt;a href=&quot;http://cs231n.github.io/setup-instructions/&quot;&gt;изложено тут&lt;/a&gt;. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.&lt;/p&gt;
+    &lt;p&gt;Необходимо установить python и библиотеки для исследований. Описание этого процесса &lt;a href=&quot;http://cs231n.github.io/setup-instructions/&quot; title=&quot;установка зависимостей&quot;&gt;изложено тут&lt;/a&gt;. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;В сетапе дополнительно предлагается работать с &lt;a href=&quot;https://github.com/cs231n/gcloud/&quot;&gt;Google Cloud&lt;/a&gt;. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.&lt;/p&gt;
+    &lt;p&gt;В сетапе дополнительно предлагается работать с &lt;a href=&quot;https://github.com/cs231n/gcloud/&quot; title=&quot;про Google Cloud&quot;&gt;Google Cloud&lt;/a&gt;. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Если Вы незнакомы с python и библиотекой numpy, можно пройти &lt;a href=&quot;http://cs231n.github.io/python-numpy-tutorial/&quot;&gt;туториал&lt;/a&gt;. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.&lt;/p&gt;
+    &lt;p&gt;Если Вы незнакомы с python и библиотекой numpy, можно пройти &lt;a href=&quot;http://cs231n.github.io/python-numpy-tutorial/&quot; title=&quot;про Numpy&quot;&gt;туториал&lt;/a&gt;. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Необходимо установить jupyter notebook. Половина задач решается в нем. Приложение есть в пакете anaconda.&lt;/p&gt;
@@ -220,7 +208,7 @@
 
 &lt;p&gt;Задачи разбиты на два модуля. В первом модуле объясняется фундаментальная работа нейронных сетей и даются практические примеры построения. Второй модуль полностью посвящен сверточным сетям.&lt;/p&gt;
 
-&lt;p&gt;Для каждого блока задач дано &lt;a href=&quot;http://cs231n.github.io/&quot;&gt;подробное описание и бекграунд&lt;/a&gt;. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.&lt;/p&gt;
+&lt;p&gt;Для каждого блока задач дано &lt;a href=&quot;http://cs231n.github.io/&quot; title=&quot;весь бекграунд курса&quot;&gt;подробное описание и бекграунд&lt;/a&gt;. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.&lt;/p&gt;
 
 &lt;h3 id=&quot;module-1-neural-networks&quot;&gt;Module 1: Neural Networks&lt;/h3&gt;
 
@@ -235,7 +223,7 @@
     &lt;p&gt;в дальнейшем надо будет построить классификатор на основе простой двухслойной нейронной сети. По сути весь блок построен на том, чтобы дать понятие о принципах классификации изображений и научить сравнивать методы и принимать решения об оптимизации алгоритмов.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;дальнейшие задачи по нейронкам вынесены в &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment2/&quot;&gt;отдельную группу&lt;/a&gt; модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.&lt;/p&gt;
+    &lt;p&gt;дальнейшие задачи по нейронкам вынесены в &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment2/&quot; title=&quot;задачи по нейронным сетям&quot;&gt;отдельную группу&lt;/a&gt; модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -245,22 +233,4 @@
 
 &lt;h2 id=&quot;в-итоге&quot;&gt;В итоге&lt;/h2&gt;
 
-&lt;p&gt;В дальнейших статьях я постараюсь зафиксировать свое понимание теоретической части курса и то, как применяя теорию, необходимо решать практическую часть. Готового кода одним куском не будет - это можно нагуглить самостоятельно. Задача данных статей - прожевать теоретический курс на практике и закрепить усвоенный материал.&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><summary type="html">О чем курс и почему он актуален?</summary></entry><entry><title type="html">Допилена структура</title><link href="https://konstantinklepikov.github.io/2019/05/06/blog-development.html" rel="alternate" type="text/html" title="Допилена структура" /><published>2019-05-06T00:00:00+02:00</published><updated>2019-05-06T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/06/blog-development</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/06/blog-development.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;добавлен трекинг в google analitics&lt;/li&gt;
-  &lt;li&gt;добавлен трекинг в yandex&lt;/li&gt;
-  &lt;li&gt;добавлено тегирование страниц и вывод списка тегов&lt;/li&gt;
-  &lt;li&gt;доработана перелинковка&lt;/li&gt;
-  &lt;li&gt;прикручен Open Sands&lt;/li&gt;
-  &lt;li&gt;исправлены ошибки с отображением ссылок в хедере&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry><entry><title type="html">Старт</title><link href="https://konstantinklepikov.github.io/2019/05/05/first-post.html" rel="alternate" type="text/html" title="Старт" /><published>2019-05-05T00:00:00+02:00</published><updated>2019-05-05T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/05/first-post</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/05/first-post.html">&lt;h2 id=&quot;что-сделано&quot;&gt;Что сделано?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;собрал шаблон на Jekyll&lt;/li&gt;
-  &lt;li&gt;добавил sitemap&lt;/li&gt;
-  &lt;li&gt;разобрался с тегированием статей&lt;/li&gt;
-  &lt;li&gt;убрал неопубликованные статьи&lt;/li&gt;
-  &lt;li&gt;подтвердил домен на yandex&lt;/li&gt;
-  &lt;li&gt;подтвердил домен в google&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="blog-development" /><summary type="html">Что сделано?</summary></entry></feed>
+&lt;p&gt;В дальнейших статьях я постараюсь зафиксировать свое понимание теоретической части курса и то, как применяя теорию, необходимо решать практическую часть. Готового кода одним куском не будет - это можно нагуглить самостоятельно. Задача данных статей - прожевать теоретический курс на практике и закрепить усвоенный материал.&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><summary type="html">О чем курс и почему он актуален?</summary></entry></feed>

@@ -10,8 +10,8 @@ permalink: /about/
 
 Найти меня можно так:
 
-[telegram](https://t.me/KlepikovKonstantin)
+[telegram](https://t.me/KlepikovKonstantin "telegram")
 
-[facebook](https://www.facebook.com/konstatin.klepikov)
+[facebook](https://www.facebook.com/konstatin.klepikov "facebook")
 
-[github](https://github.com/KonstantinKlepikov)
+[github](https://github.com/KonstantinKlepikov "github")
