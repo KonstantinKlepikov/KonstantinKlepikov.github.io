@@ -45,4 +45,5 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
-github: [metadata] 
+github: [metadata]
+highlighter: rouge

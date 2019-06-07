@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS231n: Обучение Support Vector Machine</title>
+  <meta name="description" content="Подготовка проекта">
+  <meta name="keywords" content="cs231n компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science support vector mashine svm">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: Обучение Support Vector Machine</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-05-31T00:00:00+02:00" itemprop="datePublished">May 31, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/cs231n" title="cs231n" class="link-tags">cs231n&nbsp;</a>
+    
+      
+      <a href="/tag/svm" title="svm" class="link-tags">svm&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <h2 id="подготовка-проекта">Подготовка проекта</h2>
+
+<p>Вторая задача в <a href="http://cs231n.github.io/assignments2019/assignment1/" title="Assignment #1">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a> — это построение классификатора «SVM: Support Vector Machine».</p>
+
+<p>В задаче используется тот же учебный проект, что и в <a href="/2019/05/22/cs2131n-knn.html">задании на построение knn-классификатора</a>. Будем работать с svm.ipynb и linear_svm.py</p>
+
+<p>Напомню, что я прошел курс cs231n на <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018" title="cs321s задачи 2018-го года">задачах 2018-го года</a>. Иллюстрации к данной статье взяты практически без измененеий непосредственно из бекграунда курса. Псевдокод несколько модифицирован.</p>
+
+<h2 id="что-можно-узнать-решив-задачу">Что можно узнать, решив задачу?</h2>
+
+<ol>
+  <li>
+    <p>увидеть на модели что такое линейные классификаторы</p>
+  </li>
+  <li>
+    <p>понять различия между Nearest Neighbor и линейными классификаторами</p>
+  </li>
+  <li>
+    <p>спроектировать и реализовать функцию потерь</p>
+  </li>
+  <li>
+    <p>разработать эффективное (с точки зрения вычислительной сложности) решение</p>
+  </li>
+</ol>
+
+<h2 id="немного-теории-про-линейные-классификаторы">Немного теории про линейные классификаторы</h2>
+
+<p>Для начала авторы курса предлагают вспомнить, что kNN имеет два существенных недостатка — классификатор должен перебрать и запомнить все данные из тренировочного сета, а тестовое изображение должно сравниваться по сути со всем тренировочным сетом. И это дорого. Проблема может быть решена введением двух функций. Score function (оценочная функция) формализует исходные данные  и loss function (функция потерь) определяет соотношение между прогнозируемыми метками и фактическими. Задача будет сводиться к минимизации функции потерь.</p>
+
+<p>Далее авторы курса предлагают разобраться, что из себя представляет <a href="http://cs231n.github.io/linear-classify/" title="линейная классификация">линейная классификация</a>. В основе лежит простейшая оценочная функция, которая учитывает массив весов (W), массив данных об изображении (x) и байесовский вектор (b).</p>
+
+<p><img src="../../../assets/img/310519-1.jpg" alt="linear mapping" /></p>
+
+<p>Линейная модель довольно просто интерпретируется</p>
+
+<p><img src="../../../assets/img/310519-2.jpg" alt="linear mapping interpretation" /></p>
+
+<p>В данном примере анализируется единственное монохромное изображение, состоящее из 4-х пикселей и три класса - красный, зеленый и синий. Массив весов, таким образом, имеет размерность 3х4, изображение 1х4, а параметр b 1х4. Исходя из приведенной выше формулы получается довольно тривиальный подсчет, демонстрирующий, что на четырехпиксельной картинке, скорее всего, зеленый класс. Фактически линейную функцию можно интерпретировать так: она ограничивает пространство таким образом, что по одну сторону от линии располагаются все или большинство верно классифицированных объектов, а по другую остальные. Очевидно, что W определяет наклон прямой, а b дополнительное смещение относительно нуля. Иными словами - это параметры, отвечающие за точность классификации, а сама функция определяет подмножество объектов, относящихся к выбранному классу.</p>
+
+<p>Еще одной интерпретацией линейного классификатора является идея о том, что в массиве весов каждая строка представляет из себя некий прототип изображения или шаблон. Задача классификации сводится к сопоставлению изображений с шаблоном и поиск такого шаблона, который наилучшим образом обобщает изображения выбранного класса. В этом заключается разница с kNN — в случае с ближайшими соседями сопоставление тестового объекта идет со всеми объектами тренировочного сета, а в случае линейного классификатора — с единственным объектом прототипа.</p>
+
+<p>Далее, в курсе кратко разъясняется нюансы линейных моделей.</p>
+
+<p>Во-первых, параметр b. Это смещение позволяет избежать ситуации, когда вне зависимости от веса W оценочная функция сводится к нулю, если передан x = 0. Грубо говоря, в геометрическом смысле, наш классификатор всегда вращался бы вокруг центра координат, а между тем тестовые объекты могут «располагаться» далеко по осям. Чтобы упростить расчеты с байесовским смещением, его можно вовсе убрать из функции. Трюк очень простой: добавляется еще один столбец в массив весов W, куда и помещаем значения b, а чтобы сохранить одинаковую размерность, в массив объекта x добавляется строка, заполненная единицами. Вы это увидите позже, в задаче.</p>
+
+<p><img src="../../../assets/img/310519-3.jpg" alt="Illustration of the bias trick" /></p>
+
+<p>Во-вторых, разъясняется для чего делается вычитание среднего изображения из изображений всего сета (мы делали это в первом задании по kNN). Данные, извлекаемые из изображения (для CIFAR10 — это [0, 255]) центрируются (для CIFAR10 приводятся к виду [-127, 127], что, в дальнейшем окажется очень полезным фокусом для вычисления градиентного спуска.</p>
+
+<p>Окей. На этом магия score function завершается. Осталось разобраться с loss function.</p>
+
+<h2 id="multiclass-support-vector-machine-loss">Multiclass Support Vector Machine loss</h2>
+
+<p>Как я уже писал выше, функция потерь определяет соотношение между прогнозируемыми метками и фактическими, а точнее, определяет меру ошибочно классифицированных объектов. Функции такие бывают разные, у нас задача посчитать SVM.</p>
+
+<p>SVM loss в курсе разъясняется довольно тривиально: функция требует, чтобы правильно определенный класс для каждого объекта имел значение выше, чем неправильно определенный класс плюс некая константа. Иными словами, функция подсчитывает корректные классы, которые больше некорректных более чем на заданное значение.</p>
+
+<p><img src="../../../assets/img/310519-4.jpg" alt="SVM loss" /></p>
+
+<p>С учетом линейного классификатора, функция потерь начинает выглядеть следующим образом (массивы весов тут транспонированы):</p>
+
+<p><img src="../../../assets/img/310519-5.jpg" alt="SVM loss linear" /></p>
+
+<p>Ну и, наконец, нужно справиться еще с одной небольшой проблемой. Дело в том, что могут существовать веса, с которыми наша функция потерь всегда будет равна нулю. Такие веса могут оказаться неуникальными и кратные наборы весов будут также давать минимальную функцию потерь. А нам-то как раз нужно, чтобы определенный набор весов был предпочтительнее другого набора. Что-бы исправить эту неопределенность, вводится регуляризационный штраф за «большие веса» (в данном случае L2 regularisation, хотя способов регуляризации конечно же больше). Таким образом итоговая функция потерь выглядит так:</p>
+
+<p><img src="../../../assets/img/310519-6.jpg" alt="SVM loss linear" /></p>
+
+<p>где N - это число объектов в обучающей выборке, а λ — еще один гиперпараметр — сила регуляризации (regularisation strength), который также придется задавать.</p>
+
+<p>Кстати, в курсе приводится такой SVM:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">L_i</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c">#1</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c">#2</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+  <span class="n">D</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">loss_i</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span> <span class="c">#3</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="n">loss_i</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span> <span class="c">#4</span>
+  <span class="k">return</span> <span class="n">loss_i</span>
+
+<span class="k">def</span> <span class="nf">L_i_vectorized</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c">#5</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span>
+  <span class="n">margins</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">loss_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">margins</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss_i</span>
+</code></pre></div></div>
+
+<p>Что-то подобное нам придется реализовать. Что мы видим? «Наивную» (1) и «векторизированную» (5) имплементации функций. Очевидно, вторая, за счет numpy работает быстрее. Задается «отступ» Δ (2), затем итерируется по всем классам (3), считается количество ошибок (4).</p>
+
+<p><img src="../../../assets/img/310519-8.jpg" alt="Ну когда же уже задачи?" /></p>
+
+<p>nope…</p>
+
+<h2 id="еще-немного-теории--необходимо-разобраться-с-градиентом">Еще немного теории — необходимо разобраться с градиентом</h2>
+
+<p>Про интерпретацию функции потерь рассказано в <a href="http://cs231n.github.io/linear-classify/" title="Optimization: Stochastic Gradient Descent">Optimization: Stochastic Gradient Descent</a>. Эту функцию достаточно сложно визуализировать, т.к. она, как правило, определена в многомерных пространствах. Вы можете прочитать в бэкграунде курса подробно о том, какие простейшие методы можно использовать для минимизации функции, но наиболее рациональный — необходимо следовать градиенту.</p>
+
+<p>Ключом к пониманию стратегии является пример с одномерной функцией. Градиент показывает мгновенную скорость измененеия такой функции потерь в каждой ее точке или, иными словами, угол обобщенного наклона функции. Это можно выразить через производную:</p>
+
+<p><img src="../../../assets/img/310519-7.jpg" alt="1-D gradient" /></p>
+
+<p>Стратегия «градиентного спуска» сводится к поиску таких весов, при которых наклон функции потерь будет наиболее «крутым», т.е. скорейшим из возможных способов приведет к оптимальному минимуму. В многомерных пространствах разница заключается лишь в том, что градиентом будет являться вектор частных производных для каждого измерения.</p>
+
+<p>Для решения задач курса необходимо будет посчитать градиент и авторы разбирают два метода - numerical (численный) и analytic (аналитический).</p>
+
+<p>Посчитать численный градиент довольно просто — необходимо определить алгоритм, который в простейшем случае будет принимать функцию f, вектор x, итерировать по всему индексу x и возвращать градиент в каждой точке x.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">eval_numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c">#1</span>
+  <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="mf">0.00001</span> <span class="c">#2</span>
+
+  <span class="c"># iterate over all indexes in x</span>
+  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s">'multi_index'</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s">'readwrite'</span><span class="p">])</span> <span class="c">#3</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+
+    <span class="n">ix</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
+    <span class="n">old_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="o">+</span> <span class="n">h</span>
+    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c"># 4</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span>
+
+    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c"># 5</span>
+    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">grad</span>
+</code></pre></div></div>
+
+<p>Здесь необходимо определить исходную функцию (1), затем инициализировать массив градиентов и задать шаг (2). Затем необходимо проитерировать через все x (3), посчитать значение функции в каждой точке (4) и сравнить его с исходным (5), вернув обновленный массив градиентов.</p>
+
+<p>Тут видно, что h взят произвольный, хотя, исходя из формулы, h стремится к 0. На практике это посчитать невозможно и приходится использовать очень маленькое значение вместо предельного, например, 1e-5, как в псевдокоде выше. Кроме того, градиент можно считать используя <a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5_%D0%B4%D0%B8%D1%84%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5" title="численное дифференцирование">численное дифференцирование</a> grad = [f(x + h) - f(x - h)] / 2h</p>
+
+<p>Итак, градиент будет указывать направление, в котором функция быстрее всего уменьшается. Шаг, с которым мы будем двигаться по функции называется скоростью обучения (learning rate) и это один из важнейших параметров. Очевидно, что для построения численного градиента, придется посчитать значение в каждой точке, что с учетом количества параметров в нейронных сетях, работающих с изображениями, довольно затратная вычислительная задача. К тому же мы вынуждены делать допущение о размере значения h.</p>
+
+<p>Эту проблему можно решить с помощью аналитического градиента. По сути, в нашей задаче, вычисление аналитического градиента сводится к подсчету количества классов, которые внесли свой вклад в функцию потерь, а затем масштабированию вектора x по этому значению.</p>
+
+<p><img src="../../../assets/img/310519-9.jpg" alt="analitic gradient" /></p>
+
+<p>l — здесь функция, которая примет значение 1, если выражение в скобках истинно, и 0, если ложно.</p>
+
+<p>Осталось только оптимизировать функцию потерь и эту задачу делает градиентный спуск (gradient descent). В простейшем варианте этот метод определяется так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">weights_grad</span> <span class="o">=</span> <span class="n">evaluate_gradient</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span>
+</code></pre></div></div>
+
+<p>Грубо говоря, мы принимаем данные нашего дата-сета, веса и функцию потерь, получаем некие поправки и изменяем веса, с учетом этих поправок, цикл за циклом следуя градиенту, до тех пор, пока не будет достигнут оптимум. Если объем анализируемых данных очень большой, данные можно разбить на пакеты (mini-batches) и реализовать пакетный градиентный спуск. Размер пакета - это тоже гиперпараметр, который можно настраивать.</p>
+
+<p>Все, вот и конец краткого и довольно поверхностного забега в теоретическую часть. Более подробно можно почитать в <a href="http://cs231n.github.io/linear-classify/" title="линейная классификация, SVM и softmax">бэкграунде к курсу</a>. Там-же более детализировано рассказано про регуляризацию, гиперпараметры λ и Δ, оптимизацию и другие варианты SVM. Обязательно прочитайте этот раздел.</p>
+
+<h2 id="задачи">Задачи</h2>
+
+<p>В первой части блокнота svm.ipynb копипастится вся работа по подготовке дата-сета CIFAR10. Подключаются модули, сет делится на тренировочную, валидационную и тестовую выборки, данные приводятся к рабочим размерностям и нормализуются. Если все еще плохо понимаете как это делается, читайте <a href="/2019/05/22/cs2131n-knn.html">предыдущую статью</a>.</p>
+
+<p>«Наивный» SVM классификатор уже написан в linear_svm.py. Необходимо только прикрутить к нему расчет аналитического градиента, чтобы получить осмысленный результат в ячейке:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">cs231n.classifiers.linear_svm</span> <span class="kn">import</span> <span class="n">svm_loss_naive</span>
+
+<span class="c"># generate a random SVM weight matrix of small numbers</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3073</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span> 
+
+<span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'loss: </span><span class="si">%</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">))</span>
+</code></pre></div></div>
+
+<p>Кстати, обратите внимание, что веса задаются случайно, а скорость обучения равна 0.5*1-e5. Взглянем на то, как вычисляется функция потерь.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span> <span class="c">#1</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span> <span class="c">#2</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="k">continue</span>
+
+      <span class="n">margin</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="mi">1</span> <span class="c">#3</span>
+      <span class="k">if</span> <span class="n">margin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c">#4</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="n">margin</span>
+  <span class="n">loss</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#5</span>
+  <span class="n">loss</span> <span class="o">+=</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span> <span class="c">#6</span>
+</code></pre></div></div>
+
+<p>Получаем на вход веса, тренировочный сет, метки и значение параметра λ. Затем итерируем на глубину всего тренировочного сета (2), считаем функцию потерь (3), после чего суммируем результат для ненулевых случаев (4). Все это делится на N (число объектов в обучающей выборке) (5), а функция потерь складывается с регуляризационным штрафом (6).</p>
+
+<p>Хорошо, в этом задании задаем Δ и переписываем функцию потерь с Δ (3), инициализируем нулями массив для подсчета градиента, так как мы делали это выше: dW = np.zeros(W.shape). В нашем случае получаем размерность 3073, 10. Затем вспоминаем про численное дифференцирование, в цикле вместе с функцией потерь считаем и сохраняем значения узлов аппроксимированного градиента для всех ненулевых отступов (4). Затем делим полученный массив на N, так же, как мы это сделали с функцией потерь (5) и наконец считаем сам аналитический градиент: dW += W * reg.</p>
+
+<p>Далее, в блокноте продемонстрирован метод сверки аналитического градиента с числовым. Функция для этой задачи уже написана — можно поиграться с параметрами и регуляризационным штрафом, что бы увидеть разницу.</p>
+
+<p>Следующая задача — задать svm_loss_vectorized. Она находится там же, в linear_svm.py и придется написать с нуля саму функцию потерь и градиент.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">svm_loss_vectorized</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="k">pass</span>
+
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
+</code></pre></div></div>
+
+<p>К счастью, задача решается по аналогии с предыдущей, а в упрощенном виде её уже разобрали в курсе на примере L_i_vectorized (см.выше). Что делаем? Задаем Δ, прописываем scores, считаем число корректных классов, считаем отступы через np.maximum() (обратите внимание, что margin[y] надо проигнорировать, т.к. функция тут возвращает Δ), считаем функцию потерь и аналитический градиент средствами numpy.</p>
+
+<p>На следующем шаге в задаче предлагается запустить сравнение svm_loss_naive и svm_loss_vectorized. Если всё сделано верно, разница должна быть равна нулю, а векторизированная функция потерь должна выполняться примерно в 50 раз быстрее «нативной».</p>
+
+<p>Последний большой блок в задаче посвящен градиентному спуску. В этой задаче необходимо открыть linear_classifier.py и написать функцию LinearClassifier.train(). Посмотрим что из себя представляет эта функция.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+          <span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span> <span class="c">#1</span>
+
+  <span class="n">num_train</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span> <span class="c">#2</span>
+
+  <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span> <span class="c">#3</span>
+  <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+    <span class="n">X_batch</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">y_batch</span> <span class="o">=</span> <span class="bp">None</span> <span class="c">#4</span>
+
+    <span class="k">pass</span>
+
+    <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">,</span> <span class="n">reg</span><span class="p">)</span>
+    <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c">#5</span>
+
+    <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">it</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'iteration </span><span class="si">%</span><span class="s">d / </span><span class="si">%</span><span class="s">d: loss </span><span class="si">%</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">loss_history</span>
+</code></pre></div></div>
+
+<p>На вход функции приходит numpy массив обучающего сета, массив меток, скорость обучения reg, число итераций num_iters, количество пакетов, на которые мы разобъём сет и параметр verbose, который позволяет отследить процесс исполнения функции (1). Распаковываем кортеж с размерностями и случайным образом инициализируются веса, если они не заданы (2). Задаем счетчик для функции потерь (3) и разбиваем сет на пакеты (4).</p>
+
+<p>Эту часть кода необходимо написать. Фактически нужно сгенерировать пакет из случайных объектов, размерностью с dim, batch_size для X_batch и batch_size, для y_batch.</p>
+
+<p>Затем, считаем функцию потерь и градиент для пакета и обновляем счетчик (5). Следующий шаг — обновление весов. В описании курса это уже было расписан: weights += - step_size * weights_grad, поэтому том же цикле возвращаемся к self.W и обновляем вес.</p>
+
+<p>В блокноте запускаем ячейку с SGD и наблюдаем, как падает loss с каждой итерацией. Смотрим график функции потерь. Должно получиться что-то похожее на:</p>
+
+<p><img src="../../../assets/img/310519-10.jpg" alt="loss function" /></p>
+
+<p>Следующий шаг — валидация и изменение гиперпараметров. В прошлом задании с kNN разъяснялось, что валидационный сет необходим для того, чтобы улучшить параметры модели и почему это нельзя делать на тестовом сете. В данной задаче необходимо поднять точность предсказания на уровень 0,4 (в текущей модели должно было получиться меньше). Управлять мы будем скоростью обучения и силой регуляризации. Необходимо написать код, в котором можно подобрать лучшее сочетание гиперпараметров.</p>
+
+<p>Что бы решить задани, надо во внешнем цикле проитерировать с определенным шагом по learning_rates, во внутреннем по regularization_strengths, внутри вызвать и протестировать нашу LinearSVM(), посчитать точность и сохранить результат. Задача несложная, но уже немного затратная по вычислениям и можно поработать над ее оптимизацией. Дальше подкручиваем гиперпараметры и смотрим визуализацию.</p>
+
+<p>На этом с SVM всё. В следующей статье будут разбираться задачи с Softmax классификатором и мы перейдем к обратному распространению.</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/cs231n" class="link-tags">cs231n</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">CS231n: Обучение Support Vector Machine</a> (31 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor классификатор">CS231n: k-Nearest Neighbor классификатор</a> (22 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/15/cs2131n-start.html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor классификатор">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">CS231n: k-Nearest Neighbor классификатор</p>
+      <p>Постановка задачи и подготовка Итак, мы перешли к практике для курса cs231n и первый пул задач Assignment #1: Image Classification,...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

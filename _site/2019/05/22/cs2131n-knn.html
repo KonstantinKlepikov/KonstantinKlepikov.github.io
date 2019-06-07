@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>CS231n: k-Nearest Neighbor classifier assignment</title>
+  <title>CS231n: k-Nearest Neighbor классификатор</title>
   <meta name="description" content="Постановка задачи и подготовка">
   <meta name="keywords" content="cs231n компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science k-nearest neighbors">
   <meta name="author" content="Klepikov Konstantin">
@@ -114,6 +114,8 @@
       
         
       
+        
+      
     </ul>
   </div>
 </header>
@@ -121,7 +123,7 @@
 
     <div>
       <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
-  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: k-Nearest Neighbor classifier assignment</h1>
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: k-Nearest Neighbor классификатор</h1>
   <div class="col-4 sm-width-full mt-1 border-top-thin">
     <p class="py-2 bold h4"><time datetime="2019-05-22T00:00:00+02:00" itemprop="datePublished">May 22, 2019</time></p>
     <p class="mb-3 h5">Теги: 
@@ -138,7 +140,7 @@
   <div class="prose" itemprop="articleBody">
       <h2 id="постановка-задачи-и-подготовка">Постановка задачи и подготовка</h2>
 
-<p>Итак, мы перешли к практике для курса cs231n и первый пул задач <a href="http://cs231n.github.io/assignments2019/assignment1/" title="Assignment #1">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a>. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей».</p>
+<p>Итак, мы перешли к практике для курса cs231n и первый пул задач <a href="http://cs231n.github.io/assignments2019/assignment1/" title="Assignment #1">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a>. В этой статье я разберу первую задачу — построение классификатора методом «k-ближайших соседей». Курс я прошел на <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018" title="cs321s задачи 2018-го года">задачах 2018-го года</a>.</p>
 
 <p>Давайте взглянем на структуру учебного проекта.</p>
 
@@ -195,10 +197,10 @@
 
     <span class="c"># Load the raw CIFAR-10 data</span>
     <span class="n">cifar10_dir</span> <span class="o">=</span> <span class="s">'cs231n/datasets/cifar-10-batches-py'</span> 
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span> <span class="c"># 1</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span> <span class="c">#1</span>
         
     <span class="c"># Subsample the data</span>
-    <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">))</span> <span class="c"># 2</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">))</span> <span class="c">#2</span>
     <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
     <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">))</span>
@@ -209,14 +211,14 @@
     <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
 
     <span class="c"># Normalize the data: subtract the mean image</span>
-    <span class="k">if</span> <span class="n">subtract_mean</span><span class="p">:</span> <span class="c"># 3</span>
+    <span class="k">if</span> <span class="n">subtract_mean</span><span class="p">:</span> <span class="c">#3</span>
       <span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
       <span class="n">X_train</span> <span class="o">-=</span> <span class="n">mean_image</span>
       <span class="n">X_val</span> <span class="o">-=</span> <span class="n">mean_image</span>
       <span class="n">X_test</span> <span class="o">-=</span> <span class="n">mean_image</span>
     
     <span class="c"># Transpose so that channels come first</span>
-    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c"># 4</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c">#4</span>
     <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -225,7 +227,7 @@
       <span class="s">'X_train'</span><span class="p">:</span> <span class="n">X_train</span><span class="p">,</span> <span class="s">'y_train'</span><span class="p">:</span> <span class="n">y_train</span><span class="p">,</span>
       <span class="s">'X_val'</span><span class="p">:</span> <span class="n">X_val</span><span class="p">,</span> <span class="s">'y_val'</span><span class="p">:</span> <span class="n">y_val</span><span class="p">,</span>
       <span class="s">'X_test'</span><span class="p">:</span> <span class="n">X_test</span><span class="p">,</span> <span class="s">'y_test'</span><span class="p">:</span> <span class="n">y_test</span><span class="p">,</span>
-    <span class="p">}</span> <span class="c"># 5</span>
+    <span class="p">}</span> <span class="c">#5</span>
 </code></pre></div></div>
 
 <p>Что мы видим? Объект с данными датасета (1) разбирается на тренировочный, валидационный и тестовый. Так как CIFAR10 размечен, сразу формируется массивы изображений и меток. Обратите внимание на параметры функции. Датасет в 50000 изображений делится на выборки в 49000 тренировочных, 1000 валидационных и 1000 тестовых объектов каждая. Формируются массивы с метками. Затем производится вычитание среднего изображения (это нужно для центрирования, об этом подробнее будет позже) (3) и на месте переопределяются объекты выборок в удобном для нас формате (4), после чего наконец возвращается (5) словарь с подготовленными данными.</p>
@@ -236,22 +238,22 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
-<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">():</span> <span class="c"># 1</span>
+<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">():</span> <span class="c">#1</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">pass</span>
 
-  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="c"># 2</span>
+  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="c">#2</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
 
-  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span> <span class="c"># 3</span>
+  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span> <span class="c">#3</span>
     <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># 4</span>
-      <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c"># 5</span>
-      <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c"># 6</span>
+      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c">#4</span>
+      <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c">#5</span>
+      <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c">#6</span>
 
     <span class="k">return</span> <span class="n">Ypred</span>
 </code></pre></div></div>
@@ -293,10 +295,10 @@
 <p>Что надо сделать? В knn.ipynb необходимо разделить тренировочный сет на 5 сабсетов. Затем нужно прогнать по каждому сабсету наш алгоритм.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_choices</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_folds</span><span class="p">):</span> <span class="c"># 1</span>
-        <span class="n">X_train_cross</span> <span class="o">=</span> 
-        <span class="n">X_test_cross</span> <span class="o">=</span> 
-        <span class="n">y_train_cross</span> <span class="o">=</span> 
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_folds</span><span class="p">):</span> <span class="c">#1</span>
+        <span class="n">X_train_cross</span> <span class="o">=</span>
+        <span class="n">X_test_cross</span> <span class="o">=</span>
+        <span class="n">y_train_cross</span> <span class="o">=</span>
         <span class="n">y_test_cross</span> <span class="o">=</span>  <span class="c">#2</span>
         <span class="o">...</span>
         <span class="n">dists_cross</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">compute_distances_no_loops</span><span class="p">(</span><span class="n">X_test_cross</span><span class="p">)</span> <span class="c">#3</span>
@@ -321,7 +323,11 @@
   <div class="prose mb-4">
     <ul>
         
-        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor classifier assignment">CS231n: k-Nearest Neighbor classifier assignment</a> (22 May 2019)<br>
+        <li><a href="/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">CS231n: Обучение Support Vector Machine</a> (31 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor классификатор">CS231n: k-Nearest Neighbor классификатор</a> (22 May 2019)<br>
             
         </li>
         
@@ -348,6 +354,14 @@
   </div>
   
   
+  <div class="col-4 sm-width-full left mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">
+      <span class="h5 link-secondary text-accent">Следующая запись</span>
+      <p class="bold h3 link-primary mb-1">CS231n: Обучение Support Vector Machine</p>
+      <p>## Подготовка проекта Вторая задача в [Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network](http://cs231n.github.io/assignments2019/assignment1/ "Assignment #1") — это построение...</p>
+    </a>
+  </div>
+
 
 </div>
 
