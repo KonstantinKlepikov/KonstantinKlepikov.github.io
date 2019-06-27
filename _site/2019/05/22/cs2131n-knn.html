@@ -49,6 +49,10 @@
   <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
 
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
   
   
     
@@ -104,6 +108,8 @@
             Ссылки
           </a>
         </li>
+        
+      
         
       
         
@@ -186,7 +192,7 @@
 
 <p><img src="../../../assets/img/220519-2.jpg" alt="L1 distance" /></p>
 
-<p>В итоге задача формулируется предельно просто — нам нужно найти K изображений, которые по L1 будут ближе всего к исследуемому. Ну т.е. определить k «ближайших соседей». В данном случае, очевидно, что k — это параметр, который определяет точность классификации. Чем больше это значение, тем больше «ближайших соседей» будет «захвачено» классификатором.</p>
+<p>В итоге задача формулируется предельно просто — нам нужно найти <script type="math/tex">k</script> изображений, которые по L1 будут ближе всего к исследуемому. Ну т.е. определить <script type="math/tex">k</script> «ближайших соседей». В данном случае, очевидно, что <script type="math/tex">k</script> — это параметр, который определяет точность классификации. Чем больше это значение, тем больше «ближайших соседей» будет «захвачено» классификатором.</p>
 
 <p>Для того, что бы реализовать эту концепцию, необходимо разделить данные на тренировочные, валидационные и тестовые. Часть данных послужит для обучения алгоритма, а на другой части мы будем тестировать результат обучения. По сути <strong>всё сводится к разбиению данных на выборки, подбору параметров, обучению модели, валидации и проверке результатов на тесте</strong>.</p>
 
@@ -286,7 +292,7 @@
         <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p>Всё, осталось добавить в наш k_nearest_neighbor.py функцию predict_labels. Для этого надо проитерировать по всей тестовой выборке и вернуть индексы ближайшего k-го соседа i-го изображения. В комментарии к задаче прямо пишут как это сделать (Hint: Look up the function numpy.argsort). Предсказываем метку, а затем возвращаем количество успешных предсказаний для каждой метки.</p>
+<p>Всё, осталось добавить в наш k_nearest_neighbor.py функцию predict_labels. Для этого надо проитерировать по всей тестовой выборке и вернуть индексы ближайшего <script type="math/tex">k</script>-го соседа <script type="math/tex">i</script>-го изображения. В комментарии к задаче прямо пишут как это сделать (Hint: Look up the function numpy.argsort). Предсказываем метку, а затем возвращаем количество успешных предсказаний для каждой метки.</p>
 
 <p>Запускаем ячейки, смотрим визуализации и через import time считаем время исполнения функций. Oneloop должен получиться где-то примерно в два раза дольше twoloop и в 100 раз хуже, чем noloop.</p>
 
@@ -322,6 +328,10 @@
   <p class="h4 mt-4">Все статьи с тегом <a href="/tag/cs231n" class="link-tags">cs231n</a></p>
   <div class="prose mb-4">
     <ul>
+        
+        <li><a href="/2019/06/27/cs2131n-sofrmax.html" title="CS231n: Softmax классификатор">CS231n: Softmax классификатор</a> (27 Jun 2019)<br>
+            
+        </li>
         
         <li><a href="/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">CS231n: Обучение Support Vector Machine</a> (31 May 2019)<br>
             

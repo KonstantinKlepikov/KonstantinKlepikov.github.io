@@ -25,6 +25,8 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  {% include mathjax.html %}
   
   {% if site.tags != "" %}
     {% include collecttags.html %}

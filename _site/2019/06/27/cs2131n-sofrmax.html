@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS231n: Softmax классификатор</title>
+  <meta name="description" content="Третья задача в Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network — это построение Softmax-классификатора.">
+  <meta name="keywords" content="cs231n компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science softmax classifier">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/06/27/cs2131n-sofrmax.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">CS231n: Softmax классификатор</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-06-27T00:00:00+02:00" itemprop="datePublished">Jun 27, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/cs231n" title="cs231n" class="link-tags">cs231n&nbsp;</a>
+    
+      
+      <a href="/tag/softmax" title="softmax" class="link-tags">softmax&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Третья задача в <a href="http://cs231n.github.io/assignments2019/assignment1/" title="Assignment #1">Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network</a> — это построение Softmax-классификатора.</p>
+
+<p>В задаче используется тот же учебный проект, что и в <a href="/2019/05/22/cs2131n-knn.html">задании на построение knn-классификатора</a>. Будем работать с softmax.ipynb и softmax.py</p>
+
+<p>Я проходил cs231n на <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018" title="cs321s задачи 2018-го года">задачах 2018-го года</a>. Иллюстрации к данной статье из бекграунда курса.</p>
+
+<h2 id="что-можно-узнать-решив-задачу">Что можно узнать, решив задачу?</h2>
+
+<ol>
+  <li>
+    <p>научиться строить softmax-классификатор</p>
+  </li>
+  <li>
+    <p>понять разницу между svm и softmax</p>
+  </li>
+</ol>
+
+<h2 id="совсем-немного-теории-про-softmax-функцию">Совсем немного теории про softmax-функцию</h2>
+
+<p>В прошлом задании мы разбирали <a href="/2019/05/31/cs2131n-svm.html">svm-классификатор</a> в котором используется функция потерь следующего вида:</p>
+
+<p><img src="../../../assets/img/310519-5.jpg" alt="SVM loss linear" /></p>
+
+<p>Функция в SVM подсчитывает корректные классы, которые больше некорректных более чем на заданное значение. В softmax-классификаторе применяется другая функция потерь:</p>
+
+<p><img src="../../../assets/img/180619-01.jpg" alt="Softmax loss" /></p>
+
+<p>То что мы видим внутри логарифма называется softmax-функцией. Она определяет вектор вероятностей корректных оценок в диапазоне от 0 до 1. При этом сумма вероятностей для всего исследуемого пула объектов сходится к 1.</p>
+
+<p>Softmax-классификатор сводит к минимуму кросс-энтропию между распределением вероятностей верного предсказания классов по всем исследуемым объектам и истинным распределением, в котором вероятность, равная 1, очевидно соответствует только одному объекту из всех возможных, а вероятности остальных равны 0. Иными словами, в идеале, задача минимизации функции потерь сводится к тому, чтобы в массиве вероятностей верных предсказаний все вероятности, кроме одной, стремились 0, а в математическом смысле задача сводится к минимизации расстояния между двумя распределениями.</p>
+
+<p>Авторы курса предлагают такую интерпретацию softmax-функции:</p>
+
+<p><img src="../../../assets/img/180619-03.jpg" alt="Probabilistic Softmax function" /></p>
+
+<p>Это нормализованная вероятность, соответствующая верной метке <script type="math/tex">y_{i}</script> с учетом изображения <script type="math/tex">x_{i}</script> и веса <script type="math/tex">W</script>. Классификатор Softmax интерпретирует оценки внутри выходного вектора <script type="math/tex">f</script> как ненормализованные логарифмические вероятности. Возведение в степень этих величин дает ненормализованные вероятности, а деление выполняет нормализацию так, чтобы сумма всех вероятностей сходилась к 1. В данной интерпретации мы сводим к минимуму отрицательную логарифмическую вероятность правильного класса. Это можно считать выполнением оценки максимального правдоподобия (Maximum Likelihood Estimation MLE).</p>
+
+<p>Далее, в курсе указывают на то, что на практике приходится сталкиваться с тем, что экспоненциальные компоненты функции могут быть очень большими числами, что затрудняет их точно вычисление. Для устранения проблемы применяют стандартный трюк с нормализацией константой:</p>
+
+<p><img src="../../../assets/img/180619-04.jpg" alt="Softmax normalisation" /></p>
+
+<p>На практике <script type="math/tex">C</script> подбирают таким, чтобы <script type="math/tex">\log{C} = - \max_{j} f_{j}</script> равнялся максимальному значению <script type="math/tex">f</script>. В этом случае это значение станет равным 0, а все остальные будут сдвинуты на величину максимума. Пример из курса</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># плохой вариант, проблемы с экспонентой</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">123</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">789</span><span class="p">])</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+<span class="c"># вычитаем максимальное значение и решаем проблему больших чисел</span>
+<span class="n">f</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c"># [-666, -333, 0]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Ну и, наконец, пример softmax в сравнении с SVM:</p>
+
+<p><img src="../../../assets/img/180619-05.jpg" alt="Softmax vs SVM" /></p>
+
+<p>В обоих случаях вычисляем один и тот же вектор <script type="math/tex">f</script>. Разница в функции потерь. SVM подсчитывает значения для корректных меток, которые больше некорректных более чем на заданную постоянную. Softmax же интерпретирует значения как вероятности, переводит их в логарифмический масштаб и нормализует. При этом суммарные значения функции потерь SVM и Softmax классификаторов сравнивать нельзя, так как эти значения имеют смысл только в контексте применяемой функции потерь. Softmax позволяет подсчитать вероятность верной классификации для всех меток, а SVM поставляет некие значения для всех классов, которые трудно интерпретировать. За интерпретацию в softmax приходится платить — распределение вероятностей будет сильно зависеть от силы регуляризации <script type="math/tex">\lambda</script>.</p>
+
+<p>На практике SVM и Softmax дают примерно одинаковый результат и не сильно отличаются по производительности. Хотите больше подробностей? <a href="http://cs231n.github.io/linear-classify/" title="Linear classification: Support Vector Machine, Softmax">Linear classification: Support Vector Machine, Softmax</a></p>
+
+<h2 id="задачи">Задачи</h2>
+
+<p>Задачи абсолютно аналогичны задачам <a href="/2019/05/31/cs2131n-svm.html">svm-classificator</a>. Необходимо:</p>
+
+<ul>
+  <li>реализовать векторизованную функцию потерь</li>
+  <li>посчитать аналитический градиент</li>
+  <li>сравнить результат с числовым градиентом</li>
+  <li>оптимизировать скорость обучения и силу регуляризации</li>
+</ul>
+
+<p>В softmax.ipynb уже стандартно (мы это делали в двух предыдущих задачах) получаем объекты из дата-сета CIFAR-10, формируем обучающую, валидационную и тестовые выборки, нормализуем данные, вычитая из всех изображений среднее изображение и проворачиваем трюк с баесовским вектором, вынося его в массив весов и соответственно добавляя единицы в <script type="math/tex">x_{i}</script>.</p>
+
+<p>Затем в softmax.py необходимо реализовать «наивный» softmax-классификатор. Как мы уже знаем, классификатор получает на вход абсолютно все то же самое, что и svm и от svm отличается только функцией потерь. Поэтому смело берем SVM из предыдущей задачи и меняем функцию в теле цикла на softmax-функцию.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+
+  <span class="c">#############################################################################</span>
+  <span class="c"># TODO: Compute the softmax loss and its gradient using explicit loops.     #</span>
+  <span class="c"># Store the loss in loss and the gradient in dW. If you are not careful     #</span>
+  <span class="c"># here, it is easy to run into numeric instability. Don't forget the        #</span>
+  <span class="c"># regularization!                                                           #</span>
+  <span class="c">#############################################################################</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#1</span>
+
+    <span class="c">#2 </span>
+
+  <span class="n">loss</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#4</span>
+  <span class="n">loss</span> <span class="o">+=</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span> <span class="c">#4</span>
+
+  <span class="c">#############################################################################</span>
+  <span class="c">#                          END OF YOUR CODE                                 #</span>
+  <span class="c">#############################################################################</span>
+
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
+</code></pre></div></div>
+
+<p>Во внутреннем цикле (1) считаем знаменатель softmax-функции. Далее, надо посчитать нормализованную softmax-функцию и саму функцию потерь (3), не забыв про регуляризацию.</p>
+
+<p>Следующий шаг - «наивный» градиент.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#1</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#2</span>
+    
+  <span class="n">dW</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#3</span>
+  <span class="n">dW</span> <span class="o">+=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">reg</span>
+
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
+</code></pre></div></div>
+
+<p>В той же функции считаем градиент для всего массива (2), а затем сам градиент у же известным нам по svm методом (3). Дальше смотрим на результат в блокноте и сравниваем с численным градиентом. Авторы курса предлагают сравнить результат для разных значений регуляризации. Сравниваем.</p>
+
+<p>Дальше, как и в задаче с svm, необходимо задать softmax_loss_vectorized. По традиции мы эту функцию пишем с нуля.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">softmax_loss_vectorized</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="c">#1</span>
+  <span class="n">correct_class_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">num_train</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
+</code></pre></div></div>
+
+<p>Итак, нужно как-то избавиться от циклов. Для начала пересчитаем scores и correct_class_scores средствами numpy, не прибегая к циклам. Отсюда логика всех дальнейших действий становится предельно ясной - так же считаем softmax-функцию, функцию потерь и градиент, используя встроенные методы numpy, такие как np.sum. Решение довольно простое, а его результат по производительности покажет выигрыш по сравнению с циклами примерно в 50 раз.</p>
+
+<p>Осталось только поэкспериментировать с гиперпараметрами - силой регуляризации и скоростью обучения. Задача абсолютно идентично той, что решалась в последней части задания на <a href="/2019/05/31/cs2131n-svm.html">svm-classificator</a>. Берем кусок кода, который мы делали для svm, вместо LinearSVM() получаем объект Softmax() и подкручиваем гиперпараметры так, чтобы точность перешагнула через 0.4. Можно посмотреть результат для тех же значений гиперпараметров, что использовались для svm. На этом примере как раз и можно увидеть, как softmax-классификатор зависит от силы регуляризации.</p>
+
+<p>На этом практическая часть курса, связанная с линейными классификаторами, завершается. Следующая задача - построение простейшей двухслойной нейронной сети.</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/cs231n" class="link-tags">cs231n</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/06/27/cs2131n-sofrmax.html" title="CS231n: Softmax классификатор">CS231n: Softmax классификатор</a> (27 Jun 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">CS231n: Обучение Support Vector Machine</a> (31 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/22/cs2131n-knn.html" title="CS231n: k-Nearest Neighbor классификатор">CS231n: k-Nearest Neighbor классификатор</a> (22 May 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/05/15/cs2131n-start.html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</a> (15 May 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html" title="CS231n: Обучение Support Vector Machine">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">CS231n: Обучение Support Vector Machine</p>
+      <p>Подготовка проекта Вторая задача в Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network — это построение классификатора «SVM: Support...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
