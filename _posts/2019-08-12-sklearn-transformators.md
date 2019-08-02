@@ -39,7 +39,7 @@ def PdtoNp(some_data):
 Чтобы создать более сложную конструкцию, можно реализовать собственный класс, а в нем три базовых метода scikit-learn — fit() (должен возвращать self), transform() (собственно сам трансформер) и fit_transform(). Для всех трех методов обязательным аргументом является X. Если унаследовать класс от [TransformerMixin](https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html), то fit_transformer() можно не задавать, а если добавить в качестве базового класса [BaseEstimator](https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html) и не реализовывать *args, **kwargs в конструкторе, то будут доступны методы get_params() и set_params()
 
 ````python
-rom sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import BaseEstimator, TransformerMixin
 
 class That(BaseEstimator, TransformerMixin):
     def __init__(self, this = True):
