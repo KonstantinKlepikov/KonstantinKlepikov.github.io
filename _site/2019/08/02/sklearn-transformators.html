@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Конвейеры трансформации и кастомные трансформаторы в scikit-learn</title>
+  <meta name="description" content="В scikit-learn есть специальный класс Pipeline, с помощью которого можно создавать конструктор определяющий последовательность из шагов, трансформирующих дан...">
+  <meta name="keywords" content="sklearn scikit-learn phyton машинное обучение machine learning data science">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/08/02/sklearn-transformators.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Конвейеры трансформации и кастомные трансформаторы в scikit-learn</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-08-02T00:00:00+02:00" itemprop="datePublished">Aug 2, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/scikit-learn" title="scikit-learn" class="link-tags">scikit-learn&nbsp;</a>
+    
+      
+      <a href="/tag/phyton" title="phyton" class="link-tags">phyton&nbsp;</a>
+    
+      
+      <a href="/tag/sklearn" title="sklearn" class="link-tags">sklearn&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>В scikit-learn есть специальный класс Pipeline, с помощью которого можно создавать конструктор определяющий последовательность из шагов, трансформирующих данные в нужном порядке.</p>
+
+<p>Выглядит это примерно так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">transform_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s">'std_scaler'</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s">'pd_to_np'</span><span class="p">,</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">PdtoNp</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">False</span><span class="p">)),</span>
+    <span class="p">])</span>
+</code></pre></div></div>
+
+<p>Вызов метода fit() запускает всю цепочку и приводит к последовательному выполнению трансформаций.</p>
+
+<p>В данном случае в конвейер включены два шага трансформации данных. Первый - базовый scikit-learn-овский метод стандартизации данных (<a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">подробнее</a>). А второй — это кастомный трансформатор.</p>
+
+<p>Самый простой способ создать собственный трансформатор - это импортировать FunctionTransformer из sklearn.preprocessing. FunctionTransformer отправляет X и опционально y (массив данных и массив меток), а так же пользовательские аргументы в указанную функцию и возвращает результат. В примитивном примере я трансформирую произвольные данные в numpy массив.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span>
+
+<span class="k">def</span> <span class="nf">PdtoNp</span><span class="p">(</span><span class="n">some_data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">some_data</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p>Подробнее можно прочитать <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html">базе знаний scikit-learn</a></p>
+
+<p>Чтобы создать более сложную конструкцию, можно реализовать собственный класс, а в нем три базовых метода scikit-learn — fit() (должен возвращать self), transform() (собственно сам трансформер) и fit_transform(). Для всех трех методов обязательным аргументом является X. Если унаследовать класс от <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html">TransformerMixin</a>, то fit_transformer() можно не задавать, а если добавить в качестве базового класса <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html">BaseEstimator</a> и не реализовывать *args, **kwargs в конструкторе, то будут доступны методы get_params() и set_params()</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rom</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">base</span> <span class="kn">import</span> <span class="nn">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+
+<span class="k">class</span> <span class="nc">That</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">this</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">this</span> <span class="o">=</span> <span class="n">this</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">that</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">this</span>
+        <span class="k">return</span> <span class="n">that</span>
+
+<span class="n">transformer</span> <span class="o">=</span> <span class="n">That</span><span class="p">(</span><span class="n">this</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">my_data</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">my_data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Ну и, наконец, можно собирать несколько конвейеров трансформации в один, например, так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform_pipeline1</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s">'std_scaler'</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">])</span>
+
+<span class="n">transform_pipeline2</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s">'pd_to_np'</span><span class="p">,</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">PdtoNp</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">False</span><span class="p">)),</span>
+    <span class="p">])</span>
+
+<span class="n">full_transform_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s">'transform_pipeline1'</span><span class="p">,</span> <span class="n">transform_pipeline1</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s">'transform_pipeline2'</span><span class="p">,</span> <span class="n">transform_pipeline1</span><span class="p">)),</span>
+    <span class="p">])</span>
+</code></pre></div></div>
+
+<p>Весь этот набор инструментов scikit-learn превращает обработку данных в довольно креативный и удобный для пользователя процесс.</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/scikit-learn" class="link-tags">scikit-learn</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/08/02/sklearn-transformators.html" title="Конвейеры трансформации и кастомные трансформаторы в scikit-learn">Конвейеры трансформации и кастомные трансформаторы в scikit-learn</a> (02 Aug 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/06/27/cs2131n-sofrmax.html" title="CS231n: Softmax классификатор">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">CS231n: Softmax классификатор</p>
+      <p>Третья задача в Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network — это построение Softmax-классификатора. В задаче используется тот...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

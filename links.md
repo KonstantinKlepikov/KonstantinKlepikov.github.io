@@ -12,4 +12,4 @@ permalink: /links/
 
 [Джастин Френсис](https://www.oreilly.com/people/justin-francis "Джастин Френсис")
 
-[Дэвида Анджиевский](http://www.david-andrzejewski.com/ "Дэвида Анджиевский")
+[Дэвид Анджиевский](http://www.david-andrzejewski.com/ "Дэвид Анджиевский")
