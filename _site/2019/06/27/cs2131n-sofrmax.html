@@ -160,7 +160,7 @@
 
 <p>Я проходил cs231n на <a href="https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018" title="cs321s задачи 2018-го года">задачах 2018-го года</a>. Иллюстрации к данной статье из бекграунда курса.</p>
 
-<h2 id="что-можно-узнать-решив-задачу">Что можно узнать, решив задачу?</h2>
+<h2 id="что-можно-узнать-решив-задачу">Что можно узнать, решив задачу</h2>
 
 <ol>
   <li>
@@ -233,12 +233,6 @@
   <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
   <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
 
-  <span class="c">#############################################################################</span>
-  <span class="c"># TODO: Compute the softmax loss and its gradient using explicit loops.     #</span>
-  <span class="c"># Store the loss in loss and the gradient in dW. If you are not careful     #</span>
-  <span class="c"># here, it is easy to run into numeric instability. Don't forget the        #</span>
-  <span class="c"># regularization!                                                           #</span>
-  <span class="c">#############################################################################</span>
   <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
   <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -248,14 +242,10 @@
 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#1</span>
 
-    <span class="c">#2 </span>
+    <span class="c">#2</span>
 
   <span class="n">loss</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#4</span>
   <span class="n">loss</span> <span class="o">+=</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span> <span class="c">#4</span>
-
-  <span class="c">#############################################################################</span>
-  <span class="c">#                          END OF YOUR CODE                                 #</span>
-  <span class="c">#############################################################################</span>
 
   <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
 </code></pre></div></div>
@@ -275,10 +265,15 @@
     <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
     <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#1</span>
+    <span class="n">sum_j</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+      <span class="n">sum_j</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="c">#1</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span> <span class="c">#2</span>
-    
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+      <span class="n">dW</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">sum_j</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+        <span class="n">dW</span><span class="p">[:,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
   <span class="n">dW</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#3</span>
   <span class="n">dW</span> <span class="o">+=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">reg</span>
 
@@ -295,7 +290,16 @@
   <span class="n">num_classes</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
   <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="c">#1</span>
+
   <span class="n">correct_class_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">num_train</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">sum_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">num_train</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">correct_class_scores</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sum_j</span><span class="p">))</span> <span class="o">/</span> <span class="n">num_train</span> <span class="o">+</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span>
+
+  <span class="n">correct_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">correct_matrix</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">/</span> <span class="n">sum_j</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">correct_matrix</span><span class="p">)</span>
+  <span class="n">dW</span> <span class="o">=</span> <span class="n">dW</span> <span class="o">/</span> <span class="n">num_train</span> <span class="o">+</span> <span class="n">W</span> <span class="o">*</span> <span class="n">reg</span>
 
   <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
 </code></pre></div></div>

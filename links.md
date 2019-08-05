@@ -13,3 +13,5 @@ permalink: /links/
 [Джастин Френсис](https://www.oreilly.com/people/justin-francis "Джастин Френсис")
 
 [Дэвид Анджиевский](http://www.david-andrzejewski.com/ "Дэвид Анджиевский")
+
+[Yann LeCun](http://yann.lecun.com/ "Yann LeCun")
