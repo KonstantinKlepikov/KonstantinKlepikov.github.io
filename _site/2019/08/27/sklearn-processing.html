@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>API scikit-learn</title>
+  <meta name="description" content="API scikit-learn включает три основных интерфейса:">
+  <meta name="keywords" content="sklearn scikit-learn phyton машинное обучение machine learning data science API">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/08/27/sklearn-processing.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">API scikit-learn</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-08-27T00:00:00+02:00" itemprop="datePublished">Aug 27, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/scikit-learn" title="scikit-learn" class="link-tags">scikit-learn&nbsp;</a>
+    
+      
+      <a href="/tag/phyton" title="phyton" class="link-tags">phyton&nbsp;</a>
+    
+      
+      <a href="/tag/sklearn" title="sklearn" class="link-tags">sklearn&nbsp;</a>
+    
+      
+      <a href="/tag/API" title="API" class="link-tags">API&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>API scikit-learn включает три основных интерфейса:</p>
+
+<ul>
+  <li>estimator для построения и обучения моделей</li>
+  <li>predictor для рассчета предсказаний</li>
+  <li>transformer для предварительной обработки данных</li>
+</ul>
+
+<h3 id="estimators">Estimators</h3>
+
+<p>Этот интерфейс является базовым для библиотеки. Все алгоритмы (включая обучение без учителя) scikit-learn используют этот интерфейс. Манипуляции с данными осуществляются с помощью метода fit, а все параметры задаются в виде строк.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s">"l1"</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Estimators используются не только для классических алгоритмов обучения (с учителем или без), но и для препроцессинга данных или извлечения важности признаков.</p>
+
+<h3 id="predictors">Predictors</h3>
+
+<p>Данный интерфейс добавляет метод predict, который позволяет получить предсказания для алгоритмов обучения с учителем. Метод стандартно возвращает предсказанные метки для классификации или значения для регрессии.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="transformers">Transformers</h3>
+
+<p>Интерфейс создан для предварительной обработки данных, для чего используется метод transform. Метод доступен для препроцессинга, отбора и извлечения признаков и сокращения размерности.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Необходимо вызвать метод fit(), затем метод transform(). Естественно, можно в одну строку.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="дополнительные-возможности-api">Дополнительные возможности API</h2>
+
+<h3 id="meta-estimators">Meta-estimators</h3>
+
+<p>Часть алгоритмов (например, ансамбли) параметризуются с помощью более простых алгоритмов. В scikit-learn часть алгоритмов имплементирована как meta-estimators. К примеру, можно сделать обертку для логистической регрессии, заменив, таким образом, дефолтный алгоритм OneVsRest.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="n">OneVsOneClassifier</span>
+
+<span class="n">ovo_lr</span> <span class="o">=</span> <span class="n">OneVsOneClassifier</span><span class="p">(</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s">"l1"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="pipelines-and-feature-union">Pipelines and feature union</h3>
+
+<p>API scikit-learn позволяет собирать собственный estimator из нескольких базовых. Это можно сделать с помощью Pipeline объекта или FeatureUnion. Pipeline объединяет разные оценочные функции в одну в виде последовательно выполняемой цепи функций. FeatureUnion объединяет функции таким образом, что их выходы конкатенируются. Оба объекта могут использоваться совместно.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">FeatureUnion</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">KernelPCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.featute_selection</span> <span class="kn">import</span> <span class="n">SelectKBest</span>
+
+<span class="n">union</span> <span class="o">=</span> <span class="n">FeatureUnion</span><span class="p">([(</span><span class="s">"pca"</span><span class="p">,</span> <span class="n">PCA</span><span class="p">()),</span>
+                      <span class="p">(</span><span class="s">"kpca"</span><span class="p">,</span> <span class="n">KernelPCA</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s">"rbf"</span><span class="p">))])</span>
+
+<span class="n">Pipeline</span><span class="p">([(</span><span class="s">"feat_union"</span><span class="p">,</span> <span class="n">union</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">"feat_scl"</span><span class="p">,</span> <span class="n">SelectLBest</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)),</span>
+          <span class="p">(</span><span class="s">"log-reg"</span><span class="p">,</span> <span class="n">LogisitcRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s">"l2"</span><span class="p">))</span>
+          <span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="model-selection">Model selection</h3>
+
+<p>Scikit-learn упрощает поиск оптимальных значений в пространстве гиперпараметров. Для этого используются две мета-функции: GridSearcCV и RandomizedSearchCV. Так же опциональными являются кросс-валидация и скор-функции, такие как AUC и среднеквадратичная ошибка. Пример поиска гиперпараметров для SVM-классификатора:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.gridsearch</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"kernel"</span><span class="p">:</span> <span class="p">[</span><span class="s">"linear"</span><span class="p">],</span> <span class="s">"C”"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s">"kernel"</span><span class="p">:</span> <span class="p">[</span><span class="s">"rbf"</span><span class="p">],</span> <span class="s">"C"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>
+    <span class="s">"gamma"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">]}</span>
+<span class="p">]</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s">"f1"</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Больше подробностей в <a href="https://scikit-learn.org/">документации</a> scikit-learn.</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/scikit-learn" class="link-tags">scikit-learn</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/08/27/sklearn-processing.html" title="API scikit-learn">API scikit-learn</a> (27 Aug 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/08/09/sklearn-scoring-argument.html" title="Метрики оценки для отбора моделей в scikit-learn">Метрики оценки для отбора моделей в scikit-learn</a> (09 Aug 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/08/02/sklearn-transformators.html" title="Конвейеры трансформации и кастомные трансформаторы в scikit-learn">Конвейеры трансформации и кастомные трансформаторы в scikit-learn</a> (02 Aug 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/08/09/sklearn-scoring-argument.html" title="Метрики оценки для отбора моделей в scikit-learn">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Метрики оценки для отбора моделей в scikit-learn</p>
+      <p>В scikit-learn можно воспользоваться встроенными метриками для отбора модели. Это можно сделать с помощью аргумента scoring, который доступен в том...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

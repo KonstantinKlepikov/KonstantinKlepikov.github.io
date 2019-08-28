@@ -43,4 +43,4 @@ average_precision — площадь под кривой precision/recall
 
 Для регрессий имеют значение mean_squared_error — среднеквадратическая ошибка и median_absolute_error — средняя абсолютная ошибка.
 
-Описание доступно на [странице документации](https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules). Там же можно найти подробную документацию о применении скоринговых функций для классификации и регрессии, методы применения нескольких метрик, а так-же описание make_scorer ждя создания кастомных скоринговых функций с помощью make_scorer.
+Описание доступно на [странице документации](https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules). Там же можно найти подробную документацию о применении скоринговых функций для классификации и регрессии, методы применения нескольких метрик, а так же описание make_scorer ддя создания кастомных скоринговых функций с помощью make_scorer.
