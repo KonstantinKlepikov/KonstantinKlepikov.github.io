@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Основные термины машинного обучения. Часть №1</title>
+  <meta name="description" content="Практически все алгоритмы машинного обучения можно описать как комбинацию набора данных, функции стоимости, процедуры оптимизации и модели. Любой из этих ком...">
+  <meta name="keywords" content="машинное обучение machine learning data science классификация регрессия Гудфеллоу">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/08/31/machine_learning-terms.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Основные термины машинного обучения. Часть №1</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-08-31T00:00:00+02:00" itemprop="datePublished">Aug 31, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Практически все алгоритмы машинного обучения можно описать как комбинацию набора данных, функции стоимости, процедуры оптимизации и модели. Любой из этих компонентов можно заменить, как правило, независмо от других. Такая формула построения алгоритма обучения подходит для обучения как с учителем, так и без. Пройдем по терминам, которые позволяют определить machine learning.</p>
+
+<p>Алгоритм обучается на опыте <script type="math/tex">E</script> относительно некоего класса задач <script type="math/tex">T</script> и меры качества <script type="math/tex">P</script>, если качество на задачах из <script type="math/tex">T</script>, измеряемое с помощью <script type="math/tex">P</script>, возрастает с ростом опыта <script type="math/tex">E</script>.</p>
+
+<h3 id="задача-t">Задача <script type="math/tex">T</script></h3>
+
+<p>Есть несколько типов задач, которые можно решить с помощью машинного обучения.</p>
+
+<ul>
+  <li>
+    <p><strong>Классификация</strong>. В задачах этого типа алгоритм должен ответить, какой из <script type="math/tex">k</script> категорий принадлежит некоторый пример. Для решения этой задачи алгоритм обучения обычно просят породить функцию <script type="math/tex">f : \mathbb{R}^{n} \rightarrow \{1, ..., l\}</script>. Если <script type="math/tex">y = f(\mathbf{x})</script>, то модель относит входной пример, описываемый вектором <script type="math/tex">\mathbf{x}</script>, к категории с числовым кодом <script type="math/tex">y</script>. Есть и другие варианты классификации, например, когда <script type="math/tex">f</script> — распределение вероятности принадлежности к классам.</p>
+  </li>
+  <li>
+    <p><strong>Классификация при отсутствии части данных</strong>. Если часть входных данных отсутствует, алгоритм должен обучить набор функций, вместо единственной, отображающей входной вектор на код категории. Один из способов обучить такое подмножество функций — обучить распределение вероятности всех релевантных величин, а затем решить задачу классификации, вычислив маргинальное распределение отсутствующих значений.</p>
+  </li>
+  <li>
+    <p><strong>Регрессия</strong>. Алгоритм должен предсказать числовое значение по входным данным. Для решения этой задачи необходимо породить функцию <script type="math/tex">f : \mathbb{R}^{n} \rightarrow \mathbb{R}</script>. Результатом регрессии является прогноз некоего значения.</p>
+  </li>
+  <li>
+    <p><strong>Транскрипция</strong>. В задаче этого типа предлагается проанализировать неструктурированное представление данных и преобразовать его в текст.</p>
+  </li>
+  <li>
+    <p><strong>Машинный перевод</strong>. Входные данные — это последовательность данных на одном языке, а алгоритм должен преобразовать ее в последовательность символов на другом языке.</p>
+  </li>
+  <li>
+    <p><strong>Структурный вывод</strong>.  В этой задаче на выходе порождается вектор (или иная структура, содержащая несколько значений), между элеменатами которого существуют некие, имеющие значение, связи. В сущности, в эту задачу входят и транскрипция с машинным переводом, а также грамматический разбор.</p>
+  </li>
+  <li>
+    <p><strong>Обнаружение аномалий</strong>. В данной задаче алгоритм анализирует входные данные и размечает часть из них, как аномальные.</p>
+  </li>
+  <li>
+    <p><strong>Синтез и выборка</strong>. В данной задаче алгоритм генерирует новые данные, сходные с обучающими данными. Примером может служить создание текстур или образов для компьютерных игр.</p>
+  </li>
+  <li>
+    <p><strong>Подстановка отсутствующих значений</strong>. Алгоритму предъявляется новый пример <script type="math/tex">\mathbf{x} \in \mathbb{R}^{n}</script>, в котором некоторые элементы <script type="math/tex">x</script> отсутствуют. Алгоритм должен спрогнозировать значение отсутствующих элементов.</p>
+  </li>
+  <li>
+    <p><strong>Шумоподавление</strong>. В этой задаче алгоритму предъявляется не искаженный помехами пример <script type="math/tex">\mathbf{\tilde{x}} \in \mathbb{R}^{n}</script>, полученный из чистого примера <script type="math/tex">\mathbf{x} \in \mathbb{R}^{n}</script>, в результате неизвестного процесса искажения. Алгоритм должен восстановить чистый пример <script type="math/tex">\mathbf{x}</script> по искаженному <script type="math/tex">\mathbf{\tilde{x}}</script> либо вернуть <script type="math/tex">P(\mathbf{x}\vert\mathbf{\tilde{x}})</script> условное распределение вероятности.</p>
+  </li>
+  <li>
+    <p><strong>Оценка функции вероятности или плотности функции вероятности</strong>. В данной задаче алгоритм должен обучить функцию <script type="math/tex">P{\tiny model} : \mathbb{R}^{n} \rightarrow \mathbb{R}</script>, где <script type="math/tex">P{\tiny model}(\mathbf{x})</script> интерпретируется как функция плотности вероятности (если <script type="math/tex">\mathbf{x}</script> непрерывная случайная величина) или как функция вероятности (дискретная величина), в пространстве, из которого были взяты примеры. Для решения этой задачи алгоритм должен уметь оценивать структуру данных, хотя бы неявно улавливать структуру распределения вероятности, а в задаче оценки плотности — явно.</p>
+  </li>
+</ul>
+
+<h3 id="мера-качества-p">Мера качества <script type="math/tex">P</script></h3>
+
+<p>Мера качества специфична для каждого алгоритма. Для задач классификации в основном измеряется accuracy (точность) модели — доля примеров, для которых модель выдала верное предсказание. Частота ошибок — противоположный вариант меры качества, показывающая долю примеров, для которых модель выдала неверное предсказание.</p>
+
+<h3 id="опыт-e">Опыт <script type="math/tex">E</script></h3>
+
+<p>Алгоритмы ML делятся на два больших класса:</p>
+
+<ul>
+  <li>
+    <p><strong>Алгоритму обучения без учителя</strong> предоставляются наборы данных, содержащих множество признаков, алгоритм должен выявить полезные структурные признаки набора.</p>
+  </li>
+  <li>
+    <p><strong>Алгоритму обучения с учителем</strong> предъявляются наборы данных, примеры в которых снабжены меткой (целевым классом)</p>
+  </li>
+</ul>
+
+<p>Обучение без учителя означает наблюдение нескольких примеров случайного вектора <script type="math/tex">\mathbf{x}</script> с последующей попыткой вывести, явно или неявно, распределение вероятности <script type="math/tex">P(\mathbf{x})</script> или некие свойства этого распределения. Обучение с учителем сводится к наблюдению нескольких примеров случайного вектора <script type="math/tex">\mathbf{x}</script> и ассоциированию с ним значения или вектора <script type="math/tex">\mathbf{y}</script> с последующей попыткой вывести оценку <script type="math/tex">P(\mathbf{x}\vert\mathbf{y})</script>.</p>
+
+<p>Обучение с учителем и без — понятия довольно размытые, многие алгоритмы подходят для решения и той и другой задачи. Принято считать, что задачи классификации, регрессии и структурного вывода относятся к обучению с учителем, а задача оценки плотности — к обучению без учителя.</p>
+
+<p>Возможны и другие парадигмы обучения: обучение с частичным привлечением учителя, обучение с подкреплением и т.д.</p>
+
+<h3 id="ёмкость-переобучение-и-недообучение">Ёмкость, переобучение и недообучение</h3>
+
+<p>Способность алгоритма ML хорошо работать на новых данных, которые он ранее не видел, называется <strong>обобщением</strong>. Мера ошибки алгоритма на обучающем наборе данных называется <strong>ошибкой обучения</strong> — ее необходимо минимизировать (задача оптимизации). <strong>Ошибкой обобщения</strong> называют математическое ожидание ошибки алгоритма на новых входных данных. Считается справедливым предположение, что данные из обучающего и тестового набора одинаково распределены, т.е. выбраны из одного и того же распределения вероятности, которое называется <strong>порождающим распределением</strong>. В этом контексте <strong>недообучение</strong> имеет место, когда модель не позволяет получить достаточно малую ошибку на обучающем наборе, а <strong>переобучение</strong> — когда разрыв между ошибками обучения и тестирования слишком велик. <strong>Емкость (capacity)</strong> позволяет управлять склонностью модели к переобучению или недообучению. Емкость описывает способность модели к аппроксимации широкого спектра функций. При маленькой емкости модель слишком простая и недообучается, при высокой — слишком сложная и переобучается.</p>
+
+<p>Один из способов контроля за емкостью — выбор <strong>пространства гипотез</strong>, множества функций, которые алгоритм может рассматривать в качестве потенциального решения. <strong>Репрезентативная емкость</strong> определяет семейство функций, из которой модель может выбрать алгоритм обучения в процессе варьирования параметров. Как правило, по причине дополнительных ограничений, например, из-за несовершенства оптимизации, эффективная емкость алгоритма оказывается меньше репрезентативной.</p>
+
+<h3 id="теорема-об-отсутствии-бесплатных-завтраков">Теорема об отсутствии бесплатных завтраков</h3>
+
+<p>В среднем, по всем возможным порождающим определениям у любого алгоритма классификации частота ошибок классификации ранее не наблюдавшихся примеров одинакова. Это означает, что самый сложный алгоритм, в среднем (по всем возможным задачам) дает такое же качество, как и простейший. Цель ML заключается не в том, чтобы построить самый сложный или самый эффективный алгоритм, а в том, чтобы понять, какие виды распределений характерны реальным данным.</p>
+
+<h3 id="регуляризация">Регуляризация</h3>
+
+<p>Регуляризация — это любая модификация алгоритма обучения, предпринятая с целью уменьшить его ошибку обобщения, не уменьшив при этом ошибку обучения. Из теоремы «об отсутствии бесплатных завтраках», в том числе вытекает то, что не существует наилучшего способа регуляризации.</p>
+
+<h3 id="гиперпараметры">Гиперпараметры</h3>
+
+<p>Гиперпараметры управляют поведением алгоритма ML, при этом сам алгоритм не ищет значений гиперпараметров.</p>
+
+<p>Попытка обучить гиперпараметр на обучающем наборе приводит к максимизации емкости модели и переобучению. Чтобы решить эту проблему, используется <strong>контрольный набор</strong>, который формируется из обучающего и никогда не используется в обучении. Если данных слишком мало, разделение на обучающий и тестовый наборы становится проблематичным, так как приводит к статистической недостоверности в оценке средней ошибки. Эту проблему решает <strong>перекрестная проверка</strong> — разделение исходного набора данных на подмножества и случайный выбор обучающего и контрольного набора в процессе обучения.</p>
+
+<h3 id="точечная-оценка">Точечная оценка</h3>
+
+<p>Точечная оценка — это попытка найти единственное «наилучшее» представление интересующей величины. Это может быть один или несколько параметров либо некая функция.</p>
+
+<p>Если <script type="math/tex">\tilde{\theta}</script> — оценка параметра, а <script type="math/tex">\{\mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)}\}</script> — множество <script type="math/tex">m</script> независимых т одинаково распределенных точек, то <strong>точечной оценкой</strong> или <strong>статистикой</strong> называется любая оценка этих данных: <script type="math/tex">\tilde{\theta} = g(\mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)})</script>. В этом определении не требуется, чтобы <script type="math/tex">g</script> возвращала значение, близкое к истинному значению <script type="math/tex">\theta</script> или даже чтобы область значений <script type="math/tex">g</script> совпадала со множеством допустимых значений <script type="math/tex">\theta</script>. При этом хорошей оценкой будет та, которая близка к истинному распределению <script type="math/tex">\theta</script>, из которого выбирались обучающие данные.</p>
+
+<p>Точечную оценку также можно рассматривать как оценку связи между входной или выходной величинами. такой тип точечных оценок называется <strong>оценкой функций</strong></p>
+
+<h3 id="смещение-оценки">Смещение оценки</h3>
+
+<p><script type="math/tex">bias(\tilde{\theta}{\tiny m}) = \mathbb{E}(\tilde{\theta}{\tiny m}) - \theta</script>, где:</p>
+
+<p>математическое ожидание вычисляется по данным (рассматриваемым как выборка из случайной величины), <script type="math/tex">\theta</script> — истинное значение параметра, которое определяет порождающее определение. <script type="math/tex">\tilde{\theta}</script> является <strong>несмещаной</strong>, если <script type="math/tex">bias(\tilde{\theta}{\tiny m}) = 0</script>. Напротив, <script type="math/tex">\tilde{\theta}</script> <strong>асимптотически смещена</strong>, если <script type="math/tex">\lim{\scriptscriptstyle m\rightarrow\infty}\mathbb{E}(\tilde{\theta}{\tiny m}) = 0</script>.</p>
+
+<h3 id="дисперсия-и-стандартная-ошибка">Дисперсия и стандартная ошибка</h3>
+
+<p>Дисперсия оценки измеряет, как будет изменяться оценка, вычисленная по данным, при независимой повторной выборке из набора данных, генерируемого порождающим процессом. Желательны оценки, обладающие не только маленьким смещением, но и маленькой дисперсией.</p>
+
+<p><script type="math/tex">Var(\tilde{\theta})</script>, где случайной величиной является обучающий набор.</p>
+
+<p>Стандартная ошибка — это квадратный корень из дисперсии. <script type="math/tex">SE(\tilde{\theta})</script>. На практике часто используется <strong>стандартная ошибка среднего</strong> <script type="math/tex">SE(\tilde{\mu}{\scriptscriptstyle m})</script>.</p>
+
+<h3 id="состоятельность">Состоятельность</h3>
+
+<p>Схождение точечной оценки к истинным значениям при увеличении числа примеров называется состоятельностью: <script type="math/tex">\lim{\scriptscriptstyle m\rightarrow\infty}\tilde{\theta}{\scriptscriptstyle m} = 0</script>. Состоятельность гарантирует, что смещение оценки уменьшается с ростом числа примеров. При этом обратное неверно.</p>
+
+<p><strong>Данное краткое описание составлено на основе книги «Глубокое обучение» за авторством Я.Гудфеллоу, И.Бенджио, А.Курвилль</strong></p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/machine-learning" class="link-tags">machine-learning</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/08/31/machine_learning-terms.html" title="Основные термины машинного обучения. Часть №1">Основные термины машинного обучения. Часть №1</a> (31 Aug 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/08/27/sklearn-processing.html" title="API scikit-learn">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">API scikit-learn</p>
+      <p>API scikit-learn включает три основных интерфейса: estimator для построения и обучения моделей predictor для рассчета предсказаний transformer для предварительной обработки...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
