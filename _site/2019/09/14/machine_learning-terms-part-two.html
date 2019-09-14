@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Основные термины машинного обучения. Часть №2</title>
+  <meta name="description" content="В первой части статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную о...">
+  <meta name="keywords" content="машинное обучение machine learning data science классификация регрессия Гудфеллоу">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Основные термины машинного обучения. Часть №2</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-09-14T00:00:00+02:00" itemprop="datePublished">Sep 14, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>В <a href="/2019/08/31/machine_learning-terms.html">первой части</a> статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку, смещение оценки, дисперсию, стандартную ошибку и состоятельность, а так-же важные термины, определяемые в рамках этих терминов. Продолжим.</p>
+
+<h2 id="оценка-максимального-правдоподобия">Оценка максимального правдоподобия</h2>
+
+<p><script type="math/tex">\theta{\tiny ML} = \underset{\theta}{\arg\max}\ p{\tiny model}(\mathbb{X};\theta) = \underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\prod}}\ p{\tiny model}(\mathbf{x}^{(i)};\theta)</script>, где:</p>
+
+<p><script type="math/tex">\mathbb{X} = \{ x^{(1)}, ... x^{(m)} \}</script> — множество, состоящее из <script type="math/tex">m</script> примеров, независимо выбираемых из неизвестного порождающего распределения <script type="math/tex">p{\tiny data}(\mathbf{x})</script>. В выражении максимального правдоподобия <script type="math/tex">p{\tiny model}(\mathbf{x};\theta)</script> — параметрическое семейство распределений вероятности над  одним и тем же пространством, индексированное параметром <script type="math/tex">\theta</script></p>
+
+<p>Произведение неудобно по причине, т.к. подвержено потере значимости. Взятие логарифма не изменяет <script type="math/tex">\arg\max</script>, но позволяет преобразовать произведение в сумму: <script type="math/tex">\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\sum}}\ \log\ p{\tiny model}(\mathbf{x}^{(i)};\theta)</script></p>
+
+<p>Если разделить правую часть на <script type="math/tex">m</script> (умножение функции стоимости на константу не изменяет <script type="math/tex">\arg\max</script>), мы получаем математическое ожидание относительного эмпирического распределения <script type="math/tex">\hat{p}{\tiny data}</script> определяемого обучающими данными: <script type="math/tex">\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \mathbb{E}{\scriptsize x-\hat{p}{\tiny data}}\ \log\ p{\tiny model}(\mathbf{x};\theta)</script></p>
+
+<p>Максимальное правдоподобие — это попытка совместить модельное распределение с эмпирическим <script type="math/tex">\hat{p}{\tiny data}</script>, в идеале мы хотим получить совпадение истинного и порождающего распределения <script type="math/tex">p{\tiny data}</script>. Это интерпретируется с помощью минимизации расхождения Кульбака-Лейблера.</p>
+
+<h3 id="условное-логарифмическое-правдоподобие">Условное логарифмическое правдоподобие</h3>
+
+<p>Если <script type="math/tex">\mathbf{X}</script> представляет все входы, <script type="math/tex">\mathbf{Y}</script> все наблюдаемые выходы, а все примеры независимы и одинаково распределены, то условное логарифмическое правдоподобие: <script type="math/tex">\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\sum}}\ \log\ P(\mathbf{y}^{(i)}\mid\mathbf{x}^{(i)};\theta)</script></p>
+
+<h2 id="байесовская-статистика">Байесовская статистика</h2>
+
+<p>В отличие от частотного метода, в котором предполагается, что истинное значение <script type="math/tex">\theta</script> фиксировано хотя и неизвестно, а точечная оценка <script type="math/tex">\hat{\theta}</script> — случайная величина, в байесовском подходе к статистике истинный параметр <script type="math/tex">\theta</script> неизвестен или недостоверен и представляется случайной величиной, а набор данных случайной величиной не является, т.к. доступен прямому наблюдению. До наблюдения данных  мы представляем свое знание о <script type="math/tex">\theta</script> в качестве априорного распределения вероятности <script type="math/tex">p(\theta)</script>. Тогда можно реконструировать влияние данных на наши гипотезы о <script type="math/tex">\theta</script>, объединив правдоподобие данных с априорным посредством теоремы Байеса:</p>
+
+<p><script type="math/tex">p(\theta\mid x^{(1)}, ... x^{(m)}) = \frac{p(x^{(1)}, ... x^{(m)}\mid\theta)p(\theta)}{p(x^{(1)}, ... x^{(m)})}</script>, где <script type="math/tex">x^{(1)}, ... x^{(m)})</script> — набор наблюдаемых примеров.</p>
+
+<p>В отличие от оценки максимального правдоподобия, где предсказания делаются с использованием точечной оценки <script type="math/tex">\theta</script>, в байесовской оценке  предсказания делаются с помощью полного распределения <script type="math/tex">\theta</script>. к примеру, после наблюдения <script type="math/tex">m</script> примеров предсказанное распределение следующего <script type="math/tex">x^{m+1}</script> примера описывается формулой: <script type="math/tex">p(x^{m+1}\mid x^{(1)}, ... x^{(m)}) = \int p(x^{m+1}\mid\theta)p(\theta\mid x^{(1)}, ... x^{(m)})d\theta</script>. Если после наблюдения <script type="math/tex">x^{(1)}, ... x^{(m)}</script> примеров мы все еще не знаем <script type="math/tex">\theta</script>, то эта неопределенность включается непосредственно в предсказания.</p>
+
+<p>Кроме того, при байесовской оценке происходит сдвиг плотности вероятности в сторону тех областей пространства параметров, которые априори предпочтительны, что обусловлено значительным влиянием байесовского априорного распределения. Зачастую это приводит к предпочтению более простых и гладких моделей.</p>
+
+<p>Байесовские модели обобщаются лучше при ограниченном числе обучающих данных, но с ростом данных обучение становится вычислительно более накладным.</p>
+
+<h3 id="оценка-априорного-максимума">Оценка априорного максимума</h3>
+
+<p>В большинстве случаев операции, включающие апостериорное байесовское распределение, недопустимы с точки зрения временной сложности алгоритмов. В этом случае точечная оценка <script type="math/tex">\theta</script> дает разрешимую апроксимацию. Чтобы использовать преимущества байесовской оценки, разрешив априорному распределению влиять на выбор точечной оценки, применяют оценку апостериорного максимум (MAP):</p>
+
+<p><script type="math/tex">\theta{\tiny MAP} = \underset{\theta}{\arg\max}\ p(\theta\mid\mathbf{x})\ = \underset{\theta}{\arg\max}\ \log\ p(\theta\mid\mathbf{x}) + \log\ p(\theta)</script>, где <script type="math/tex">\log\ p(\theta\mid\mathbf{x})</script> — стандартное логарифмическое правдоподобие, а <script type="math/tex">\log\ p(\theta)</script> соответствует априорному распределению.</p>
+
+<h2 id="проблемы-требующие-глубокого-изучения">Проблемы, требующие глубокого изучения</h2>
+
+<h3 id="проклятие-размерности">Проклятие размерности</h3>
+
+<p>С увеличением размерности данных количество представляющих интерес конфигураций растет экспоненциально. Если имеется <script type="math/tex">d</script> измерений и нужно различать <script type="math/tex">v</script> значений вдоль каждой оси, то потребуется <script type="math/tex">O(v^{d})</script> областей и примеров.</p>
+
+<h3 id="регуляризация-для-достижения-локального-постоянства-и-гладкости">Регуляризация для достижения локального постоянства и гладкости</h3>
+
+<p>Чтобы алгоритм хорошо обобщался, необходимо иметь априорное представление о том, какого рода функцию он должен обучить. Самое распространенные априорные предположения — <strong>априорное предположение о гладкости</strong> или <strong>априорное предположение о локальном постоянстве</strong>. Это означает, что обучаемая функция не должна сильно изменяться в небольшой области.</p>
+
+<p>Обобщаемость большинства алгоритмов опирается на этот принцип, поэтому они плохо масштабируются на многие статистические задачи.</p>
+
+<h3 id="обучение-многообразий">Обучение многообразий</h3>
+
+<p>В основе ML лежит концепция <strong>многообразия</strong> — множества точек, ассоциированных с окрестностью каждой точки. Из этой концепции вытекает существование преобразований для перемещения из одного места многообразия в другое.</p>
+
+<p>В ML многообразие — это связное множество точек в пространстве высокой размерности, которое можно хорошо аппроксимировать, вводя в рассмотрение лишь небольшое число степеней свободы, или измерений. В машинном обучении допускаются многообразия, размерность которых различна в разных точках.</p>
+
+<p>Многие алгоритмы ML безнадежны, если ожидается, что в результате обучения алгоритм должен найти функции с нетривиальными изменениями во всем пространстве <script type="math/tex">\mathbb{R}^{n}</script>. Алгоритмы обучения многообразий преодолевают это препятствие, предполагая, что большая часть <script type="math/tex">\mathbb{R}^{n}</script> — недопустимые входные данные, а интересующие нас входы сосредоточены только в наборе многообразий, содержащем небольшое подмножество точек, причем интересные изменения результирующей функции будут происходить только вдоль направлений, принадлежащих какому-то одному многообразию, или при переходе с одного многообразия на другое.</p>
+
+<p><strong>Данное краткое описание составлено на основе книги «Глубокое обучение» за авторством Я.Гудфеллоу, И.Бенджио, А.Курвилль</strong></p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/machine-learning" class="link-tags">machine-learning</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/09/14/machine_learning-terms-part-two.html" title="Основные термины машинного обучения. Часть №2">Основные термины машинного обучения. Часть №2</a> (14 Sep 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/09/08/time-complexity-of-machine-learning-algorithms.html" title="Временная сложность алгоритмов машинного обучения">Временная сложность алгоритмов машинного обучения</a> (08 Sep 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/08/31/machine_learning-terms.html" title="Основные термины машинного обучения. Часть №1">Основные термины машинного обучения. Часть №1</a> (31 Aug 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/09/08/time-complexity-of-machine-learning-algorithms.html" title="Временная сложность алгоритмов машинного обучения">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Временная сложность алгоритмов машинного обучения</p>
+      <p>Временная сложность определяет количество операций, которые необходимо выполнить алгоритму для обработки входных данных объемом n. Показатель сложности усредняется, но на...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
