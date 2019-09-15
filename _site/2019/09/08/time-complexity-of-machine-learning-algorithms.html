@@ -176,17 +176,44 @@
 
 <p><img src="../../../assets/img/080919-1.jpg" alt="time complexity" /></p>
 
-<p>Далее в этой статье я попробую собрать данные о временной сложности различных реализаций ML/DL алгоритмов.</p>
+<p>Далее в этой статье я попробую собрать данные о временной сложности различных реализаций ML/DL алгоритмов. В статье <script type="math/tex">n</script> — количество признаков, <script type="math/tex">m</script> — количество образцов.</p>
 
-<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></strong> из пакета scikit-learn. Временная сложность <script type="math/tex">O(n^{2,4})</script> — <script type="math/tex">O(n^{3})</script> в зависимости от реализации (здесь и далее <script type="math/tex">n</script> — количество признаков). Или <script type="math/tex">O(m)</script>, где <script type="math/tex">m</script> — количество образцов.</p>
+<h2 id="алгоритмы-из-scikit-learn">Алгоритмы из scikit-learn</h2>
 
-<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html">LinearSVC</a></strong> из пакета scikit-learn. Временная сложность <script type="math/tex">O(m*n)</script>. Алгоритм реализован на базе библиотеки liblinear, который реализует <a href="https://www.csie.ntu.edu.tw/~cjlin/liblinear/">Large Linear Classification</a> (подробнее <a href="https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf">тут</a>)</p>
+<p><strong><a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neighbors">Nearest Neighbors Algorithms</a></strong>. Временная сложность зависит от имплементации.</p>
 
-<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html">SGDClassifier</a></strong> из пакета scikit-learn. Временная сложность <script type="math/tex">O(m*n)</script>.</p>
+<ul>
+  <li>
+    <p>brute force (наиболее нативная имплементация, дистанция считается между всеми точками дата-сета). Сложность при построении <script type="math/tex">O(n*m^{2})</script>. Сложность при запросе <script type="math/tex">O(n*m)</script>. Время расчета не зависит от структуры данных и количества «ближайших соседей».</p>
+  </li>
+  <li>
+    <p>K-D tree. Сложность при построении <script type="math/tex">O(n*m\log(m))</script>. Сложность при запросе для небольшого числа фич <script type="math/tex">% <![CDATA[
+n < 20 %]]></script> — <script type="math/tex">O(n\log(m))</script>. Для большего числа измерений, сложность возрастает до <script type="math/tex">O(n*m)</script>. Время расчета сильно зависит от структуры данных и растет с увеличением количества «ближайших соседей».</p>
+  </li>
+  <li>
+    <p>Ball Tree. Сложность при построении <script type="math/tex">O(n*m\log(m))</script>. Сложность при запросе — <script type="math/tex">O(n\log(m))</script>. Время расчета сильно зависит от структуры данных и растет с увеличением количества «ближайших соседей».</p>
+  </li>
+</ul>
 
-<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">SVC</a></strong> из пакета scikit-learn. Временная сложность <script type="math/tex">O(m^{2}*n)</script> — <script type="math/tex">O(m^{3}*n)</script>. Алгоритм реализован на библиотеке <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a></p>
+<p>Больше подробностей смотри в <a href="https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbor-algorithms">документации</a></p>
 
-<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">DecisionTreeClassifier</a></strong> из пакета scikit-learn. Нахождение оптимального дерева является <a href="https://en.wikipedia.org/wiki/NP-completeness">NP-полной задачей</a> и ее временная сложность <script type="math/tex">O(\exp(m))</script>. Обход дерева имеет временную сложность <script type="math/tex">O(\frac{\log(m)}{\log(2)})</script>, ну или <script type="math/tex">O(\log{\scriptscriptstyle 2}(m))</script>. Если осуществляется сравнение по всем признакам, то <script type="math/tex">O(n*m\log(m))</script>, поэтому важно определять количество сравниваемых признаков.</p>
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></strong>. Временная сложность <script type="math/tex">O(m*n^{2,4})</script> — <script type="math/tex">O(m*n^{3})</script> в зависимости от реализации.</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html">SGDClassifier</a></strong>. Временная сложность <script type="math/tex">O(m*n)</script>.</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">SVC</a></strong>. Временная сложность <script type="math/tex">O(m^{2}*n)</script> — <script type="math/tex">O(m^{3}*n)</script>. Алгоритм реализован на библиотеке <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a></p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html">LinearSVC</a></strong>. Временная сложность <script type="math/tex">O(m*n)</script>. Алгоритм реализован на базе библиотеки liblinear, который реализует <a href="https://www.csie.ntu.edu.tw/~cjlin/liblinear/">Large Linear Classification</a> (подробнее <a href="https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf">тут</a>)</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/tree.html">DecisionTree</a></strong>. Нахождение оптимального дерева является <a href="https://en.wikipedia.org/wiki/NP-completeness">NP-полной задачей</a> и ее временная сложность <script type="math/tex">O(\exp(m))</script>.</p>
+
+<p>Временная сложность построения сбалансированного бинарного дерева для наивной имплементации <script type="math/tex">O(n*m\log(m))</script>, сложность расчета по построенной модели — <script type="math/tex">O(\log(m))</script>. На практике сбалансированного дерева не получается, поэтому сложность построения дерева возростает до <script type="math/tex">O(n*m^{2}\log(m))</script>. В scikit-learn используется препроцессинг, что позволяет уменьшить итоговую сложность для всего дерева до <script type="math/tex">O(n*m\log(m))</script>. <a href="https://scikit-learn.org/stable/modules/tree.html#complexity">Подробнее</a>.</p>
+
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">DecisionTreeClassifier</a>. Обход дерева имеет временную сложность <script type="math/tex">O(\frac{\log(m)}{\log(2)})</script>, ну или <script type="math/tex">O(\log{\scriptscriptstyle 2}(m))</script>. Если осуществляется сравнение по всем признакам, то <script type="math/tex">O(n*m\log(m))</script>, поэтому важно определять количество сравниваемых признаков.</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/ensemble.html#parameters">RandomForest</a></strong>. <script type="math/tex">O(M*m\log(m))</script>, где <script type="math/tex">M</script> — число решающих деревьев. Сложность можно уменьшить с помощью параметров.</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neural_network">Multi-layer Perceptron</a></strong>. <script type="math/tex">O(m*n*h^{k}*o*i)</script>, где <script type="math/tex">h</script> — количество нейронов, <script type="math/tex">k</script> — число скрытых слоев, <script type="math/tex">o</script> — количество выходов и <script type="math/tex">i</script> — число итераций.</p>
 
 <p>Статья будет дополняться…</p>
 

@@ -15,16 +15,36 @@ keywords: машинное обучение machine learning временная 
 
 ![time complexity](../../../assets/img/080919-1.jpg)
 
-Далее в этой статье я попробую собрать данные о временной сложности различных реализаций ML/DL алгоритмов.
+Далее в этой статье я попробую собрать данные о временной сложности различных реализаций ML/DL алгоритмов. В статье $$n$$ — количество признаков, $$m$$ — количество образцов.
 
-**[LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)** из пакета scikit-learn. Временная сложность $$O(n^{2,4})$$ — $$O(n^{3})$$ в зависимости от реализации (здесь и далее $$n$$ — количество признаков). Или $$O(m)$$, где $$m$$ — количество образцов.
+## Алгоритмы из scikit-learn
 
-**[LinearSVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html)** из пакета scikit-learn. Временная сложность $$O(m*n)$$. Алгоритм реализован на базе библиотеки liblinear, который реализует [Large Linear Classification](https://www.csie.ntu.edu.tw/~cjlin/liblinear/) (подробнее [тут](https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf))
+**[Nearest Neighbors Algorithms](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neighbors)**. Временная сложность зависит от имплементации.
 
-**[SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html)** из пакета scikit-learn. Временная сложность $$O(m*n)$$.
+- brute force (наиболее нативная имплементация, дистанция считается между всеми точками дата-сета). Сложность при построении $$O(n*m^{2})$$. Сложность при запросе $$O(n*m)$$. Время расчета не зависит от структуры данных и количества «ближайших соседей».
 
-**[SVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)** из пакета scikit-learn. Временная сложность $$O(m^{2}*n)$$ — $$O(m^{3}*n)$$. Алгоритм реализован на библиотеке [libsvm](https://www.csie.ntu.edu.tw/~cjlin/libsvm/)
+- K-D tree. Сложность при построении $$O(n*m\log(m))$$. Сложность при запросе для небольшого числа фич $$n < 20$$ — $$O(n\log(m))$$. Для большего числа измерений, сложность возрастает до $$O(n*m)$$. Время расчета сильно зависит от структуры данных и растет с увеличением количества «ближайших соседей».
 
-**[DecisionTreeClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html)** из пакета scikit-learn. Нахождение оптимального дерева является [NP-полной задачей](https://en.wikipedia.org/wiki/NP-completeness) и ее временная сложность $$O(\exp(m))$$. Обход дерева имеет временную сложность $$O(\frac{\log(m)}{\log(2)})$$, ну или $$O(\log{\scriptscriptstyle 2}(m))$$. Если осуществляется сравнение по всем признакам, то $$O(n*m\log(m))$$, поэтому важно определять количество сравниваемых признаков.
+- Ball Tree. Сложность при построении $$O(n*m\log(m))$$. Сложность при запросе — $$O(n\log(m))$$. Время расчета сильно зависит от структуры данных и растет с увеличением количества «ближайших соседей».
+
+Больше подробностей смотри в [документации](https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbor-algorithms)
+
+**[LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)**. Временная сложность $$O(m*n^{2,4})$$ — $$O(m*n^{3})$$ в зависимости от реализации.
+
+**[SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html)**. Временная сложность $$O(m*n)$$.
+
+**[SVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)**. Временная сложность $$O(m^{2}*n)$$ — $$O(m^{3}*n)$$. Алгоритм реализован на библиотеке [libsvm](https://www.csie.ntu.edu.tw/~cjlin/libsvm/)
+
+**[LinearSVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html)**. Временная сложность $$O(m*n)$$. Алгоритм реализован на базе библиотеки liblinear, который реализует [Large Linear Classification](https://www.csie.ntu.edu.tw/~cjlin/liblinear/) (подробнее [тут](https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf))
+
+**[DecisionTree](https://scikit-learn.org/stable/modules/tree.html)**. Нахождение оптимального дерева является [NP-полной задачей](https://en.wikipedia.org/wiki/NP-completeness) и ее временная сложность $$O(\exp(m))$$.
+
+Временная сложность построения сбалансированного бинарного дерева для наивной имплементации $$O(n*m\log(m))$$, сложность расчета по построенной модели — $$O(\log(m))$$. На практике сбалансированного дерева не получается, поэтому сложность построения дерева возростает до $$O(n*m^{2}\log(m))$$. В scikit-learn используется препроцессинг, что позволяет уменьшить итоговую сложность для всего дерева до $$O(n*m\log(m))$$. [Подробнее](https://scikit-learn.org/stable/modules/tree.html#complexity).
+
+[DecisionTreeClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html). Обход дерева имеет временную сложность $$O(\frac{\log(m)}{\log(2)})$$, ну или $$O(\log{\scriptscriptstyle 2}(m))$$. Если осуществляется сравнение по всем признакам, то $$O(n*m\log(m))$$, поэтому важно определять количество сравниваемых признаков.
+
+**[RandomForest](https://scikit-learn.org/stable/modules/ensemble.html#parameters)**. $$O(M*m\log(m))$$, где $$M$$ — число решающих деревьев. Сложность можно уменьшить с помощью параметров.
+
+**[Multi-layer Perceptron](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neural_network)**. $$O(m*n*h^{k}*o*i)$$, где $$h$$ — количество нейронов, $$k$$ — число скрытых слоев, $$o$$ — количество выходов и $$i$$ — число итераций.
 
 Статья будет дополняться...
