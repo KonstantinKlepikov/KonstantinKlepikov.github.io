@@ -1,4 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-09-15T17:57:45+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Основные термины машинного обучения. Часть №2</title><link href="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html" rel="alternate" type="text/html" title="Основные термины машинного обучения. Часть №2" /><published>2019-09-14T00:00:00+02:00</published><updated>2019-09-14T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html">&lt;p&gt;В &lt;a href=&quot;/2019/08/31/machine_learning-terms.html&quot;&gt;первой части&lt;/a&gt; статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку, смещение оценки, дисперсию, стандартную ошибку и состоятельность, а так-же важные термины, определяемые в рамках этих терминов. Продолжим.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-09-28T15:30:07+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных</title><link href="https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions.html" rel="alternate" type="text/html" title="Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных" /><published>2019-09-28T00:00:00+02:00</published><updated>2019-09-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions.html">&lt;h2 id=&quot;производительность-вычислений&quot;&gt;Производительность вычислений&lt;/h2&gt;
+
+&lt;p&gt;В scikit-learn производительность вычисления предсказаний зависит от:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;количества фичей&lt;/li&gt;
+  &lt;li&gt;распределения и разреженности данных&lt;/li&gt;
+  &lt;li&gt;временной сложности алгоритма&lt;/li&gt;
+  &lt;li&gt;извлечения фичей&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;количество-фичей&quot;&gt;Количество фичей&lt;/h3&gt;
+
+&lt;p&gt;Библиотека хорошо оптимизирована под небольшие дата-сеты, поэтому количество фичей начинает оказывать значительное влияние на время предсказания для данных с 250+ фичами.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-01.jpg&quot; alt=&quot;Влияние количества фичей на время предсказания&quot; title=&quot;Влияние количества фичей на время предсказания&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;распределение-и-разреженность-данных&quot;&gt;Распределение и разреженность данных&lt;/h3&gt;
+
+&lt;p&gt;Вычисления по разреженным дата-сетам (более 90% значений) можно улучшить по времени с помощью ScyPy, т.к. библиотека оптимизирована по потреблению кеша CPU. Подробнее о том, как готовить разреженные данные, можно посмотреть в &lt;a href=&quot;https://docs.scipy.org/doc/scipy/reference/sparse.html&quot;&gt;документации ScyPy&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;временная-сложность-алгоритмов&quot;&gt;Временная сложность алгоритмов&lt;/h3&gt;
+
+&lt;p&gt;С ростом временной сложности падает производительность вычислений алгоритма на предсказаниях. В примерах - зависимость задержки вычисления предсказания от временной сложности линейных моделей, SVM и ансамблей.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-02.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для линейных моделей&quot; title=&quot;Зависимость от временной сложности для линейных моделей&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-03.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для SVM&quot; title=&quot;Зависимость от временной сложности для SVM&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-04.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для ансамблей&quot; title=&quot;Зависимость от временной сложности для ансамблей&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;В линейных моделях используется схожая решающая функция, поэтому время предсказаний для разных линейных моделей зависит примерно одинаково от временной сложности модели. В алгоритмах с нелинейными кернелами вычислительная производительность зависит от количества векторов (чем больше, тем производительность меньше). Задержка вычисления предсказания возрастает линейно для SVM (для регрессора и классификатора) с ростом числа саппортных векторов. Для ансамблей наибольшее значение имеет количество решающих деревьев и их глубина.&lt;/p&gt;
+
+&lt;p&gt;Про временную сложность построения алгоритмов и подробнее про сложность расчета предсказаний можно почитать в &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;отдельной статье&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;извлечение-фичей&quot;&gt;Извлечение фичей&lt;/h3&gt;
+
+&lt;p&gt;На самом деле, препроцессинг данных занимает самую значительную часть времени в выдаче предсказаний. Часто очистка и трансформация данных может увеличивать задержку выдачи предсказаний в сотни раз, поэтому этот процесс необходимо постоянно внимательно и аккуратно улучшать.&lt;/p&gt;
+
+&lt;h2 id=&quot;пропускная-способность-предсказаний&quot;&gt;Пропускная способность предсказаний&lt;/h2&gt;
+
+&lt;p&gt;Еще одна важная метрика производительности алгоритма - это пропускная способность, определяющая количество предсказаний за заданное время. В примере пропускная способность различных алгоритмов scikit-learn.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-05.jpg&quot; alt=&quot;Пропускная способность различных алгоритмов scikit-learn&quot; title=&quot;Пропускная способность различных алгоритмов scikit-learn&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Основной способ повышения пропускной способности предсказывающей модели - это увеличение количества экземпляров модели и распределение запросов на предсказания между экземплярами.&lt;/p&gt;
+
+&lt;p&gt;Больше информации и примеров про производительность вычислений scikit-learn можно прочитать в &lt;a href=&quot;https://scikit-learn.org/stable/documentation.html&quot;&gt;технической документации&lt;/a&gt; (смотрите &lt;a href=&quot;https://scikit-learn.org/stable/modules/computing.html&quot;&gt;раздел 7&lt;/a&gt; user guide).&lt;/p&gt;</content><author><name></name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><category term="ml-data" /><category term="computation-performance" /><summary type="html">Производительность вычислений</summary></entry><entry><title type="html">Основные термины машинного обучения. Часть №2</title><link href="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html" rel="alternate" type="text/html" title="Основные термины машинного обучения. Часть №2" /><published>2019-09-14T00:00:00+02:00</published><updated>2019-09-14T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html">&lt;p&gt;В &lt;a href=&quot;/2019/08/31/machine_learning-terms.html&quot;&gt;первой части&lt;/a&gt; статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку, смещение оценки, дисперсию, стандартную ошибку и состоятельность, а так-же важные термины, определяемые в рамках этих терминов. Продолжим.&lt;/p&gt;
 
 &lt;h2 id=&quot;оценка-максимального-правдоподобия&quot;&gt;Оценка максимального правдоподобия&lt;/h2&gt;
 
@@ -1004,62 +1051,4 @@ n &lt; 20 %]]&gt;&lt;/script&gt; — &lt;script type=&quot;math/tex&quot;&gt;O(n
 
 &lt;p&gt;Вот и вся задача. Делаем вывод, что у нас k = 10 — зебест, выпиваем бокал шампанского и надуваем шарики.&lt;/p&gt;
 
-&lt;p&gt;Какой вывод делают авторы курса? KNN медленный, он перебирает весь сет попиксельно. В случае с изображениями данные многоразмерные и обработка алгоритма затратна. К тому же расстояния основанные на пикселях, не справляются с поврежденными изображениями. Поэтому переходим к следующим задачам курса :)&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><category term="knn" /><summary type="html">Постановка задачи и подготовка</summary></entry><entry><title type="html">CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части</title><link href="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html" rel="alternate" type="text/html" title="CS231n: Convolutional Neural Networks for Visual Recognition. Старт практической части" /><published>2019-05-15T00:00:00+02:00</published><updated>2019-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/05/15/cs2131n-start</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/05/15/cs2131n-start.html">&lt;h2 id=&quot;о-чем-курс-и-почему-он-актуален&quot;&gt;О чем курс и почему он актуален?&lt;/h2&gt;
-
-&lt;p&gt;Данный цикл статей создан, потому что я заочно прошел cs231n и мне захотелось закрепить некоторые практические аспекты работы над задачами. Все статьи на тему курса можно будет найти по тегу &lt;a href=&quot;/tag/cs231n&quot; title=&quot;cs231n&quot;&gt;cs231n&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Курс целиком посвящен вопросам детектирования, распознавания и другим проблемам, связанным с компьютерным зрением. Программа обновляется каждый год, т.к. данная область знаний не стоит на месте. У курса довольно объемный и подробный бекграунд, а задачи подымаются от низкоуровневых решений к работе с фреймворками. В общем, если вас интересует компьютерное зрение — курс полностью себя оправдывает.&lt;/p&gt;
-
-&lt;p&gt;Вся актуальная информация содержится на &lt;a href=&quot;http://cs231n.stanford.edu/&quot; title=&quot;cs231n.stanford&quot;&gt;страничке&lt;/a&gt; Стэндфорда. Вы можете записаться и пройти оригинальную образовательную программу платно. Мне повезло больше и получилось пройти цикл лекций и практику без лишних жертв.&lt;/p&gt;
-
-&lt;p&gt;Лекционную часть я разбирать не буду. Лекции за 2017 год выложены на &lt;a href=&quot;https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv&quot; title=&quot;лекции на youtube&quot;&gt;youtube&lt;/a&gt;. Практическая часть курса изложена на &lt;a href=&quot;http://cs231n.github.io/&quot; title=&quot;cs231n.github.io&quot;&gt;странице с заданиями&lt;/a&gt;. Я &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018&quot; title=&quot;cs321s задачи 2018-го года&quot;&gt;задачи 2018-го года&lt;/a&gt; и могу сказать, что они не отличаются кардинально от 2019-го. На момент написания данной статьи на github &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments&quot; title=&quot;cs231n.github.io assignments&quot;&gt;доступна&lt;/a&gt; вся практика за 2015-2019 годы.&lt;/p&gt;
-
-&lt;h2 id=&quot;подготовка-к-работе-над-курсом&quot;&gt;Подготовка к работе над курсом&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Необходимо установить python и библиотеки для исследований. Описание этого процесса &lt;a href=&quot;http://cs231n.github.io/setup-instructions/&quot; title=&quot;установка зависимостей&quot;&gt;изложено тут&lt;/a&gt;. Я традиционно работаю под windows и, чтобы не заморачиваться, ставлю всё из пакета anaconda, тем более что в курсе любезно предоставлена готовая сборка.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;В сетапе дополнительно предлагается работать с &lt;a href=&quot;https://github.com/cs231n/gcloud/&quot; title=&quot;про Google Cloud&quot;&gt;Google Cloud&lt;/a&gt;. Для решения первого модуля задач это не потребуется и будет достаточно возможностей домашнего компьютера.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Если Вы незнакомы с python и библиотекой numpy, можно пройти &lt;a href=&quot;http://cs231n.github.io/python-numpy-tutorial/&quot; title=&quot;про Numpy&quot;&gt;туториал&lt;/a&gt;. На самом деле, могу сказать, что курс в плане написания кода непростой и если вы не работали ранее с python, то браться за решение задач бессмысленно. Отправляйтесь лучше сразу изучать python.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Необходимо установить jupyter notebook. Половина задач решается в нем. Приложение есть в пакете anaconda.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;С сетапом вроде всё.&lt;/p&gt;
-
-&lt;h2 id=&quot;что-в-курсе&quot;&gt;Что в курсе?&lt;/h2&gt;
-
-&lt;p&gt;Задачи разбиты на два модуля. В первом модуле объясняется фундаментальная работа нейронных сетей и даются практические примеры построения. Второй модуль полностью посвящен сверточным сетям.&lt;/p&gt;
-
-&lt;p&gt;Для каждого блока задач дано &lt;a href=&quot;http://cs231n.github.io/&quot; title=&quot;весь бекграунд курса&quot;&gt;подробное описание и бекграунд&lt;/a&gt;. Особенно обратите внимание на последнее - объем полезного материала значительно превышает то, что дано в видеолекциях. На самом деле, не пройдете бек - считай не прошли курс.&lt;/p&gt;
-
-&lt;h3 id=&quot;module-1-neural-networks&quot;&gt;Module 1: Neural Networks&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;в первом блоке задач предлагается классифицировать изображения дата-сета CIFAR10 с помощью метода k-ближайших соседей. Это можно было бы проигнорировать, т.к. алгоритм не используется для задач компьютерного зрения. На самом деле задача полезная. В ней разбирается производительность различных методов вычислений.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;во втором и третьем блоке строим SVM и softmax-классификаторы. Решения отсюда и дальше начнут двигаться от задачи к задаче, что формирует отличную практику работы с готовыми сборками.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;в дальнейшем надо будет построить классификатор на основе простой двухслойной нейронной сети. По сути весь блок построен на том, чтобы дать понятие о принципах классификации изображений и научить сравнивать методы и принимать решения об оптимизации алгоритмов.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;дальнейшие задачи по нейронкам вынесены в &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment2/&quot; title=&quot;задачи по нейронным сетям&quot;&gt;отдельную группу&lt;/a&gt; модуля. Тут мы будем изучать полносвязные слои, бач-нормализацию, дропауты и работу со свертками. В последней задаче разбирается работа во фреймворках PyTorch и TensorFlow.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;module-2-convolutional-neural-networks&quot;&gt;Module 2: Convolutional Neural Networks&lt;/h3&gt;
-
-&lt;p&gt;Задачи модуля полностью посвящены сверточным сетям. Разбираются RNN, LSTM, GAN сетки, а также методы разработки и конкретные задачи (например, перенос стилей изображений). Вся работа ведется уже с фреймворками.&lt;/p&gt;
-
-&lt;h2 id=&quot;в-итоге&quot;&gt;В итоге&lt;/h2&gt;
-
-&lt;p&gt;В дальнейших статьях я постараюсь зафиксировать свое понимание теоретической части курса и то, как применяя теорию, необходимо решать практическую часть. Готового кода одним куском не будет - это можно нагуглить самостоятельно. Задача данных статей - прожевать теоретический курс на практике и закрепить усвоенный материал.&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><summary type="html">О чем курс и почему он актуален?</summary></entry></feed>
+&lt;p&gt;Какой вывод делают авторы курса? KNN медленный, он перебирает весь сет попиксельно. В случае с изображениями данные многоразмерные и обработка алгоритма затратна. К тому же расстояния основанные на пикселях, не справляются с поврежденными изображениями. Поэтому переходим к следующим задачам курса :)&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><category term="knn" /><summary type="html">Постановка задачи и подготовка</summary></entry></feed>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных</title>
+  <meta name="description" content="Производительность вычислений">
+  <meta name="keywords" content="машинное обучение machine learning временная сложность time complexity алгоритмы scikit-learn данные производительность вычислений computation performance">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-09-28T00:00:00+02:00" itemprop="datePublished">Sep 28, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+      
+      <a href="/tag/algorithms" title="algorithms" class="link-tags">algorithms&nbsp;</a>
+    
+      
+      <a href="/tag/time-complexity" title="time-complexity" class="link-tags">time-complexity&nbsp;</a>
+    
+      
+      <a href="/tag/scikit-learn" title="scikit-learn" class="link-tags">scikit-learn&nbsp;</a>
+    
+      
+      <a href="/tag/ml-data" title="ml-data" class="link-tags">ml-data&nbsp;</a>
+    
+      
+      <a href="/tag/computation-performance" title="computation-performance" class="link-tags">computation-performance&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <h2 id="производительность-вычислений">Производительность вычислений</h2>
+
+<p>В scikit-learn производительность вычисления предсказаний зависит от:</p>
+
+<ul>
+  <li>количества фичей</li>
+  <li>распределения и разреженности данных</li>
+  <li>временной сложности алгоритма</li>
+  <li>извлечения фичей</li>
+</ul>
+
+<h3 id="количество-фичей">Количество фичей</h3>
+
+<p>Библиотека хорошо оптимизирована под небольшие дата-сеты, поэтому количество фичей начинает оказывать значительное влияние на время предсказания для данных с 250+ фичами.</p>
+
+<p><img src="../../../assets/img/280919-01.jpg" alt="Влияние количества фичей на время предсказания" title="Влияние количества фичей на время предсказания" /></p>
+
+<h3 id="распределение-и-разреженность-данных">Распределение и разреженность данных</h3>
+
+<p>Вычисления по разреженным дата-сетам (более 90% значений) можно улучшить по времени с помощью ScyPy, т.к. библиотека оптимизирована по потреблению кеша CPU. Подробнее о том, как готовить разреженные данные, можно посмотреть в <a href="https://docs.scipy.org/doc/scipy/reference/sparse.html">документации ScyPy</a></p>
+
+<h3 id="временная-сложность-алгоритмов">Временная сложность алгоритмов</h3>
+
+<p>С ростом временной сложности падает производительность вычислений алгоритма на предсказаниях. В примерах - зависимость задержки вычисления предсказания от временной сложности линейных моделей, SVM и ансамблей.</p>
+
+<p><img src="../../../assets/img/280919-02.jpg" alt="Зависимость задержки вычислений предсказаний от временной сложности для линейных моделей" title="Зависимость от временной сложности для линейных моделей" /></p>
+
+<p><img src="../../../assets/img/280919-03.jpg" alt="Зависимость задержки вычислений предсказаний от временной сложности для SVM" title="Зависимость от временной сложности для SVM" /></p>
+
+<p><img src="../../../assets/img/280919-04.jpg" alt="Зависимость задержки вычислений предсказаний от временной сложности для ансамблей" title="Зависимость от временной сложности для ансамблей" /></p>
+
+<p>В линейных моделях используется схожая решающая функция, поэтому время предсказаний для разных линейных моделей зависит примерно одинаково от временной сложности модели. В алгоритмах с нелинейными кернелами вычислительная производительность зависит от количества векторов (чем больше, тем производительность меньше). Задержка вычисления предсказания возрастает линейно для SVM (для регрессора и классификатора) с ростом числа саппортных векторов. Для ансамблей наибольшее значение имеет количество решающих деревьев и их глубина.</p>
+
+<p>Про временную сложность построения алгоритмов и подробнее про сложность расчета предсказаний можно почитать в <a href="/2019/09/08/time-complexity-of-machine-learning-algorithms.html">отдельной статье</a>.</p>
+
+<h3 id="извлечение-фичей">Извлечение фичей</h3>
+
+<p>На самом деле, препроцессинг данных занимает самую значительную часть времени в выдаче предсказаний. Часто очистка и трансформация данных может увеличивать задержку выдачи предсказаний в сотни раз, поэтому этот процесс необходимо постоянно внимательно и аккуратно улучшать.</p>
+
+<h2 id="пропускная-способность-предсказаний">Пропускная способность предсказаний</h2>
+
+<p>Еще одна важная метрика производительности алгоритма - это пропускная способность, определяющая количество предсказаний за заданное время. В примере пропускная способность различных алгоритмов scikit-learn.</p>
+
+<p><img src="../../../assets/img/280919-05.jpg" alt="Пропускная способность различных алгоритмов scikit-learn" title="Пропускная способность различных алгоритмов scikit-learn" /></p>
+
+<p>Основной способ повышения пропускной способности предсказывающей модели - это увеличение количества экземпляров модели и распределение запросов на предсказания между экземплярами.</p>
+
+<p>Больше информации и примеров про производительность вычислений scikit-learn можно прочитать в <a href="https://scikit-learn.org/stable/documentation.html">технической документации</a> (смотрите <a href="https://scikit-learn.org/stable/modules/computing.html">раздел 7</a> user guide).</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/time-complexity" class="link-tags">time-complexity</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/09/28/computation-performance-of-scikit-learn-functions.html" title="Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных">Зависимость производительности вычислений сложности алгоритмов в scikit-learn от данных</a> (28 Sep 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/09/08/time-complexity-of-machine-learning-algorithms.html" title="Временная сложность алгоритмов машинного обучения">Временная сложность алгоритмов машинного обучения</a> (08 Sep 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html" title="Основные термины машинного обучения. Часть №2">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Основные термины машинного обучения. Часть №2</p>
+      <p>В первой части статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку,...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
