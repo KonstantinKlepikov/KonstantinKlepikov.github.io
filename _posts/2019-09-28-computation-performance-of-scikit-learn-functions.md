@@ -4,7 +4,7 @@ title: "Зависимость производительности вычисл
 date: 2019-09-28
 tags: machine-learning algorithms time-complexity scikit-learn ml-data computation-performance
 tag-for-sollecting: time-complexity
-keywords: машинное обучение machine learning временная сложность time complexity алгоритмы scikit-learn данные производительность вычислений computation performance
+keywords: машинное обучение machine learning временная сложность time complexity алгоритмы scikit-learn производительность вычислений computation performance
 ---
 
 ## Производительность вычислений
