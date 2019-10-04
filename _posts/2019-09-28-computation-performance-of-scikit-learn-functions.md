@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Зависимость производительности вычислений предсказаний в scikit-learn от данных и модели"
+title: "Зависимость вычислений в scikit-learn от данных и модели"
 date: 2019-09-28
 tags: machine-learning algorithms time-complexity scikit-learn ml-data computation-performance
 tag-for-sollecting: time-complexity

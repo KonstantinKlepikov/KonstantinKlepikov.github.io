@@ -16,6 +16,8 @@ permalink: /links/
 
 [Yann LeCun](http://yann.lecun.com/ "Yann LeCun")
 
+[Alison Gopnik](hhttp://alisongopnik.com/ "Alison Gopnik")
+
 ## Инструменты разработки
 
 **[numpy](https://github.com/numpy/numpy "numpy")**. [Документация](https://docs.scipy.org/doc/ "Документация").
@@ -64,4 +66,12 @@ dimensions. [Документация](https:http://hyperopt.github.io/hyperopt/
 
 **[ML-From-Scratch](https://github.com/eriklindernoren/ML-From-Scratch "ML-From-Scratch")**. Machine Learning From Scratch. Bare bones NumPy implementations of machine learning models and algorithms with a focus on accessibility. Aims to cover everything from linear regression to deep learning.
 
+**[auto-sklearn](https://github.com/automl/auto-sklearn "auto-sklearn")**. Auto-sklearn frees a machine learning user from algorithm selection and hyperparameter tuning. It leverages recent advantages in Bayesian optimization, meta-learning and ensemble construction. [Документация](https://automl.github.io/auto-sklearn/master/#manual "Документация").
+
+**[TROT](https://github.com/EpistasisLab/tpot "TROT")**. TPOT is a Python Automated Machine Learning tool that optimizes machine learning pipelines using genetic programming. [Документация](http://epistasislab.github.io/tpot/ "Документация").
+
+**[mixtend](https://github.com/rasbt/mlxtend "mixtend")**. A library of extension and helper modules for Python's data analysis and machine learning libraries. [Документация](http://rasbt.github.io/mlxtend/ "Документация").
+
 **[kaggle-api](https://github.com/Kaggle/kaggle-api "kaggle-api")**. Official Kaggle API.
+
+**[pythons API](https://github.com/realpython/list-of-python-api-wrappers "pythons API")**. List of Python API Wrappers and Libraries.
