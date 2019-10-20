@@ -47,4 +47,16 @@ keywords: машинное обучение machine learning временная 
 
 **[Multi-layer Perceptron](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neural_network)**. $$O(m*n*h^{k}*o*i)$$, где $$h$$ — количество нейронов, $$k$$ — число скрытых слоев, $$o$$ — количество выходов и $$i$$ — число итераций.
 
+### Алгоритмы кластеризации
+
+**[Affinity Propogation](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AffinityPropagation.html)**. $$O(n^{2}*t)$$, где $$n$$ — количество примеров, $$t$$ — число итераций до сходимости. Сложность по памяти при этом $$O(n^{2})$$
+
+**[DBSCAN](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html)**. $$O(n*d)$$, где $$n$$ — количество примеров, $$d$$ — среднее число соседей. Сложность по памяти при этом линейная $$O(n)$$
+
+**[OPTICS](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.OPTICS.html)**. $$O(n^2)$$
+
+**[kMean](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)**. Средняя сложность по времени $$O(k*n*t)$$, где $$n$$ — количество примеров, $$t$$ — число итераций до сходимости, $$k$$ число соседей. В худшем случае сложность вырастает до $$O(n^{k + \frac{2}{p}})$$, где $$p$$ число фичей.
+
+**[MeanShift](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html)**. При использовании flat или ball tree кернелов, сложность по времени $$O(t*n*\log(n))$$, где $$t$$ — количество точек кластеризации. В многомерном пространстве сложность стремится к $$O(t*n^2)$$.
+
 Статья будет дополняться...

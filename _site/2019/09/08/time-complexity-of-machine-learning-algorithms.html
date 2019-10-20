@@ -221,6 +221,18 @@ n < 20 %]]></script> — <script type="math/tex">O(n\log(m))</script>. Для б
 
 <p><strong><a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.neural_network">Multi-layer Perceptron</a></strong>. <script type="math/tex">O(m*n*h^{k}*o*i)</script>, где <script type="math/tex">h</script> — количество нейронов, <script type="math/tex">k</script> — число скрытых слоев, <script type="math/tex">o</script> — количество выходов и <script type="math/tex">i</script> — число итераций.</p>
 
+<h3 id="алгоритмы-кластеризации">Алгоритмы кластеризации</h3>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AffinityPropagation.html">Affinity Propogation</a></strong>. <script type="math/tex">O(n^{2}*t)</script>, где <script type="math/tex">n</script> — количество примеров, <script type="math/tex">t</script> — число итераций до сходимости. Сложность по памяти при этом <script type="math/tex">O(n^{2})</script></p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">DBSCAN</a></strong>. <script type="math/tex">O(n*d)</script>, где <script type="math/tex">n</script> — количество примеров, <script type="math/tex">d</script> — среднее число соседей. Сложность по памяти при этом линейная <script type="math/tex">O(n)</script></p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.OPTICS.html">OPTICS</a></strong>. <script type="math/tex">O(n^2)</script></p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">kMean</a></strong>. Средняя сложность по времени <script type="math/tex">O(k*n*t)</script>, где <script type="math/tex">n</script> — количество примеров, <script type="math/tex">t</script> — число итераций до сходимости, <script type="math/tex">k</script> число соседей. В худшем случае сложность вырастает до <script type="math/tex">O(n^{k + \frac{2}{p}})</script>, где <script type="math/tex">p</script> число фичей.</p>
+
+<p><strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html">MeanShift</a></strong>. При использовании flat или ball tree кернелов, сложность по времени <script type="math/tex">O(t*n*\log(n))</script>, где <script type="math/tex">t</script> — количество точек кластеризации. В многомерном пространстве сложность стремится к <script type="math/tex">O(t*n^2)</script>.</p>
+
 <p>Статья будет дополняться…</p>
 
   </div>
@@ -228,6 +240,10 @@ n < 20 %]]></script> — <script type="math/tex">O(n\log(m))</script>. Для б
   <p class="h4 mt-4">Все статьи с тегом <a href="/tag/machine-learning" class="link-tags">machine-learning</a></p>
   <div class="prose mb-4">
     <ul>
+        
+        <li><a href="/2019/10/19/complexity-basics-terms.html" title="Вычислительная сложность машинного обучения. Базовые принцыпы">Вычислительная сложность машинного обучения. Базовые принцыпы</a> (19 Oct 2019)<br>
+            
+        </li>
         
         <li><a href="/2019/10/08/scikit-learn-preprocessing.html" title="Особенности препроцессинга данных в scikit-learn">Особенности препроцессинга данных в scikit-learn</a> (08 Oct 2019)<br>
             

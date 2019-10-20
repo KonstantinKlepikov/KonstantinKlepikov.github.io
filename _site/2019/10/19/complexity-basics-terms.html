@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Вычислительная сложность машинного обучения. Базовые принцыпы</title>
+  <meta name="description" content="Чуть ранее, в статье временная сложность алгоритмов машинного обучения, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Наста...">
+  <meta name="keywords" content="машинное обучение machine learning временная сложность time complexity">
+  <meta name="author" content="Klepikov Konstantin">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Вычислительная сложность машинного обучения. Базовые принцыпы</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2019-10-19T00:00:00+02:00" itemprop="datePublished">Oct 19, 2019</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+      
+      <a href="/tag/algorithms" title="algorithms" class="link-tags">algorithms&nbsp;</a>
+    
+      
+      <a href="/tag/time-complexity" title="time-complexity" class="link-tags">time-complexity&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Чуть ранее, в статье <a href="/2019/09/08/time-complexity-of-machine-learning-algorithms.html">временная сложность алгоритмов машинного обучения</a>, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.</p>
+
+<p><strong>Вычислительная сложность</strong> (или асимптотическая сложность или производительность) — это свойство алгоритма. Она определяется функцией, которая показывает насколько ухудшается работа алгоритма с усложнением поставленной задачи.</p>
+
+<p>Вот пять основных правил расчета вычислительной сложности:</p>
+
+<ul>
+  <li>
+    <p>если для математической функции <script type="math/tex">f</script> алгоритму необходимо выполнить действия <script type="math/tex">f(N)</script> раз, то для этого ему понадобится сделать <script type="math/tex">O(f(N))</script> шагов.</p>
+  </li>
+  <li>
+    <p>если алгоритм выполняет одну операцию, состоящую из <script type="math/tex">O(f(N))</script> шагов, а затем вторую, состоящую из <script type="math/tex">O(g(N))</script> шагов, то общая производительность f и g суммируется <script type="math/tex">O(f(N) + g(N))</script></p>
+  </li>
+  <li>
+    <p>если алгоритму необходимо сделать <script type="math/tex">O(f(N) + g(N))</script> шагов и область значений N функции <script type="math/tex">f(N)</script> больше чем у <script type="math/tex">g(N)</script>, то вычислительную сложность можно упростить до <script type="math/tex">f(N)</script></p>
+  </li>
+  <li>
+    <p>если алгоритму внутри каждого шага <script type="math/tex">O(f(N))</script> одной операции приходится выполнять еще <script type="math/tex">O(g(N))</script> шагов другой операции, то общая производительность составляет <script type="math/tex">O(f(N)*g(N))</script></p>
+  </li>
+  <li>
+    <p>постоянными множителями (константами) можно пренебречь: <script type="math/tex">O(C*f(N))</script> и <script type="math/tex">O(f(C*N))</script> можно записать как <script type="math/tex">O(f(N))</script></p>
+  </li>
+</ul>
+
+<p>Нотация <strong>«O» большое</strong> всего лишь указывает на то, что мы рассматриваем ситуацию, когда алгоритму для завершения необходимо потребить  максимальное возможное количество (худший случай). В предыдущей статье рассматривался частный случай, входящий в обобщенное понятие вычислительной сложности — временная сложность алгоритмов МО. Грубо говоря, объем задачи алгоритма всегда связан с вычислительными ресурсами — временем (или количеством шагов) вычислений и пространством (или объемом памяти), необходимыми для завершения задачи. Поэтому в различной специальной литературе по машинному обучению, где рассматриваются частные случаи алгоритмов, можно встретить отсылки как к вычислительной сложности в целом так и к сложности по времени или по памятми.</p>
+
+<p>На практике чаще всего встречаются следующие сложности:</p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">O(1)</script> вне зависимости от сложности задачи время выполнения алгоритма постоянно</p>
+  </li>
+  <li>
+    <p><script type="math/tex">O(\log(N))</script> на каждом шаге алгоритма происходит деление количества рассматриваемых элементов на фиксированный коэффициент</p>
+  </li>
+  <li>
+    <p><script type="math/tex">O(N)</script> рост числа входов вызывает линейный рост производительности</p>
+  </li>
+  <li>
+    <p><script type="math/tex">O(N*\log(N))</script> алгоритм с логарифмической сложностью, на каждом шаге которого производится дополнительная операция с каждым элементом</p>
+  </li>
+  <li>
+    <p><script type="math/tex">O(N^2)</script> перебор всех данных, а затем повторный их перебор. Степень может быть другой, что, очевидно, влияет на сложность вычислений.</p>
+  </li>
+  <li>
+    <p><script type="math/tex">O(2^N)</script> экспоненциальная сложность и <script type="math/tex">O(!N)</script> факториальная сложность</p>
+  </li>
+</ul>
+
+<p>Задачи со сложностью до <script type="math/tex">O(N*\log(N))</script> включительно решаемы. При грамотном управлении количеством входных данных решаемы и задачи со степенной сложностью. Экспоненциальные и факториальные сложности, в виду в целом большого входного объема данных, в МО неприменимы.</p>
+
+<p>Ключевым вопросом в оценке сложности алгоритмов МО является их класс, определяющий требования ко времени и ресурсам памяти, применительно к некой абстрактной машине (часто рассматривается детерминированная машина, в частности, машина Тьюринга). Для детерминированных машин определены следующие классы:</p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">DTIME(f(N))</script> задачи, которые машина решает за время <script type="math/tex">f(N)</script>. Временная сложность таким образом будет составлять <script type="math/tex">O(f(N))</script></p>
+  </li>
+  <li>
+    <p><script type="math/tex">P</script> задачи, с которыми машина справляется за полиномиальное время</p>
+  </li>
+  <li>
+    <p><script type="math/tex">EXPTIME(EXP)</script> задачи, с которыми машина справляется за экспоненциальное время</p>
+  </li>
+</ul>
+
+<p>Для недетерминированных машин:</p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">NTIME(f(N))</script> задачи, которые машина решает за время <script type="math/tex">f(N)</script>. Временная сложность, таким образом будет, составлять <script type="math/tex">O(f(N))</script></p>
+  </li>
+  <li>
+    <p><script type="math/tex">NP</script> задачи, с которыми машина справляется за полиномиальное время</p>
+  </li>
+  <li>
+    <p><script type="math/tex">NEXPTIME(EXP)</script> задачи, с которыми машина справляется за экспоненциальное время</p>
+  </li>
+</ul>
+
+<p>Аналогичным образом задачи делятся в зависимости от потребляемого объема памяти.</p>
+
+<p>Не вдаваясь в подроности, в общем случае <script type="math/tex">P \subseteq NP</script>, экспоненциальные задачи, по сути, не считаемые, а задачей построения алгоритмов МО, в том числе, является их сведение к менее затратному классу. Задачи, которые входят в класс NP и к которым можно свести любые другие задачи этого класса за полиномиальное время называются NP-полными. NP-сложные задачи необязательно относятся к классу NP.</p>
+
+<h2 id="время-обучения-для-алгоритмов-мо">Время обучения для алгоритмов МО</h2>
+
+<p>Фактическое время работы алгоритма МО зависит от конкретной машины, на которой алгоритм реализован. В общем случае алгоритм обучения с учителем имеет доступ к множеству примеров, классу гипотез, функции потерь и обучающему набору, взятому из множества примеров. Четкого понятия размера входных данных для такого алгоритма не существует, т.к. если мы предъявляем алгоритму избыточное количество обучающих примеров, он может игнорировать лишние. Поэтому увеличение размера обучающего набора не ведет к тому, что проблема обучения становится более трудной. кроме того, алгоритм обучения может передавать часть вычислений выходной гипотезе, в случае, когда такая гипотеза определена как функция, сохраняющая обучающий набор. Для этого вводятся понятия времени обучения и времени предсказания. Будем рассматривать алгоритмы, чье время предсказания не превышает время обучения.</p>
+
+<p>Вычислительная сложность алгоритма обучения определяется в два этапа:</p>
+
+<ul>
+  <li>
+    <p>дана функция <script type="math/tex">f : (0, 1)^2 \rightarrow \mathbb{N}</script>, задача обучения <script type="math/tex">(Z, H, l)</script> и алгоритм обучения <script type="math/tex">A</script>. Алгоритм <script type="math/tex">A</script> решает задачу обучения за время <script type="math/tex">O(f)</script>, если существует постоянное число <script type="math/tex">c</script> такое, что для любого распределения вероятности <script type="math/tex">D</script> на <script type="math/tex">Z</script> и входных параметров <script type="math/tex">\epsilon, \delta \in (0, 1)</script> справедливо следующее утверждение: если <script type="math/tex">A</script> имеет доступ к примерам, независимо выбранным из распределения <script type="math/tex">D</script>, то, во-первых, <script type="math/tex">A</script> завершается, выполнив не более <script type="math/tex">c f(\epsilon, \delta)</script> операций, во-вторых, выход <script type="math/tex">A</script> обозначаемый как <script type="math/tex">h{\scriptstyle A}</script> можно применять для предсказания метки нового примера и при этом будет выполнено не более <script type="math/tex">c f(\epsilon, \delta)</script> операций и, в-третьих, выход <script type="math/tex">A</script> вероятно почти корректен, т.е. с вероятностью не ниже <script type="math/tex">1 - \delta</script> (для случайной выборки, которую получает <script type="math/tex">A</script>) <script type="math/tex">{L_{\scriptscriptstyle D}}({h_{\scriptscriptstyle A}}) \leq {\min_{\scriptscriptstyle h'\in H}} {L_{\scriptscriptstyle D}}{(h'_{\scriptscriptstyle A}}) + \epsilon</script></p>
+  </li>
+  <li>
+    <p>далее, рассматриваем последовательность проблем обучения <script type="math/tex">{({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})^{\scriptscriptstyle{\infty}}_{\scriptscriptstyle n=1}}</script>, где проблема <script type="math/tex">n</script> описывается областью примеров <script type="math/tex">{Z_{\scriptscriptstyle n}}</script>, классом гипотез <script type="math/tex">{H_{\scriptscriptstyle n}}</script> и функцией потерь <script type="math/tex">{l_{\scriptscriptstyle n}}</script>. Если <script type="math/tex">A</script> спроектирован для проблем обучения такого вида и задана функция <script type="math/tex">g : \mathbb{N} x (0, 1)^2 \rightarrow \mathbb{N}</script>, то считается, что время работы <script type="math/tex">A</script> на вышеупомянутой последовательности равно <script type="math/tex">O(g)</script>, если для всех <script type="math/tex">n</script> <script type="math/tex">A</script> решает проблему <script type="math/tex">({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})</script> за время  <script type="math/tex">O({f_{\scriptscriptstyle n}})</script>, где функция <script type="math/tex">f : (0, 1)^2 \rightarrow \mathbb{N}</script> определяется выражением <script type="math/tex">{f_{\scriptscriptstyle n}}(\epsilon, \delta) = {g_{\scriptscriptstyle n}}(n, \epsilon, \delta)</script></p>
+  </li>
+</ul>
+
+<p>В таком случае можно сказать, что алгоритм <script type="math/tex">A</script> эффективен на последовательности <script type="math/tex">({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})</script>, если его время работы равно $$O(p(n, 1/\epsilon, 1/\delta)) для некоторого полинома p. Очевидно, что вопрос об эффективном решении проблемы обучения зависит от того, как именно задача обучения представлена в виде последовательности конкретных проблем.</p>
+
+<p>Более подробную информацию на эту тему можно найти в учебнике «Understanding Machine Learning», изданном в Cambridge University Press в 2014-ом году.</p>
+
+  </div>
+
+  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/time-complexity" class="link-tags">time-complexity</a></p>
+  <div class="prose mb-4">
+    <ul>
+        
+        <li><a href="/2019/10/19/complexity-basics-terms.html" title="Вычислительная сложность машинного обучения. Базовые принцыпы">Вычислительная сложность машинного обучения. Базовые принцыпы</a> (19 Oct 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/09/28/computation-performance-of-scikit-learn-functions.html" title="Зависимость вычислений в scikit-learn от данных и модели">Зависимость вычислений в scikit-learn от данных и модели</a> (28 Sep 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/09/08/time-complexity-of-machine-learning-algorithms.html" title="Временная сложность алгоритмов машинного обучения">Временная сложность алгоритмов машинного обучения</a> (08 Sep 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2019/10/08/scikit-learn-preprocessing.html" title="Особенности препроцессинга данных в scikit-learn">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Особенности препроцессинга данных в scikit-learn</p>
+      <p>В статье кратко раскрываются некоторые вопросы подготовки данных с помощью scikit-learn. Замена пропусков Scikit-learn не поддерживает замену пропусков с разными...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
