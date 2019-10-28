@@ -1,4 +1,138 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-10-20T19:48:31+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Вычислительная сложность машинного обучения. Базовые принцыпы</title><link href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html" rel="alternate" type="text/html" title="Вычислительная сложность машинного обучения. Базовые принцыпы" /><published>2019-10-19T00:00:00+02:00</published><updated>2019-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">&lt;p&gt;Чуть ранее, в статье &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;временная сложность алгоритмов машинного обучения&lt;/a&gt;, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-10-29T01:36:48+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
+
+&lt;p&gt;Часто данные содержат множественные категориальные признаки, часть из которых представлена несколькими категориями. В некоторых случаях категорий оказывается сравнительно много, по отношению к общему объему данных. Иногда значения в категориальных признаках распределены по-разному, в частности, могут быть определены какие-то серии, разбитые по времени. Все это не добавляет энтузиазма во время предварительной обработки данных.&lt;/p&gt;
+
+&lt;p&gt;К счастью, есть другие готовые решения, в т.ч. библиотека &lt;strong&gt;&lt;a href=&quot;https://contrib.scikit-learn.org/categorical-encoding/&quot;&gt;Category Encoders&lt;/a&gt; (CE)&lt;/strong&gt;, предоставляющая широкий набор кодировщиков категориальных признаков.&lt;/p&gt;
+
+&lt;h2 id=&quot;какие-преимущества-у-ce&quot;&gt;Какие преимущества у CE&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Наверное, самое основное — это полная совместимость с scikit-learn. Доступны методы fit, fit_transform, get_params, set_params и transform. На основе CE можно строить пайплайны в scikit-learn.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Поддержка numpy и pandas. Что важно — pandas dataframe можно получить и на выходе кодировщика. Иногда это весьма полезно, особенно когда нужно выполнить выборочное кодирование. Это позволяет не городить самодельный забор из кодировщиков, а использовать CE непосредственно в пайплайне scikit-learn.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Есть возможность выбрать и явно указать кодируемые столбцы&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Можно отбрасывать часть данных&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Спроектированный кодировщик отлично портируется на рабочие данные.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;какие-задачи-можно-решать-с-помощью-ce&quot;&gt;Какие задачи можно решать с помощью CE?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;кодирование номинальных признаков (nominal) — признаки, порядок которых не определен&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;кодирование упорядоченных признаков (ordinal) признаки, порядок которых не частично определен&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Можно кодировать бинарные признаки, упорядоченные по алфавиту или численному возрастанию признаки, а так же географические, геометрические данные, данные о времени и другие структурированные данные.&lt;/p&gt;
+
+&lt;h2 id=&quot;что-имеется-в-наборе-ce&quot;&gt;Что имеется в наборе CE&lt;/h2&gt;
+
+&lt;h3 id=&quot;contrast-coding&quot;&gt;Contrast Coding&lt;/h3&gt;
+
+&lt;p&gt;Данный тип кодирование разбивает столбец на уровни (в каждом только значения, относящиеся к одной категории). Затем для каждого уровня вычисляется некоторая статистика. Например, вот так это делается в &lt;a href=&quot;http://www.statsmodels.org/dev/contrasts.html&quot;&gt;statsmodels&lt;/a&gt;. Метод подходит для кодирования номинальных и частично упорядоченных признаков.&lt;/p&gt;
+
+&lt;p&gt;В CE реализованы следующие кодеры:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Backward Difference Coding — сравнивается среднее для уровня со средним предыдущего уровня&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Helmert Coding — сравнивается среднее для уровня со средним для всех последующих уровней. Больше подходит для номинальных переменных.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Sum Coding — сравнивается среднее для уровня со средним для всех остальных уровней&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Polynomial Coding — используются линейные, квадратичные и кубические представления целевого признака. Подходит исключительно для упорядоченных признаков, интервалы между которыми одинаковы.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;В CE не реализованы:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Deviation Coding — более общий случай суммирующего кодирования, когда сравнение идет со всеми уровнями&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dummy Coding — сравнение со средним значением на уровне уровнем&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Simple Coding — то же самое, что и Dummy Coding, только в качестве среднего принимается среднее всех значений фиксированного уровня&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Reverse Helmet Coding&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Forward Difference Coding&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Больше подробностей &lt;a href=&quot;https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/&quot;&gt;смотри тут&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;target-based-coding&quot;&gt;Target-based Coding&lt;/h3&gt;
+
+&lt;p&gt;Для кодирования переменных используются сведения о разметке (цели) дата-сета. Для кодирования обычно используются следующие понятия: &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; общее число примеров, &lt;script type=&quot;math/tex&quot;&gt;y^+&lt;/script&gt; число примеров, размеченных «положительной» целью, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; число примеров в уровне, &lt;script type=&quot;math/tex&quot;&gt;n^+&lt;/script&gt; число примеров уровня, отнесенных к положительному классу, &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; регуляризирующий параметр, &lt;script type=&quot;math/tex&quot;&gt;prior&lt;/script&gt; среднее значение цели. В CE реализованы:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Target Encoder. Переменная кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = prior*(1 - s) + s*\frac{n^+}{n}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;s = \frac{1}{1 + \exp(\frac{-n - mdl}{\alpha})}&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;\scriptsize mdl&lt;/script&gt; — минимум среди всех примеров на уровне.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;James-Stein Encoder кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = (1 - B) * \frac{n^+ + prior*m}{u^+ + m} + B*\frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; дополнительный гиперпараметр, регулирующий переобучение&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;M-estimate кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \frac{n^+}{n} + B * \frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = 1... 100&lt;/script&gt; — дополнительный гиперпараметр, регулирующий переобучение. (На момент написания статьи кодировщик работает некорректно)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Weight of Evidence (WOE) считается по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \ln(\frac{nominator}{denominator})&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;nominator = \frac{n^+ + \alpha}{y^+ + 2\alpha}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;denominator = \frac{n - n^+ + \alpha}{y - y^+ + 2\alpha}&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Leave One Out (LOO) считается среднее цели для примера выбранной категории, для случая, когда пример удален из дата-сета.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Catboost Encoder улучшенный LOO (&lt;a href=&quot;https://catboost.ai/docs/concepts/algorithm-main-stages_cat-to-numberic.html&quot;&gt;документация&lt;/a&gt;)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;У всех target-based кодировщиков имеет место проблема риска переобучения, так как используются данные о разметке дата-сета. Два варианта решения — дополнительная регуляризация и двойная кросс-валидация. Кроме того, последние два плохо работают, если реальные данные имеют другую размерность, нежели те, на которых обучалась модель.&lt;/p&gt;
+
+&lt;h3 id=&quot;остальные-кодировщики&quot;&gt;Остальные кодировщики&lt;/h3&gt;
+
+&lt;p&gt;В CE реализовано несколько базовых кодировщиков:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Binary аналог binarizer в scikit-learn&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;One Hot аналог OnHotEncoder в scikit-learn&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Base N комбинация One Hot и Binary&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Кроме того, реализован Hashing, позволяющий хешировать переменную. Это аналог FeatureHasher (последний больше подходит для работы с текстом).&lt;/p&gt;
+
+&lt;p&gt;К сожалению, в библиотеке не реализован частотный кодировщик и в принципе не реализованы методы работы с временными рядами.&lt;/p&gt;
+
+&lt;p&gt;Дополнительные статьи по этой тематике: &lt;a href=&quot;https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02&quot;&gt;один&lt;/a&gt;, &lt;a href=&quot;https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8&quot;&gt;два&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="preprocessing" /><category term="category-encoders" /><category term="sklearn" /><category term="scikit-learn" /><category term="ml-data" /><summary type="html">В статье «особенности препроцессинга данных в scikit-learn» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.</summary></entry><entry><title type="html">Вычислительная сложность машинного обучения. Базовые принципы</title><link href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html" rel="alternate" type="text/html" title="Вычислительная сложность машинного обучения. Базовые принципы" /><published>2019-10-19T00:00:00+02:00</published><updated>2019-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">&lt;p&gt;Чуть ранее, в статье &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;временная сложность алгоритмов машинного обучения&lt;/a&gt;, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Вычислительная сложность&lt;/strong&gt; (или асимптотическая сложность или производительность) — это свойство алгоритма. Она определяется функцией, которая показывает насколько ухудшается работа алгоритма с усложнением поставленной задачи.&lt;/p&gt;
 
@@ -627,158 +761,4 @@ n &lt; 20 %]]&gt;&lt;/script&gt; — &lt;script type=&quot;math/tex&quot;&gt;O(n
     &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Весь этот набор инструментов scikit-learn превращает обработку данных в довольно креативный и удобный для пользователя процесс.&lt;/p&gt;</content><author><name></name></author><category term="scikit-learn" /><category term="phyton" /><category term="sklearn" /><summary type="html">В scikit-learn есть специальный класс Pipeline, с помощью которого можно создавать конструктор определяющий последовательность из шагов, трансформирующих данные в нужном порядке.</summary></entry><entry><title type="html">CS231n: Softmax классификатор</title><link href="https://konstantinklepikov.github.io/2019/06/27/cs2131n-sofrmax.html" rel="alternate" type="text/html" title="CS231n: Softmax классификатор" /><published>2019-06-27T00:00:00+02:00</published><updated>2019-06-27T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/06/27/cs2131n-sofrmax</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/06/27/cs2131n-sofrmax.html">&lt;p&gt;Третья задача в &lt;a href=&quot;http://cs231n.github.io/assignments2019/assignment1/&quot; title=&quot;Assignment #1&quot;&gt;Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network&lt;/a&gt; — это построение Softmax-классификатора.&lt;/p&gt;
-
-&lt;p&gt;В задаче используется тот же учебный проект, что и в &lt;a href=&quot;/2019/05/22/cs2131n-knn.html&quot;&gt;задании на построение knn-классификатора&lt;/a&gt;. Будем работать с softmax.ipynb и softmax.py&lt;/p&gt;
-
-&lt;p&gt;Я проходил cs231n на &lt;a href=&quot;https://github.com/cs231n/cs231n.github.io/tree/master/assignments/2018&quot; title=&quot;cs321s задачи 2018-го года&quot;&gt;задачах 2018-го года&lt;/a&gt;. Иллюстрации к данной статье из бекграунда курса.&lt;/p&gt;
-
-&lt;h2 id=&quot;что-можно-узнать-решив-задачу&quot;&gt;Что можно узнать, решив задачу&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;научиться строить softmax-классификатор&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;понять разницу между svm и softmax&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;совсем-немного-теории-про-softmax-функцию&quot;&gt;Совсем немного теории про softmax-функцию&lt;/h2&gt;
-
-&lt;p&gt;В прошлом задании мы разбирали &lt;a href=&quot;/2019/05/31/cs2131n-svm.html&quot;&gt;svm-классификатор&lt;/a&gt; в котором используется функция потерь следующего вида:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/310519-5.jpg&quot; alt=&quot;SVM loss linear&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Функция в SVM подсчитывает корректные классы, которые больше некорректных более чем на заданное значение. В softmax-классификаторе применяется другая функция потерь:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/180619-01.jpg&quot; alt=&quot;Softmax loss&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;То что мы видим внутри логарифма называется softmax-функцией. Она определяет вектор вероятностей корректных оценок в диапазоне от 0 до 1. При этом сумма вероятностей для всего исследуемого пула объектов сходится к 1.&lt;/p&gt;
-
-&lt;p&gt;Softmax-классификатор сводит к минимуму кросс-энтропию между распределением вероятностей верного предсказания классов по всем исследуемым объектам и истинным распределением, в котором вероятность, равная 1, очевидно соответствует только одному объекту из всех возможных, а вероятности остальных равны 0. Иными словами, в идеале, задача минимизации функции потерь сводится к тому, чтобы в массиве вероятностей верных предсказаний все вероятности, кроме одной, стремились 0, а в математическом смысле задача сводится к минимизации расстояния между двумя распределениями.&lt;/p&gt;
-
-&lt;p&gt;Авторы курса предлагают такую интерпретацию softmax-функции:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/180619-03.jpg&quot; alt=&quot;Probabilistic Softmax function&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Это нормализованная вероятность, соответствующая верной метке &lt;script type=&quot;math/tex&quot;&gt;y_{i}&lt;/script&gt; с учетом изображения &lt;script type=&quot;math/tex&quot;&gt;x_{i}&lt;/script&gt; и веса &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;. Классификатор Softmax интерпретирует оценки внутри выходного вектора &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt; как ненормализованные логарифмические вероятности. Возведение в степень этих величин дает ненормализованные вероятности, а деление выполняет нормализацию так, чтобы сумма всех вероятностей сходилась к 1. В данной интерпретации мы сводим к минимуму отрицательную логарифмическую вероятность правильного класса. Это можно считать выполнением оценки максимального правдоподобия (Maximum Likelihood Estimation MLE).&lt;/p&gt;
-
-&lt;p&gt;Далее, в курсе указывают на то, что на практике приходится сталкиваться с тем, что экспоненциальные компоненты функции могут быть очень большими числами, что затрудняет их точно вычисление. Для устранения проблемы применяют стандартный трюк с нормализацией константой:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/180619-04.jpg&quot; alt=&quot;Softmax normalisation&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;На практике &lt;script type=&quot;math/tex&quot;&gt;C&lt;/script&gt; подбирают таким, чтобы &lt;script type=&quot;math/tex&quot;&gt;\log{C} = - \max_{j} f_{j}&lt;/script&gt; равнялся максимальному значению &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt;. В этом случае это значение станет равным 0, а все остальные будут сдвинуты на величину максимума. Пример из курса&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# плохой вариант, проблемы с экспонентой&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;456&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;789&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# вычитаем максимальное значение и решаем проблему больших чисел&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# [-666, -333, 0]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Ну и, наконец, пример softmax в сравнении с SVM:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/180619-05.jpg&quot; alt=&quot;Softmax vs SVM&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;В обоих случаях вычисляем один и тот же вектор &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt;. Разница в функции потерь. SVM подсчитывает значения для корректных меток, которые больше некорректных более чем на заданную постоянную. Softmax же интерпретирует значения как вероятности, переводит их в логарифмический масштаб и нормализует. При этом суммарные значения функции потерь SVM и Softmax классификаторов сравнивать нельзя, так как эти значения имеют смысл только в контексте применяемой функции потерь. Softmax позволяет подсчитать вероятность верной классификации для всех меток, а SVM поставляет некие значения для всех классов, которые трудно интерпретировать. За интерпретацию в softmax приходится платить — распределение вероятностей будет сильно зависеть от силы регуляризации &lt;script type=&quot;math/tex&quot;&gt;\lambda&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;На практике SVM и Softmax дают примерно одинаковый результат и не сильно отличаются по производительности. Хотите больше подробностей? &lt;a href=&quot;http://cs231n.github.io/linear-classify/&quot; title=&quot;Linear classification: Support Vector Machine, Softmax&quot;&gt;Linear classification: Support Vector Machine, Softmax&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;задачи&quot;&gt;Задачи&lt;/h2&gt;
-
-&lt;p&gt;Задачи абсолютно аналогичны задачам &lt;a href=&quot;/2019/05/31/cs2131n-svm.html&quot;&gt;svm-classificator&lt;/a&gt;. Необходимо:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;реализовать векторизованную функцию потерь&lt;/li&gt;
-  &lt;li&gt;посчитать аналитический градиент&lt;/li&gt;
-  &lt;li&gt;сравнить результат с числовым градиентом&lt;/li&gt;
-  &lt;li&gt;оптимизировать скорость обучения и силу регуляризации&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;В softmax.ipynb уже стандартно (мы это делали в двух предыдущих задачах) получаем объекты из дата-сета CIFAR-10, формируем обучающую, валидационную и тестовые выборки, нормализуем данные, вычитая из всех изображений среднее изображение и проворачиваем трюк с баесовским вектором, вынося его в массив весов и соответственно добавляя единицы в &lt;script type=&quot;math/tex&quot;&gt;x_{i}&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;Затем в softmax.py необходимо реализовать «наивный» softmax-классификатор. Как мы уже знаем, классификатор получает на вход абсолютно все то же самое, что и svm и от svm отличается только функцией потерь. Поэтому смело берем SVM из предыдущей задачи и меняем функцию в теле цикла на softmax-функцию.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;softmax_loss_naive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros_like&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;correct_class_score&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#1&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;#2&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#4&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#4&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Во внутреннем цикле (1) считаем знаменатель softmax-функции. Далее, надо посчитать нормализованную softmax-функцию и саму функцию потерь (3), не забыв про регуляризацию.&lt;/p&gt;
-
-&lt;p&gt;Следующий шаг - «наивный» градиент.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;softmax_loss_naive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros_like&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;correct_class_score&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#1&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#3&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В той же функции считаем градиент для всего массива (2), а затем сам градиент у же известным нам по svm методом (3). Дальше смотрим на результат в блокноте и сравниваем с численным градиентом. Авторы курса предлагают сравнить результат для разных значений регуляризации. Сравниваем.&lt;/p&gt;
-
-&lt;p&gt;Дальше, как и в задаче с svm, необходимо задать softmax_loss_vectorized. По традиции мы эту функцию пишем с нуля.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;softmax_loss_vectorized&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;num_classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#1&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;correct_class_scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correct_class_scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;correct_matrix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;correct_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum_j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;correct_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Итак, нужно как-то избавиться от циклов. Для начала пересчитаем scores и correct_class_scores средствами numpy, не прибегая к циклам. Отсюда логика всех дальнейших действий становится предельно ясной - так же считаем softmax-функцию, функцию потерь и градиент, используя встроенные методы numpy, такие как np.sum. Решение довольно простое, а его результат по производительности покажет выигрыш по сравнению с циклами примерно в 50 раз.&lt;/p&gt;
-
-&lt;p&gt;Осталось только поэкспериментировать с гиперпараметрами - силой регуляризации и скоростью обучения. Задача абсолютно идентично той, что решалась в последней части задания на &lt;a href=&quot;/2019/05/31/cs2131n-svm.html&quot;&gt;svm-classificator&lt;/a&gt;. Берем кусок кода, который мы делали для svm, вместо LinearSVM() получаем объект Softmax() и подкручиваем гиперпараметры так, чтобы точность перешагнула через 0.4. Можно посмотреть результат для тех же значений гиперпараметров, что использовались для svm. На этом примере как раз и можно увидеть, как softmax-классификатор зависит от силы регуляризации.&lt;/p&gt;
-
-&lt;p&gt;На этом практическая часть курса, связанная с линейными классификаторами, завершается. Следующая задача - построение простейшей двухслойной нейронной сети.&lt;/p&gt;</content><author><name></name></author><category term="cs231n" /><category term="softmax" /><summary type="html">Третья задача в Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network — это построение Softmax-классификатора.</summary></entry></feed>
+&lt;p&gt;Весь этот набор инструментов scikit-learn превращает обработку данных в довольно креативный и удобный для пользователя процесс.&lt;/p&gt;</content><author><name></name></author><category term="scikit-learn" /><category term="phyton" /><category term="sklearn" /><summary type="html">В scikit-learn есть специальный класс Pipeline, с помощью которого можно создавать конструктор определяющий последовательность из шагов, трансформирующих данные в нужном порядке.</summary></entry></feed>

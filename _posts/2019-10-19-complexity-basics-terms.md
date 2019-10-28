@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Вычислительная сложность машинного обучения. Базовые принцыпы"
+title: "Вычислительная сложность машинного обучения. Базовые принципы"
 date: 2019-10-19
 tags: machine-learning algorithms time-complexity
 tag-for-sollecting: time-complexity
