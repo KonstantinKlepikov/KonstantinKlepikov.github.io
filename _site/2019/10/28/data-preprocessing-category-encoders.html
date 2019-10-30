@@ -296,22 +296,19 @@
 
 <ul>
   <li>
-    <p>Binary аналог binarizer в scikit-learn</p>
-  </li>
-  <li>
-    <p>One Hot аналог OnHotEncoder в scikit-learn</p>
+    <p>Binary и One Hot — аналоги OnHotEncoder в scikit-learn</p>
   </li>
   <li>
     <p>Base N комбинация One Hot и Binary</p>
   </li>
   <li>
-    <p>Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn</p>
+    <p>Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)</p>
   </li>
 </ul>
 
 <p>Кроме того, реализован Hashing, позволяющий хешировать переменную. Это аналог FeatureHasher (последний больше подходит для работы с текстом).</p>
 
-<p>К сожалению, в библиотеке не реализован частотный кодировщик и в принципе не реализованы методы работы с временными рядами.</p>
+<p>К сожалению, в библиотеке в принципе не реализованы методы работы с категориальными признаками, распределенными по времени.</p>
 
 <p>Дополнительные статьи по этой тематике: <a href="https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02">один</a>, <a href="https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8">два</a></p>
 

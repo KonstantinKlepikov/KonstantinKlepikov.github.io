@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-10-29T01:36:48+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" /><updated>2019-10-30T02:37:00+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
 
 &lt;p&gt;Часто данные содержат множественные категориальные признаки, часть из которых представлена несколькими категориями. В некоторых случаях категорий оказывается сравнительно много, по отношению к общему объему данных. Иногда значения в категориальных признаках распределены по-разному, в частности, могут быть определены какие-то серии, разбитые по времени. Все это не добавляет энтузиазма во время предварительной обработки данных.&lt;/p&gt;
 
@@ -115,22 +115,19 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Binary аналог binarizer в scikit-learn&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;One Hot аналог OnHotEncoder в scikit-learn&lt;/p&gt;
+    &lt;p&gt;Binary и One Hot — аналоги OnHotEncoder в scikit-learn&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Base N комбинация One Hot и Binary&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn&lt;/p&gt;
+    &lt;p&gt;Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Кроме того, реализован Hashing, позволяющий хешировать переменную. Это аналог FeatureHasher (последний больше подходит для работы с текстом).&lt;/p&gt;
 
-&lt;p&gt;К сожалению, в библиотеке не реализован частотный кодировщик и в принципе не реализованы методы работы с временными рядами.&lt;/p&gt;
+&lt;p&gt;К сожалению, в библиотеке в принципе не реализованы методы работы с категориальными признаками, распределенными по времени.&lt;/p&gt;
 
 &lt;p&gt;Дополнительные статьи по этой тематике: &lt;a href=&quot;https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02&quot;&gt;один&lt;/a&gt;, &lt;a href=&quot;https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8&quot;&gt;два&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="preprocessing" /><category term="category-encoders" /><category term="sklearn" /><category term="scikit-learn" /><category term="ml-data" /><summary type="html">В статье «особенности препроцессинга данных в scikit-learn» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.</summary></entry><entry><title type="html">Вычислительная сложность машинного обучения. Базовые принципы</title><link href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html" rel="alternate" type="text/html" title="Вычислительная сложность машинного обучения. Базовые принципы" /><published>2019-10-19T00:00:00+02:00</published><updated>2019-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">&lt;p&gt;Чуть ранее, в статье &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;временная сложность алгоритмов машинного обучения&lt;/a&gt;, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.&lt;/p&gt;
 

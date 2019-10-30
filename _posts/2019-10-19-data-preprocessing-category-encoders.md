@@ -85,16 +85,14 @@ keywords: подготовка данных машинное обучение п
 
 В CE реализовано несколько базовых кодировщиков:
 
-- Binary аналог binarizer в scikit-learn
-
-- One Hot аналог OnHotEncoder в scikit-learn
+- Binary и One Hot — аналоги OnHotEncoder в scikit-learn
 
 - Base N комбинация One Hot и Binary
 
-- Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn
+- Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)
 
 Кроме того, реализован Hashing, позволяющий хешировать переменную. Это аналог FeatureHasher (последний больше подходит для работы с текстом).
 
-К сожалению, в библиотеке не реализован частотный кодировщик и в принципе не реализованы методы работы с временными рядами.
+К сожалению, в библиотеке в принципе не реализованы методы работы с категориальными признаками, распределенными по времени.
 
 Дополнительные статьи по этой тематике: [один](https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02), [два](https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8)
