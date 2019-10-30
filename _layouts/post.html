@@ -16,6 +16,10 @@ layout: default
   <div class="prose" itemprop="articleBody">
       {{ content }}
   </div>
+  {% if jekyll.environment == 'production' %}
+    {% include share-bar.html %}
+    {% include comments.html %}
+  {% endif %}
 
   <p class="h4 mt-4">Все статьи с тегом <a href="/tag/{{ page.tag-for-sollecting }}" class="link-tags">{{ page.tag-for-sollecting }}</a></p>
   <div class="prose mb-4">
