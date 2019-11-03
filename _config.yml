@@ -15,23 +15,31 @@
 # in the templates via {{ site.myvariable }}.
 title: My deep learning
 email: oformleno@gmail.com
+author: Klepikov Konstantin
 description: >- # this means to ignore newlines until "baseurl:"
   Блог про нейронные сети и машинное обучение
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://konstantinklepikov.github.io" # the base hostname & protocol for your site
+social:
+  links:
+    - https://t.me/KlepikovKonstantin
+    - https://github.com/KonstantinKlepikov
+    - https://facebook.com/konstatin.klepikov
+lang: ru_RU
+
 # twitter_username: 
 facebook_username: konstatin.klepikov
 telegram_username: KlepikovKonstantin
-github_username:  KonstantinKlepikov
+github_username: KonstantinKlepikov
 
 # Build settings
 markdown: kramdown
-# theme: minima
 theme: jekyll-swiss
 theme_color: magenta
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
