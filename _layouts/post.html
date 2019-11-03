@@ -21,8 +21,8 @@ layout: default
     {% include comments.html %}
   
 
-  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/{{ page.tag-for-sollecting }}" class="link-tags">{{ page.tag-for-sollecting }}</a></p>
-  <div class="prose mb-4">
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/{{ page.tag-for-sollecting }}" class="link-tags">{{ page.tag-for-sollecting }}</a></p>
+  <div class="prose mb-2">
     <ul>
         {% for post in site.tags[page.tag-for-sollecting] %}
         <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
