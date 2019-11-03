@@ -284,10 +284,10 @@
 
 <ul>
   <li>
-    <p>Target Encoder. Переменная кодируется по формуле <script type="math/tex">x^k = prior*(1 - s) + s*\frac{n^+}{n}</script>, где <script type="math/tex">s = \frac{1}{1 + \exp(\frac{-n - mdl}{\alpha})}</script>, а <script type="math/tex">\scriptsize mdl</script> — минимум среди всех примеров на уровне.</p>
+    <p>Target Encoder. Переменная кодируется по формуле <script type="math/tex">x^k = prior*(1 - s)</script> <script type="math/tex">+ s*\frac{n^+}{n}</script>, где <script type="math/tex">s = \frac{1}{1 + \exp(\frac{-n - mdl}{\alpha})}</script>, а <script type="math/tex">\scriptsize mdl</script> — минимум среди всех примеров на уровне.</p>
   </li>
   <li>
-    <p>James-Stein Encoder кодируется по формуле <script type="math/tex">x^k = (1 - B) * \frac{n^+ + prior*m}{u^+ + m} + B*\frac{y^+}{y}</script>, где <script type="math/tex">B</script> дополнительный гиперпараметр, регулирующий переобучение</p>
+    <p>James-Stein Encoder кодируется по формуле <script type="math/tex">x^k = (1 - B) * \frac{n^+ + prior*m}{u^+ + m}</script> <script type="math/tex">+ B*\frac{y^+}{y}</script>, где <script type="math/tex">B</script> дополнительный гиперпараметр, регулирующий переобучение</p>
   </li>
   <li>
     <p>M-estimate кодируется по формуле <script type="math/tex">x^k = \frac{n^+}{n} + B * \frac{y^+}{y}</script>, где <script type="math/tex">m = 1... 100</script> — дополнительный гиперпараметр, регулирующий переобучение. (На момент написания статьи кодировщик работает некорректно)</p>
@@ -363,8 +363,8 @@
 </script>
   
 
-  <p class="h4 mt-4">Все статьи с тегом <a href="/tag/category-encoders" class="link-tags">category-encoders</a></p>
-  <div class="prose mb-4">
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/category-encoders" class="link-tags">category-encoders</a></p>
+  <div class="prose mb-2">
     <ul>
         
         <li><a href="/2019/10/28/data-preprocessing-category-encoders.html" title="Подготовка данных: кодирование категориальных признаков">Подготовка данных: кодирование категориальных признаков</a> (28 Oct 2019)<br>

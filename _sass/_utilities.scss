@@ -10,6 +10,27 @@
   }
 }
 
+.h1 {
+  font-size: $h2-size;
+  @media (min-width: $breakpoint-lg) {
+    font-size: $h1-size;
+  }
+}
+
+h2 {
+  font-size: $h3-size;
+  @media (min-width: $breakpoint-lg) {
+    font-size: $h2-size;
+  }
+}
+
+h3 {
+  font-size: $h4-size;
+  @media (min-width: $breakpoint-lg) {
+    font-size: $h3-size;
+  }
+}
+
 .text-right { text-align: right; }
 
 .no-underline {
