@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2019-11-03T19:34:01+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2019-11-14T00:57:45+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
 
-&lt;p&gt;Часто данные содержат множественные категориальные признаки, часть из которых представлена несколькими категориями. В некоторых случаях категорий оказывается сравнительно много, по отношению к общему объему данных. Иногда значения в категориальных признаках распределены по-разному, в частности, могут быть определены какие-то серии, разбитые по времени. Все это не добавляет энтузиазма во время предварительной обработки данных.&lt;/p&gt;
+&lt;p&gt;Часто данные содержат множественные категориальные признаки с разными представлениями категорий. В некоторых случаях категорий оказывается сравнительно много, по отношению к общему объему данных. Иногда значения в категориальных признаках имеют различные распределения, могут иметь как явный, так и неочевидный порядок. Все это не добавляет энтузиазма во время предварительной обработки.&lt;/p&gt;
 
-&lt;p&gt;К счастью, есть другие готовые решения, в т.ч. библиотека &lt;strong&gt;&lt;a href=&quot;https://contrib.scikit-learn.org/categorical-encoding/&quot;&gt;Category Encoders&lt;/a&gt; (CE)&lt;/strong&gt;, предоставляющая широкий набор кодировщиков категориальных признаков.&lt;/p&gt;
+&lt;p&gt;К счастью, есть готовые решения, например библиотека &lt;strong&gt;&lt;a href=&quot;https://contrib.scikit-learn.org/categorical-encoding/&quot;&gt;Category Encoders&lt;/a&gt; (CE)&lt;/strong&gt;, предоставляющая широкий набор кодировщиков категориальных признаков.&lt;/p&gt;
 
 &lt;h2 id=&quot;какие-преимущества-у-ce&quot;&gt;Какие преимущества у CE&lt;/h2&gt;
 
@@ -11,13 +11,13 @@
     &lt;p&gt;Наверное, самое основное — это полная совместимость с scikit-learn. Доступны методы fit, fit_transform, get_params, set_params и transform. На основе CE можно строить пайплайны в scikit-learn.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Поддержка numpy и pandas. Что важно — pandas dataframe можно получить и на выходе кодировщика. Иногда это весьма полезно, особенно когда нужно выполнить выборочное кодирование. Это позволяет не городить самодельный забор из кодировщиков, а использовать CE непосредственно в пайплайне scikit-learn.&lt;/p&gt;
+    &lt;p&gt;Поддержка numpy и pandas. Что важно — pandas dataframe можно получить и на выходе кодировщика. Иногда это весьма полезно, особенно когда нужно выполнить выборочное кодирование. Это позволяет не городить самодельный забор из кодировщиков, а использовать CE непосредственно в последовательном пайплайне scikit-learn.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Есть возможность выбрать и явно указать кодируемые столбцы&lt;/p&gt;
+    &lt;p&gt;Есть возможность задать маску для кодирования, т.е. сделать выборочное кодирование&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Можно отбрасывать часть данных&lt;/p&gt;
+    &lt;p&gt;Можно отбросить часть данных&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Спроектированный кодировщик отлично портируется на рабочие данные.&lt;/p&gt;
@@ -28,20 +28,20 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;кодирование номинальных признаков (nominal) — признаки, порядок которых не определен&lt;/p&gt;
+    &lt;p&gt;кодирование номинальных признаков (nominal) — признаки, порядок которых не определен (часто в табличных данных к таким признакам относятся распределения по цветам или по городам)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;кодирование упорядоченных признаков (ordinal) признаки, порядок которых не частично определен&lt;/p&gt;
+    &lt;p&gt;кодирование упорядоченных признаков (ordinal) — признаки, порядок которых можно считать определенным (например, распределение по яркости)&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Можно кодировать бинарные признаки, упорядоченные по алфавиту или численному возрастанию признаки, а так же географические, геометрические данные, данные о времени и другие структурированные данные.&lt;/p&gt;
+&lt;p&gt;В CE можно кодировать бинарные признаки, упорядоченные по алфавиту или численному возрастанию признаки, а также географические, геометрические данные, данные о времени и другие структурированные данные. Единственное ограничение — решение не предоставляет собственного способа для создания масок для выборочного кодирования.&lt;/p&gt;
 
 &lt;h2 id=&quot;что-имеется-в-наборе-ce&quot;&gt;Что имеется в наборе CE&lt;/h2&gt;
 
 &lt;h3 id=&quot;contrast-coding&quot;&gt;Contrast Coding&lt;/h3&gt;
 
-&lt;p&gt;Данный тип кодирование разбивает столбец на уровни (в каждом только значения, относящиеся к одной категории). Затем для каждого уровня вычисляется некоторая статистика. Например, вот так это делается в &lt;a href=&quot;http://www.statsmodels.org/dev/contrasts.html&quot;&gt;statsmodels&lt;/a&gt;. Метод подходит для кодирования номинальных и частично упорядоченных признаков.&lt;/p&gt;
+&lt;p&gt;Данный тип кодирование разбивает признак на уровни (в каждом только значения, относящиеся к одной категории). Затем для каждого уровня вычисляется некоторая статистика. Например, вот так это делается в &lt;a href=&quot;http://www.statsmodels.org/dev/contrasts.html&quot;&gt;statsmodels&lt;/a&gt;. Метод подходит для кодирования номинальных и частично упорядоченных признаков.&lt;/p&gt;
 
 &lt;p&gt;В CE реализованы следующие кодеры:&lt;/p&gt;
 
@@ -56,18 +56,18 @@
     &lt;p&gt;Sum Coding — сравнивается среднее для уровня со средним для всех остальных уровней&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Polynomial Coding — используются линейные, квадратичные и кубические представления целевого признака. Подходит исключительно для упорядоченных признаков, интервалы между которыми одинаковы.&lt;/p&gt;
+    &lt;p&gt;Polynomial Coding — используются линейные, квадратичные и кубические представления целевой категории. Подходит исключительно для упорядоченных признаков, интервалы между категориями которых одинаковы. Ну и довольно прожорлив по памяти.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;В CE не реализованы:&lt;/p&gt;
+&lt;p&gt;Не реализованы:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;Deviation Coding — более общий случай суммирующего кодирования, когда сравнение идет со всеми уровнями&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Dummy Coding — сравнение со средним значением на уровне уровнем&lt;/p&gt;
+    &lt;p&gt;Dummy Coding — сравнение со средним значением на уровне&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Simple Coding — то же самое, что и Dummy Coding, только в качестве среднего принимается среднее всех значений фиксированного уровня&lt;/p&gt;
@@ -84,7 +84,7 @@
 
 &lt;h3 id=&quot;target-based-coding&quot;&gt;Target-based Coding&lt;/h3&gt;
 
-&lt;p&gt;Для кодирования переменных используются сведения о разметке (цели) дата-сета. Для кодирования обычно используются следующие понятия: &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; общее число примеров, &lt;script type=&quot;math/tex&quot;&gt;y^+&lt;/script&gt; число примеров, размеченных «положительной» целью, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; число примеров в уровне, &lt;script type=&quot;math/tex&quot;&gt;n^+&lt;/script&gt; число примеров уровня, отнесенных к положительному классу, &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; регуляризирующий параметр, &lt;script type=&quot;math/tex&quot;&gt;prior&lt;/script&gt; среднее значение цели. В CE реализованы:&lt;/p&gt;
+&lt;p&gt;Для кодирования переменных используются сведения о разметке (цели) дата-сета. Тут надо знать следующие понятия: &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; общее число примеров, &lt;script type=&quot;math/tex&quot;&gt;y^+&lt;/script&gt; число примеров, отнесенных к «положительному» классу, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; число примеров на уровне, &lt;script type=&quot;math/tex&quot;&gt;n^+&lt;/script&gt; число примеров уровня, отнесенных к положительному классу, &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; регуляризирующий параметр, &lt;script type=&quot;math/tex&quot;&gt;prior&lt;/script&gt; среднее значение цели. В CE реализованы:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -94,11 +94,16 @@
     &lt;p&gt;James-Stein Encoder кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = (1 - B) * \frac{n^+ + prior*m}{u^+ + m}&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;+ B*\frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; дополнительный гиперпараметр, регулирующий переобучение&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;M-estimate кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \frac{n^+}{n} + B * \frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = 1... 100&lt;/script&gt; — дополнительный гиперпараметр, регулирующий переобучение. (На момент написания статьи кодировщик работает некорректно)&lt;/p&gt;
+    &lt;p&gt;M-estimate кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \frac{n^+}{n} + B * \frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = 1... 100&lt;/script&gt; — дополнительный гиперпараметр, регулирующий переобучение. По сути — упрощенный вариант Target Encoder. (На момент написания статьи кодировщик работает некорректно)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Weight of Evidence (WOE) считается по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \ln(\frac{nominator}{denominator})&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;nominator = \frac{n^+ + \alpha}{y^+ + 2\alpha}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;denominator = \frac{n - n^+ + \alpha}{y - y^+ + 2\alpha}&lt;/script&gt;&lt;/p&gt;
+    &lt;p&gt;Weight of Evidence (WOE) считается по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \ln(\frac{nominator}{denominator})&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;nominator = \frac{n^+ + \alpha}{y^+ + 2\alpha}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;denominator = \frac{n - n^+ + \alpha}{y - y^+ + 2\alpha}&lt;/script&gt;. Кодировщик часто используется для подсчета рисков и других скорингов, т.к. по сути производит упорядочивание в логарифмическом масштабе. Хорошо решает проблему стандартизации и группировки разреженных данных. Проблема — теряются данные на биннинге, не учитывается корреляция между зависимыми данными и сам кодировщик легко может переобучиться.&lt;/p&gt;
   &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Альтернативой WOE является PRE (Probability Ratio Encoding). В этом случае для каждой метки вычисляется &lt;script type=&quot;math/tex&quot;&gt;P(1)/P(0)&lt;/script&gt;, т.е отношение вероятностей того, что объект размечен положительно и вероятность отрицательной разметки. Этим значением заменяется значение при кодировании. &lt;script type=&quot;math/tex&quot;&gt;P(0)&lt;/script&gt; естественно ни при каких условиях не принимается равным 0. В CE метод не реализован.&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;Leave One Out (LOO) считается среднее цели для примера выбранной категории, для случая, когда пример удален из дата-сета.&lt;/p&gt;
   &lt;/li&gt;
@@ -107,7 +112,7 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;У всех target-based кодировщиков имеет место проблема риска переобучения, так как используются данные о разметке дата-сета. Два варианта решения — дополнительная регуляризация и двойная кросс-валидация. Кроме того, последние два плохо работают, если реальные данные имеют другую размерность, нежели те, на которых обучалась модель.&lt;/p&gt;
+&lt;p&gt;У всех target-based кодировщиков имеет место проблема риска переобучения, так как используются данные о разметке дата-сета. Два варианта решения — дополнительная регуляризация и двойная кросс-валидация. Кроме того LOO и Catboost Encoder работают плохо, если реальные данные имеют другую размерность, что приводит к сдвигу по отноешнию к данным, на которых производилось обучение.&lt;/p&gt;
 
 &lt;h3 id=&quot;остальные-кодировщики&quot;&gt;Остальные кодировщики&lt;/h3&gt;
 
@@ -115,19 +120,52 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Binary и One Hot — аналоги OnHotEncoder в scikit-learn&lt;/p&gt;
+    &lt;p&gt;One Hot — аналог OnHotEncoder в scikit-learn или get_dummies в pandas&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Base N комбинация One Hot и Binary&lt;/p&gt;
+    &lt;p&gt;Ordinal только для упорядоченных признаков (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Ordinal аналог LabelEncoder или OrdinalEncoder в scikit-learn (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)&lt;/p&gt;
+    &lt;p&gt;Binary конвертит категории признака в бинарный код. Категории конвертятся в номера по порядку, затем номера кодируются на двоичной базе, а затем единицы и нули из полученых кодированных значений выносятся в новые признаки. По сути, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; категорий переводятся в &lt;script type=&quot;math/tex&quot;&gt;log_{2}n&lt;/script&gt; бинаризированных признаков. Это весьма значительно сокращает количество признаков на выходе по сравнению с One Hot и полезно, когда число кодируемых категорий значительно.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Base N комбинирует One Hot и Binary&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Кроме того, реализован Hashing, позволяющий хешировать переменную. Это аналог FeatureHasher (последний больше подходит для работы с текстом).&lt;/p&gt;
+&lt;p&gt;Кроме того, реализован Hashing, позволяющий хешировать категории. Это аналог FeatureHasher (последний больше подходит для работы с текстом). Также походит для кодирования большого числа категорий, так как сокращает размерность на выходе по сравнению с One Hot.&lt;/p&gt;
 
-&lt;p&gt;К сожалению, в библиотеке в принципе не реализованы методы работы с категориальными признаками, распределенными по времени.&lt;/p&gt;
+&lt;h3 id=&quot;чего-нет-в-ce&quot;&gt;Чего нет в CE&lt;/h3&gt;
+
+&lt;p&gt;Не реализован Label Encoding. Можно воспользоваться factorize из pandas или LabelEncoder из sklearn или Ordinal, что то же самое. Не реализован Frequincy Encoding, когда категории кодируются в числовом виде в зависимости от частоты для признака в диапазоне [0, 1]. Кроме того, нет методов для кодирования признаков, которые явно упорядочены циклически, например, дат и времени. Ну и, естественно, нет методов для конструирования признаков, таких как разделение выражения на части и т.д. Все это придется написать самостоятельно или искать более специфическое решение.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-использовать-кодирование-категориальных-признаков&quot;&gt;Как использовать кодирование категориальных признаков&lt;/h2&gt;
+
+&lt;p&gt;Есть множество разных рекомендаций. Все их можно свести к следующему:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Определить, относится ли вообще признак к категориальному и посчитать количество категорий.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Необходимо понять природу категориального признака, отнести его к номинальному или упорядоченному типу, установить циклические зависимости для категорий и другие особенности распределения категорий&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Необходимо знать, к какому распределению данных лучше приспособлена обучаемая модель. Это позволит сразу выбрать наиболее оптимальный метод кодирования&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Методы, использующие гиперпараметры, желательно сразу включить в цикл поиска оптимального решения.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Для частично упорядоченных признаков понять, можно ли соотнести категории с численными значениями, расположенными на эквивалентных интервалах. Если да, то стоит подумать о применении Ordinal Encoding. если нет, то можно попробовать один из методов контрастного кодирования. Если же количество категорий велико и есть проблемы с вычислительной сложностью по памяти, можно попробовать один из методов кодирования, сокращающий выходную размерность, например, хеширование. При этом надо помнить, что это может привести к потере данных.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Для неупорядоченных признаков можно использовать One Hot, если число категорий невелико. Большое количество категорий  можно также бинаризировать или хешировать, если потеря части данных приемлема. Если нет, придется использовать один из методов target encoding. Необходимо помнить о переобучении и построить, при необходимости, двойную кросс-валидацию.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;На практике, на мой взгляд, можно миксовать различные методы, попутно расширяя пространство признаков. Например, можно сконструировать новые признаки, применить относительно простые кодировщики к части исходных, а на выходе закодировать весь пул по цели. Пространство для экспериментов ограничено, как всегда, только по вычислительной сложности.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Дополнительные статьи по этой тематике: &lt;a href=&quot;https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02&quot;&gt;один&lt;/a&gt;, &lt;a href=&quot;https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8&quot;&gt;два&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="preprocessing" /><category term="category-encoders" /><category term="sklearn" /><category term="scikit-learn" /><category term="ml-data" /><summary type="html">В статье «особенности препроцессинга данных в scikit-learn» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.</summary></entry><entry><title type="html">Вычислительная сложность машинного обучения. Базовые принципы</title><link href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html" rel="alternate" type="text/html" title="Вычислительная сложность машинного обучения. Базовые принципы" /><published>2019-10-19T00:00:00+02:00</published><updated>2019-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">&lt;p&gt;Чуть ранее, в статье &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;временная сложность алгоритмов машинного обучения&lt;/a&gt;, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.&lt;/p&gt;
 
