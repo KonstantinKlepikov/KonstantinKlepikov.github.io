@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Begin Jekyll SEO tag v2.5.0 -->
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>CS231n: Обучение Support Vector Machine | My deep learning</title>
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="CS231n: Обучение Support Vector Machine" />
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-05-31T00:00:00+02:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html"},"url":"https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html","author":{"@type":"Person","name":"Klepikov Konstantin"},"headline":"CS231n: Обучение Support Vector Machine","description":"Подготовка проекта","datePublished":"2019-05-31T00:00:00+02:00","dateModified":"2019-05-31T00:00:00+02:00","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"url":"https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html","headline":"CS231n: Обучение Support Vector Machine","dateModified":"2019-05-31T00:00:00+02:00","datePublished":"2019-05-31T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Подготовка проекта","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2019/05/31/cs2131n-svm.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="cs231n компьютерное зрение visual recognition нейронные сети deep learning глубокое обучение машинное обучение machine learning data science support vector mashine svm">
@@ -260,20 +260,20 @@
 
 <p>Кстати, в курсе приводится такой SVM:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">L_i</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c">#1</span>
-  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c">#2</span>
-  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">L_i</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c1">#1
+</span>  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1">#2
+</span>  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
   <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
   <span class="n">D</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   <span class="n">loss_i</span> <span class="o">=</span> <span class="mf">0.0</span>
-  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span> <span class="c">#3</span>
-    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span> <span class="c1">#3
+</span>    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
     <span class="o">...</span>
-    <span class="n">loss_i</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span> <span class="c">#4</span>
-  <span class="k">return</span> <span class="n">loss_i</span>
+    <span class="n">loss_i</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span> <span class="c1">#4
+</span>  <span class="k">return</span> <span class="n">loss_i</span>
 
-<span class="k">def</span> <span class="nf">L_i_vectorized</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c">#5</span>
-  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">def</span> <span class="nf">L_i_vectorized</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span> <span class="c1">#5
+</span>  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span>
   <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
   <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span>
   <span class="n">margins</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -303,22 +303,22 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">eval_numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 
-  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c">#1</span>
-  <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-  <span class="n">h</span> <span class="o">=</span> <span class="mf">0.00001</span> <span class="c">#2</span>
-
-  <span class="c"># iterate over all indexes in x</span>
-  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s">'multi_index'</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s">'readwrite'</span><span class="p">])</span> <span class="c">#3</span>
-  <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#1
+</span>  <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="mf">0.00001</span> <span class="c1">#2
+</span>
+  <span class="c1"># iterate over all indexes in x
+</span>  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s">'multi_index'</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s">'readwrite'</span><span class="p">])</span> <span class="c1">#3
+</span>  <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
 
     <span class="n">ix</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
     <span class="n">old_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
     <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="o">+</span> <span class="n">h</span>
-    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c"># 4</span>
-    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span>
+    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># 4
+</span>    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span>
 
-    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c"># 5</span>
-    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
+    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c1"># 5
+</span>    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
 
   <span class="k">return</span> <span class="n">grad</span>
 </code></pre></div></div>
@@ -354,8 +354,8 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">cs231n.classifiers.linear_svm</span> <span class="kn">import</span> <span class="n">svm_loss_naive</span>
 
-<span class="c"># generate a random SVM weight matrix of small numbers</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3073</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span>
+<span class="c1"># generate a random SVM weight matrix of small numbers
+</span><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3073</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span>
 
 <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'loss: </span><span class="si">%</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">))</span>
@@ -363,28 +363,28 @@
 
 <p>Кстати, обратите внимание, что веса задаются случайно, а скорость обучения равна <script type="math/tex">0.5*1e^{-5}</script>. Взглянем на то, как вычисляется функция потерь.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span> <span class="c">#1</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="p">):</span> <span class="c1">#1
+</span>
   <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
   <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span> <span class="c">#2</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span> <span class="c1">#2
+</span>    <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
     <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
       <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
         <span class="k">continue</span>
-      <span class="n">margin</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="mi">1</span> <span class="c">#3</span>
-      <span class="k">if</span> <span class="n">margin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c">#4</span>
-        <span class="n">loss</span> <span class="o">+=</span> <span class="n">margin</span>
+      <span class="n">margin</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">#3
+</span>      <span class="k">if</span> <span class="n">margin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#4
+</span>        <span class="n">loss</span> <span class="o">+=</span> <span class="n">margin</span>
         <span class="n">dW</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">dW</span><span class="p">[:,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
   
-  <span class="n">loss</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c">#5</span>
-  <span class="n">dW</span> <span class="o">/=</span> <span class="n">num_train</span>
-  <span class="n">loss</span> <span class="o">+=</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span> <span class="c">#6</span>
-  <span class="n">dW</span> <span class="o">+=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">reg</span>
+  <span class="n">loss</span> <span class="o">/=</span> <span class="n">num_train</span> <span class="c1">#5
+</span>  <span class="n">dW</span> <span class="o">/=</span> <span class="n">num_train</span>
+  <span class="n">loss</span> <span class="o">+=</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">W</span><span class="p">)</span> <span class="c1">#6
+</span>  <span class="n">dW</span> <span class="o">+=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">reg</span>
 
   <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span>
 </code></pre></div></div>
@@ -424,25 +424,25 @@
 <p>Последний большой блок в задаче посвящен градиентному спуску. В этой задаче необходимо открыть linear_classifier.py и написать функцию LinearClassifier.train(). Посмотрим что из себя представляет эта функция.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-          <span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span> <span class="c">#1</span>
-
+          <span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span> <span class="c1">#1
+</span>
   <span class="n">num_train</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
   <span class="n">num_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span> <span class="c">#2</span>
-
-  <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span> <span class="c">#3</span>
-  <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span> <span class="c1">#2
+</span>
+  <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#3
+</span>  <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
     <span class="n">X_batch</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">y_batch</span> <span class="o">=</span> <span class="bp">None</span> <span class="c">#4</span>
-
+    <span class="n">y_batch</span> <span class="o">=</span> <span class="bp">None</span> <span class="c1">#4
+</span>
     <span class="n">batch_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
     <span class="n">X_batch</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">batch_ix</span><span class="p">]</span>
     <span class="n">y_batch</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">batch_ix</span><span class="p">]</span>
 
     <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">,</span> <span class="n">reg</span><span class="p">)</span>
-    <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c">#5</span>
-
+    <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c1">#5
+</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">-=</span> <span class="n">grad</span> <span class="o">*</span> <span class="n">learning_rate</span>
 
     <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">it</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
