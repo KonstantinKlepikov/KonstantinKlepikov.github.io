@@ -37,3 +37,4 @@ gem 'jekyll-seo-tag'
 
 gem "rubyzip", ">= 1.3.0"
 gem "nokogiri", ">= 1.10.4"
+gem "activesupport", ">= 4.1.11"
