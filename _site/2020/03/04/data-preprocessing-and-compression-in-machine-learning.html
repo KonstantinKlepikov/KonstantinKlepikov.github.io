@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Подготовка и оптимизация данных для задач машинного обучения | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Подготовка и оптимизация данных для задач машинного обучения" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных." />
+<meta property="og:description" content="Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных." />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-04T00:00:00+02:00" />
+<script type="application/ld+json">
+{"url":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html","headline":"Подготовка и оптимизация данных для задач машинного обучения","dateModified":"2020-03-04T00:00:00+02:00","datePublished":"2020-03-04T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="optimisation data preprocessing machine learning машинное обучение оптимизация подготовка данных pandas python">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Подготовка и оптимизация данных для задач машинного обучения</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2020-03-04T00:00:00+02:00" itemprop="datePublished">Mar 4, 2020</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/ml-data" title="ml-data" class="link-tags">ml-data&nbsp;</a>
+    
+      
+      <a href="/tag/phyton" title="phyton" class="link-tags">phyton&nbsp;</a>
+    
+      
+      <a href="/tag/preprocessing" title="preprocessing" class="link-tags">preprocessing&nbsp;</a>
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.</p>
+
+<h2 id="проблема-неоптимизированных-данных">Проблема неоптимизированных данных</h2>
+
+<p>С какими задачами можно столкнуться и зачем вообще питонисту работать с данными?</p>
+
+<ul>
+  <li>
+    <p>компания собрала дату, «потому что это важно»</p>
+  </li>
+  <li>
+    <p>люди, которые проектировали «склад» данных уволились, сошли с ума или умерли</p>
+  </li>
+  <li>
+    <p>пришло время «извлечь из этого смыслы» и «применить кейсы»</p>
+  </li>
+</ul>
+
+<p>Это означает, что потребуется разобрать авгиевы конюшни данных и построить какие-то модели машинного обучения. И тут-то все как раз и вспоминают про Вас. При этом есть несколько нюансов:</p>
+
+<ul>
+  <li>
+    <p>абсолютно никто не в курсе что значат все эти забавные числа и строки из базы данных</p>
+  </li>
+  <li>
+    <p>никого особо не интересует сколько это будет стоить в расчетах (кстати, как всегда, сделать надо было вчера)</p>
+  </li>
+  <li>
+    <p>совершенно очевидно, что на эту задачу амазоновские инстансы за 100500 миллиардов долларов Вам не выделят</p>
+  </li>
+</ul>
+
+<p>Часто самым первым шагом после извлечения массива, является построение некой сырой модели данных. Тут можно применять множество подходов, таких как, к примеру, разведочный анализ. Важно, что на этом этапе приходится обращаться к большому объему информации и производить определенные манипуляции вручную, что обходится дорого по времени. <strong>Что делать?</strong> Попробуем разобраться в приемах оптимизации на примере данных с kaggle-соревнования <a href="https://www.kaggle.com/c/data-science-bowl-2019">data-science-bowl-2019</a>.</p>
+
+<p><img src="../../../assets/img/040320-01.png" alt="data-science-bowl-2019" title="data-science-bowl-2019" /></p>
+
+<p>Цель соревнования рассматривать не будем, нас интересует только формат данных. Особенностью этой конкретной задачи было то, что она была ограничена весьма скромными вычислительными ресурсам. А это как раз наш случай. В задаче использовался датасет, содержащий почти 12 млн строк. Для наглядности я буду использовать только 200 тыс.строк и не стану приводить в данной статье исходники или каким-то образом исследовать данные, т.к. правилами конкурса запрещено использование датасет в целях, не связанных с соревнованием. Если Вам интересно разобраться непосредственно с задачей data-science-bowl-2019, Вы всегда можете сделать это самостоятельно на <a href="https://www.kaggle.com/c/data-science-bowl-2019">kaggle.com</a></p>
+
+<p>После загрузки и формирования дата-фрейма посмотрим на данные с помощью метода info() библиотеки pandas</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 11 entries, installation_id to world
+dtypes: int64(3), object(8)
+memory usage: 16.8+ MB
+</code></pre></div></div>
+
+<p>Здесь мы сразу встречаем первую ошибку, которая довольно часто в дальнейшем стоит значительных временных затрат. Дело в том, что метод info() оценивает объем данных в дата-фрейме приблизительно — нам об этом намекает скромный значек “+” после значения задействованной памяти. Особенно этот перекос становится заметен, если данные содержат объекты с вложенными структурами. Посмотрим еще раз, но теперь глубже.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 11 entries, installation_id to world
+dtypes: int64(3), object(8)
+memory usage: 147.3 MB
+</code></pre></div></div>
+
+<p>Почти в десять раз больше! Очевидно, что 200 тыс. строк, которые составляют менее 2% всего объема предоставленных данных, весят слишком много и их обработка потребует ресурсных затрат. Построение же модели на всех данных может оказаться и вовсе невыполнимой задачей по потребляемой памяти.</p>
+
+<p>Заглянем внутрь (в качестве примера здесь и далее показаны несколько строк и заголовки колонок)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>installation_id</th>
+      <th>event_id</th>
+      <th>game_session</th>
+      <th>timestamp</th>
+      <th>event_data</th>
+      <th>event_count</th>
+      <th>event_code</th>
+      <th>game_time</th>
+      <th>title</th>
+      <th>type</th>
+      <th>world</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0001e90f</td>
+      <td>27253bdc</td>
+      <td>45bb1e1b6b50c07b</td>
+      <td>2019-09-06T17:53:46.937Z</td>
+      <td>{“event_code”: 2000, “event_count”: 1}</td>
+      <td>1</td>
+      <td>2000</td>
+      <td>0</td>
+      <td>Welcome to Lost Lagoon!</td>
+      <td>Clip</td>
+      <td>NONE</td>
+    </tr>
+    <tr>
+      <td>0001e90f</td>
+      <td>77261ab5</td>
+      <td>0848ef14a8dc6892</td>
+      <td>2019-09-06T17:54:56.302Z</td>
+      <td>{“version”:”1.0”,”event_count”:1,”game_time”:0,”event_code”:2000}</td>
+      <td>1</td>
+      <td>2000</td>
+      <td>0</td>
+      <td>Sandcastle Builder (Activity)</td>
+      <td>Activity</td>
+      <td>MAGMAPEAK</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Часть данных являются числовыми, часть объектами. Как минимум одна серия имеет неограниченно вложенную структуру. Нам явно нужно привести данные к некоему единому виду.</p>
+
+<h2 id="почему-нам-вообще-может-понадобиться-приводить-данные-к-какому-то-виду">Почему нам вообще может понадобиться приводить данные к какому-то виду</h2>
+
+<ul>
+  <li>
+    <p>большинство алгоритмов ML требует предварительной подготовки данных, например, приведение к числовому виду</p>
+  </li>
+  <li>
+    <p>часто данные нужно дополнительно привести к определенному виду для того чтобы срослась математика, например, нормализовать или привести к логарифмическому масштабу</p>
+  </li>
+  <li>
+    <p>машинное обучение точно плохо понимает неразобранные составные объекты</p>
+  </li>
+  <li>
+    <p>для большинства алгоритмов сложность по пространству/времени в основном сосредоточена на построении модели. Это хорошо для продакшена, но сильно увеличивает расходы на поиск решения</p>
+  </li>
+</ul>
+
+<p>Попробуем «разобрать» json-подобный объект, находящийся в колонке event_data. Для этого воспользуемся <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html">pandas.json_normalize</a>, который разбирает структурированные данные из JSON в табличный формат, а также <a href="https://docs.python.org/3/library/json.html">json.load</a>, который десериализует текст или байткод, содержащий json-документ в python-объекты. Чтобы применить эти методы ко всей серии, воспользуемся <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">DataFrame.apply</a> (метод не сильно быстрый, но нам требуется выполнить эту операцию всего один раз, поэтому, в данном случае, время смело приносим в жертву).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># json unpack
+</span><span class="n">df_train_extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
+    <span class="n">df_train</span><span class="p">[</span><span class="s">'event_data'</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>В результате у нас получилось довольно прилично новых признаков (приведено сокращенно)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Data columns (total 136 columns):
+event_code                  int64
+event_count                 int64
+version                     object
+game_time                   float64
+description                 object
+...
+gate.column                 float64
+gate.side                   object
+dinosaur_weight             float64
+dinosaur_count              float64
+chests                      object
+dtypes: float64(64), int64(2), object(70)
+memory usage: 207.5+ MB
+</code></pre></div></div>
+
+<p>Проблема заключается в том, что нам не удалось полностью разобрать json-подобные объекты, т.к. на самом деле они не отвечают стандарту json. Например, вот эти колонки остались неразобранными:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>flower</th>
+      <th>flowers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.0</td>
+      <td>[0, 0, 0, 0, 0]</td>
+    </tr>
+    <tr>
+      <td>0.0</td>
+      <td>[0, 0, 0, 0, 8]</td>
+    </tr>
+    <tr>
+      <td>0.0</td>
+      <td>[8, 8, 8, 7, 8]</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>shels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[2, 3, 1]</td>
+    </tr>
+    <tr>
+      <td>[2, 3, 2, 1]</td>
+    </tr>
+    <tr>
+      <td>[2, 3, 2, 3, 2]</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>bottles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…</td>
+    </tr>
+    <tr>
+      <td>[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…</td>
+    </tr>
+    <tr>
+      <td>[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>castles_placed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>[{‘size’: 3, ‘position’: {‘x’: 567, ‘y’: 484, ‘stage_width’: 1015, ‘stage_height’: 762}}]</td>
+    </tr>
+    <tr>
+      <td>[{‘size’: 3, ‘position’: {‘x’: 567, ‘y’: 484, ‘stage_width’: 1015, ‘stage_height’: 762}}, {‘size…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Мы видим списки с пропусками, пустые списки, списки неравной длины, списки словарей, а так-же списки с разным числом вложенных вловарей и даже кортежи списков. Все это возникло потому, что так когда-то кому-то было удобно складировать эти данные в базу данных. Теперь это придется разобрать вручную. Данная задача выходит за рамки этой статьи. Тут я всего лишь демонстрирую то, с чем зачастую можно столкнуться при обработке данных.</p>
+
+<p><strong>Что еще можно встретить?</strong> Строки, пустые множества и словари. Булевые и другие значение, в том числе записанные как строки или с ошибками, например так: ‘NONE’, ‘nul’, ‘none’, ‘0’ и т.п., false и true, ‘False’, ‘True’, ‘Yes’, ‘No’ и т.д. - список сильно неполный. Все это требует детального исследования и разбора.</p>
+
+<p>К тому же, не все данные стоит разбирать. Иногда можно встретить готовые векторы, например координаты или списки каких-то сгруппированных значений.</p>
+
+<p>В итоге, что с памятью?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 136 entries, event_code to chests
+dtypes: float64(64), int64(2), object(70)
+memory usage: 543.8 MB
+</code></pre></div></div>
+
+<p>Мы еще сильнее потеряли в потреблении памяти! А данные еще копать и копать…</p>
+
+<h2 id="битва-за-память">Битва за память</h2>
+
+<p>На самом деле Pandas группирует и хранит “столбцы” блоками, разбитыми по типам. Иными словами float, int и objects хранятся раздельно, причем оптимизировано, без индексов. С числами все просто — столбцы в блоке объединяются в многомерный массив NumPy. При запросе значения происходит сопоставление индекса с массивом. С объектами немного сложнее. Все это означает, что <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes">разные объекты</a> по-разному используют память.</p>
+
+<p>Поработаем с разными типами объектов отдельно.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'number'</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">objects_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'object'</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>Для начала разберемся с наименьшим злом — с числами</strong>. В Pandas используются подтипы int8, int16, int32, int64, float16, float32, float64. В нашем случае в результате сравнения при извлечении, числа оказались в наиболее затратном по памяти формате.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Data columns (total 66 columns):
+event_code                  200000 non-null int64
+event_count                 200000 non-null int64
+game_time                   196724 non-null float64
+total_duration              34617 non-null float64
+duration                    67500 non-null float64
+...
+end_position                4 non-null float64
+gate.row                    832 non-null float64
+gate.column                 832 non-null float64
+dinosaur_weight             1547 non-null float64
+dinosaur_count              1550 non-null float64
+dtypes: float64(64), int64(2)
+memory usage: 100.7 MB
+</code></pre></div></div>
+
+<p>Изменим эту ситуацию и вот как: получим минимальное и максимальное значение в серии, затем сравним его с машинными лимитами для типов Numpy, после чего заменим на наименьшее.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'int16'</span><span class="p">,</span> <span class="s">'int32'</span><span class="p">,</span> <span class="s">'int64'</span><span class="p">,</span> <span class="s">'float16'</span><span class="p">,</span> <span class="s">'float32'</span><span class="p">,</span> <span class="s">'float64'</span><span class="p">]</span> 
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span>
+    <span class="k">if</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">numerics</span><span class="p">:</span>
+        <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="nb">min</span><span class="p">()</span>
+        <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">col_type</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s">'int'</span><span class="p">:</span>
+            <span class="c1"># последовательно сравниваем от наименьшего инта начиная с np.int8
+</span>            <span class="c1"># наверх и переопределяем тип для серии
+</span>            <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="nb">max</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="nb">max</span><span class="p">:</span>
+            <span class="c1"># и т.д.
+</span>        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># аналогично для float
+</span></code></pre></div></div>
+
+<p>Мы выполнили самопальный вариант понижающего преобразования, выиграв 74.4Mb.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 66 entries, event_code to dinosaur_count
+dtypes: float16(61), float32(3), int16(2)
+memory usage: 26.3 MB
+</code></pre></div></div>
+
+<p>Но у нас все еще есть проблема:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>flower</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Оказывается, везде в датасете использовано число с плавающей точкой, хотя на самом деле никакой потребности в этом нет - в этих данных все числа целые. Исправим эту ситуацию:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">numerics_part</span> <span class="o">=</span> <span class="n">numerics_part</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>В данном случае мы заменили все пропуски в данных на -1, что открыло для нас возможность применить преобразование типов. Прием замены пропусков на число довольно часто встречается — обычно выбирают число, которое не встречается в данных, к примеру -9999. В нашем случае в данных вообще нет отрицательных чисел, поэтому мы просто взяли наименьшее кешированное, что бы сэкономить и тут. К тому же этот трюк окажется полезен в будущем. Смотрим на результат преобразования:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Data columns (total 66 columns):
+event_code                  200000 non-null int16
+event_count                 200000 non-null int16
+game_time                   200000 non-null int32
+total_duration              200000 non-null int32
+duration                    200000 non-null int32
+...
+end_position                200000 non-null int8
+gate.row                    200000 non-null int8
+gate.column                 200000 non-null int8
+dinosaur_weight             200000 non-null int8
+dinosaur_count              200000 non-null int8
+dtypes: int16(9), int32(4), int8(53)
+memory usage: 16.6 MB
+</code></pre></div></div>
+
+<p>Итого, по числам нам удалось сэкономить 83.5% по памяти! Неплохо.</p>
+
+<p><strong>Переходим к объектам</strong>. Тип object в Pandas хранит строковое представление. Строки хранятся фрагментировано - значение в ячейке по сути является указателем. При этом резервируется много памяти и это для нас плохо.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 70 entries, version to chests
+dtypes: object(70)
+memory usage: 443.1 MB
+</code></pre></div></div>
+
+<p>Pandas предоставляет подтип category, который отображает строковые данные на индекс в int, а это то, что нам нужно, т.к. данные будут храниться не в виде указателя, а в виде словаря, в котором целочисленным значениям сопоставлены уникальным значениям данных. Перегоним наши объекты в «категории»:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># subtype categoty
+</span><span class="k">def</span> <span class="nf">object_to_category</span><span class="p">(</span><span class="n">part</span><span class="p">):</span>
+    <span class="n">converted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">unconverted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">unic</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">unic</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+                <span class="n">converted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">converted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+            <span class="c1"># unhashable objects can't be categorised
+</span>            <span class="n">unconverted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">converted_objects_part</span><span class="p">,</span> <span class="n">unconverted_objects_part</span>
+</code></pre></div></div>
+
+<p>Мы отбросим часть объектов, т.к. договорились ранее не работать с нераспакованной частью json</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">converted_objects_part</span><span class="p">,</span> <span class="n">unconverted_objects_part</span> <span class="o">=</span> <span class="n">object_to_category</span><span class="p">(</span><span class="n">objects_part</span><span class="p">)</span>
+<span class="n">converted_objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Data columns (total 39 columns):
+version                2345 non-null category
+description            69717 non-null category
+identifier             68610 non-null category
+...
+crystal_id             2090 non-null category
+location               1180 non-null category
+gate.side              832 non-null category
+dtypes: category(39)
+memory usage: 7.9 MB
+</code></pre></div></div>
+
+<p>Обратите внимание, что мы сами управляем какие именно объекты представлять в виде категорий через отношение количества уникальных значений к общему количеству значений в серии. Теперь посмотрим объем нераспакованных данных и сложим с оптимизированными распакованными:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">unconverted_objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200000 entries, 0 to 199999
+Columns: 31 entries, castles_placed to chests
+dtypes: object(31)
+memory usage: 193.0 MB
+</code></pre></div></div>
+
+<p>193.0MB + 7.9MB — нам удалось сэкономить 242.2MB, больше половины. Если мы применим наш метод ко всему дата-сету, то мы увидим, что не все объекты укладываются в наш формат категорий. часть объектов имеет слишком большое число уникальных значений (хешы, айдишники и т.д.) и есть смысл оставить их в объектах.</p>
+
+<p>Кстати, при определении подтипа category, пропуски в списке заменяются на дефолтное значение -1. Это очень удачно совпало с принятым нами ранее решением :)</p>
+
+<p>Отдельно стоит отметить колонку timestamp. Это временная метка и в неоптимизированном виде она тоже занимает избыточное пространство.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0         2019-09-06T17:53:46.937Z
+1         2019-09-06T17:54:17.519Z
+2         2019-09-06T17:54:56.302Z
+...
+199997    2019-08-02T00:06:37.107Z
+199998    2019-08-02T00:06:38.480Z
+199999    2019-08-02T00:06:40.684Z
+Name: timestamp, Length: 200000, dtype: object
+</code></pre></div></div>
+
+<p>Временную метку оптимизируем с помощью функции pandas <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html">pd.to_datetime</a>. Параметр format позволяет задать тип представления временной отметки. Дефолтный вот такой: “%d/%m/%Y”. Теперь метка будет выглядеть так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">])</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0        2019-09-06 17:53:46.937000+00:00
+1        2019-09-06 17:54:17.519000+00:00
+2        2019-09-06 17:54:56.302000+00:00
+...
+199997   2019-08-02 00:06:37.107000+00:00
+199998   2019-08-02 00:06:38.480000+00:00
+199999   2019-08-02 00:06:40.684000+00:00
+Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
+</code></pre></div></div>
+
+<p>В этом оптимизированном виде мы сэкономим дополнительные 14Mb памяти.</p>
+
+<p>В завершении операций по оптимизации необходимо данные сериализовать. Сделать это можно, к примеру, с помощью стандартного модуля shelve. Чуть позже, в отдельной статье я расскажу про сложности и пути их решения, которые могут возникнуть при сериализации.</p>
+
+<h3 id="что-еще-можно-сделать">Что еще можно сделать</h3>
+
+<ul>
+  <li>
+    <p>распаковать вложенности</p>
+  </li>
+  <li>
+    <p>не все нужно распаковывать - кое-что это готовые вектора, кое-что можно пересчитать в скаляры</p>
+  </li>
+  <li>
+    <p>избавиться от разреженности либо оптимизировать разреженные данные</p>
+  </li>
+</ul>
+
+<p>Кроме того, можно не ограничиться представлением, а закодировать столбцы цифрами. Есть методы в самом Pandas. Я рекомендую использовать внешний модуль category_encoders:</p>
+
+<ul>
+  <li>
+    <p>позволяет кодировать категории в цифры разными методами (их там около 20)</p>
+  </li>
+  <li>
+    <p>можно кодировать полуструктурированные и неструктурированные данные</p>
+  </li>
+  <li>
+    <p>можно сильно сократить выход по памяти за счет target encoding</p>
+  </li>
+  <li>
+    <p>работает в стиле scikit-learn пайплайнов</p>
+  </li>
+  <li>
+    <p>возвращает как Numpy массив, так и Pandas датафрейм</p>
+  </li>
+</ul>
+
+<p>Как кодировать категории с помощью category_encoders читайте в <a href="/2019/10/28/data-preprocessing-category-encoders.html">этой статье</a></p>
+
+<p>Ну и, наконец, можно перегнать все в Numpy! :)</p>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&title=Подготовка и оптимизация данных для задач машинного обучения" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Подготовка и оптимизация данных для задач машинного обучения&url=https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&title=Подготовка и оптимизация данных для задач машинного обучения" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Подготовка и оптимизация данных для задач машинного обучения&body=Check out this site https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/preprocessing" class="link-tags">preprocessing</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" title="Подготовка и оптимизация данных для задач машинного обучения">Подготовка и оптимизация данных для задач машинного обучения</a> (04 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/28/data-preprocessing-category-encoders.html" title="Подготовка данных: кодирование категориальных признаков">Подготовка данных: кодирование категориальных признаков</a> (28 Oct 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/08/scikit-learn-preprocessing.html" title="Особенности препроцессинга данных в scikit-learn">Особенности препроцессинга данных в scikit-learn</a> (08 Oct 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two.html" title="Термины статистики, которые пригодятся для data science. Часть 2">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Термины статистики, которые пригодятся для data science. Часть 2</p>
+      <p>Первую часть статьи можно найти по ссылке. Источником для данного материала является книга Practical Statistics for Data Scientists, Andrew Bruce,...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
