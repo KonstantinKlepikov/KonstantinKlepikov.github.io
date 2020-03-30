@@ -2,7 +2,7 @@
 layout: post
 title: "Подготовка и оптимизация данных для задач машинного обучения"
 date: 2020-03-04
-tags: ml-data phyton preprocessing machine-learning
+tags: ml-data phyton preprocessing machine-learning pandas json
 tag-for-sollecting: preprocessing
 keywords: optimisation data preprocessing machine learning машинное обучение оптимизация подготовка данных pandas python
 ---

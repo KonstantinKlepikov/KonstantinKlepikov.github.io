@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Как преобразовать вложенные структуры JSON в массив Pandas на Python | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Как преобразовать вложенные структуры JSON в массив Pandas на Python" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать." />
+<meta property="og:description" content="Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать." />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-30T00:00:00+02:00" />
+<script type="application/ld+json">
+{"url":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html","headline":"Как преобразовать вложенные структуры JSON в массив Pandas на Python","dateModified":"2020-03-30T00:00:00+02:00","datePublished":"2020-03-30T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas python">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Как преобразовать вложенные структуры JSON в массив Pandas на Python</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2020-03-30T00:00:00+02:00" itemprop="datePublished">Mar 30, 2020</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/ml-data" title="ml-data" class="link-tags">ml-data&nbsp;</a>
+    
+      
+      <a href="/tag/phyton" title="phyton" class="link-tags">phyton&nbsp;</a>
+    
+      
+      <a href="/tag/preprocessing" title="preprocessing" class="link-tags">preprocessing&nbsp;</a>
+    
+      
+      <a href="/tag/machine-learning" title="machine-learning" class="link-tags">machine-learning&nbsp;</a>
+    
+      
+      <a href="/tag/pandas" title="pandas" class="link-tags">pandas&nbsp;</a>
+    
+      
+      <a href="/tag/json" title="json" class="link-tags">json&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье <a href="/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html">подготовка и оптимизация данных для задач машинного обучения</a>. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.</p>
+
+<h2 id="вложенные-структуры-json-с-которыми-придется-повозиться">Вложенные структуры JSON с которыми придется повозиться</h2>
+
+<p>Попробуем поработать с данными на примере публичного API Государственной Думы Российской Федерации. Сервис предоставляет сведения о членах обеих палат и законотворческой деятельности.</p>
+
+<p>Вот пример ответа по запросу о списке депутатов и сенаторов (в данном случае :token и :app_token заменяются на ключи в реальном запросе):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">json_object</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://api.duma.gov.ru/api/:token/deputies.json?app_token=:app_token'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Что содержалось в ответе?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+{'id': '99100491',
+  'name': 'Абдулатипов Рамазан Гаджимурадович',
+  'position': 'Депутат ГД',
+  'isCurrent': False,
+  'factions': [{'id': '72100020',
+    'name': 'Депутатская группа "Российские регионы"',
+    'startDate': '1996-01-16',
+    'endDate': '1997-11-12'},
+   {'id': '72100024',
+    'name': 'Фракция Всероссийской политической партии "ЕДИНАЯ РОССИЯ"',
+    'startDate': '2011-12-04',
+    'endDate': '2013-01-27'}]}
+...
+</code></pre></div></div>
+
+<p>В этом примере мы наблюдаем вложенный список по ключу factions, в который помещены два словаря, агрегирующих данные о вхождении депутата во фракции. Такое вложение развернуть сразу не получится. Ситуация осложняется еще и тем, что по части депутатов ключ factions отсутствует.</p>
+
+<h2 id="как-преобразовать-json-в-pandas">Как преобразовать json в Pandas?</h2>
+
+<p>Мы можем разобрать json-объект с помощью <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html">pandas.json_normalize</a> — метода, который разбирает структурированные данные из JSON в табличный формат, а также <a href="https://docs.python.org/3/library/json.html">json.load</a>, который десериализует текст или байткод, содержащий json-документ в python-объекты. Применим к нашему json-объекта.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">json_object</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Как и предполагалось, данные по factions остались неразвернутыми.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>position</th>
+      <th>isCurrent</th>
+      <th>factions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>99100491</td>
+      <td>Абдулатипов Рамазан Гаджимурадович</td>
+      <td>Депутат ГД</td>
+      <td>False</td>
+      <td>[{‘id’: ‘72100020’, ‘name’: ‘Депутатская группа “Российские регионы”’, ‘startDate’: ‘1996-01-16’, ‘endDate’: ‘1997-11-12’}, {‘id’: ‘72100024’, ‘name’: ‘Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”’, ‘startDate’: ‘2011-12-04’, ‘endDate’: ‘2013-01-27’}]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Что бы разобрать вложенный список из factions для начала избавимся от пропусков</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">json_object</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">factions_with_id</span><span class="p">:</span>
+    <span class="n">is_factions</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'factions'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_factions</span><span class="p">:</span>
+        <span class="n">factions_with_id</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Теперь развернем factions относительно айдишников депутатов (meta=’id’). Чтобы сохранить семантику в полученной таблице, будем использовать аргумент record_prefix=’factions.’, который добавим к вновь образуемым столбцам массива.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span>
+                                             <span class="n">record_path</span><span class="o">=</span><span class="s">'factions'</span><span class="p">,</span>
+                                             <span class="n">meta</span><span class="o">=</span><span class="s">'id'</span><span class="p">,</span>
+                                             <span class="n">record_prefix</span><span class="o">=</span><span class="s">'factions.'</span><span class="p">,</span>
+                                             <span class="n">errors</span><span class="o">=</span><span class="s">"ignore"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Нам удалось развернуть список словарей в полноценную таблицу:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5031 entries, 0 to 5030
+Data columns (total 5 columns):
+factions.id           5031 non-null object
+factions.name         5031 non-null object
+factions.startDate    5031 non-null object
+factions.endDate      5031 non-null object
+id                    5031 non-null object
+dtypes: object(5)
+memory usage: 196.6+ KB
+</code></pre></div></div>
+
+<p>Теперь в исходном массиве удалим колонку factions и с помощью метода merge() добавим в массив развернутые данные.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extracted</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'factions'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s">'columns'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">extracted</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 5703 entries, 0 to 5702
+Data columns (total 8 columns):
+id                    5703 non-null object
+name                  5703 non-null object
+position              5703 non-null object
+isCurrent             5703 non-null bool
+factions.id           5031 non-null object
+factions.name         5031 non-null object
+factions.startDate    5031 non-null object
+factions.endDate      5031 non-null object
+dtypes: bool(1), object(7)
+memory usage: 362.0+ KB
+</code></pre></div></div>
+
+<p>Теперь все хорошо — данные извлечены и представлены в удобном, с точки зрения семантики, табличном виде:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>position</th>
+      <th>isCurrent</th>
+      <th>factions.id</th>
+      <th>factions.name</th>
+      <th>factions.startDate</th>
+      <th>factions.endDate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>99100491</td>
+      <td>Абдулатипов Рамазан Гаджимурадович</td>
+      <td>Депутат ГД</td>
+      <td>False</td>
+      <td>72100020</td>
+      <td>Депутатская группа “Российские регионы”</td>
+      <td>1996-01-16</td>
+      <td>1997-11-12</td>
+    </tr>
+    <tr>
+      <td>99100491</td>
+      <td>Абдулатипов Рамазан Гаджимурадович</td>
+      <td>Депутат ГД</td>
+      <td>False</td>
+      <td>72100024</td>
+      <td>Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”</td>
+      <td>2011-12-04</td>
+      <td>2013-01-27</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html&title=Как преобразовать вложенные структуры JSON в массив Pandas на Python" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Как преобразовать вложенные структуры JSON в массив Pandas на Python&url=https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html&title=Как преобразовать вложенные структуры JSON в массив Pandas на Python" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Как преобразовать вложенные структуры JSON в массив Pandas на Python&body=Check out this site https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/preprocessing" class="link-tags">preprocessing</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python">Как преобразовать вложенные структуры JSON в массив Pandas на Python</a> (30 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" title="Подготовка и оптимизация данных для задач машинного обучения">Подготовка и оптимизация данных для задач машинного обучения</a> (04 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/28/data-preprocessing-category-encoders.html" title="Подготовка данных: кодирование категориальных признаков">Подготовка данных: кодирование категориальных признаков</a> (28 Oct 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/08/scikit-learn-preprocessing.html" title="Особенности препроцессинга данных в scikit-learn">Особенности препроцессинга данных в scikit-learn</a> (08 Oct 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" title="Подготовка и оптимизация данных для задач машинного обучения">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Подготовка и оптимизация данных для задач машинного обучения</p>
+      <p>Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных. Проблема неоптимизированных данных...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

@@ -1,4 +1,165 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-03-05T02:03:59+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Подготовка и оптимизация данных для задач машинного обучения</title><link href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" rel="alternate" type="text/html" title="Подготовка и оптимизация данных для задач машинного обучения" /><published>2020-03-04T00:00:00+02:00</published><updated>2020-03-04T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html">&lt;p&gt;Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-03-30T20:46:57+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Как преобразовать вложенные структуры JSON в массив Pandas на Python</title><link href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" rel="alternate" type="text/html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python" /><published>2020-03-30T00:00:00+02:00</published><updated>2020-03-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html">&lt;p&gt;Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье &lt;a href=&quot;/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&quot;&gt;подготовка и оптимизация данных для задач машинного обучения&lt;/a&gt;. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.&lt;/p&gt;
+
+&lt;h2 id=&quot;вложенные-структуры-json-с-которыми-придется-повозиться&quot;&gt;Вложенные структуры JSON с которыми придется повозиться&lt;/h2&gt;
+
+&lt;p&gt;Попробуем поработать с данными на примере публичного API Государственной Думы Российской Федерации. Сервис предоставляет сведения о членах обеих палат и законотворческой деятельности.&lt;/p&gt;
+
+&lt;p&gt;Вот пример ответа по запросу о списке депутатов и сенаторов (в данном случае :token и :app_token заменяются на ключи в реальном запросе):&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://api.duma.gov.ru/api/:token/deputies.json?app_token=:app_token'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Что содержалось в ответе?&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+{'id': '99100491',
+  'name': 'Абдулатипов Рамазан Гаджимурадович',
+  'position': 'Депутат ГД',
+  'isCurrent': False,
+  'factions': [{'id': '72100020',
+    'name': 'Депутатская группа &quot;Российские регионы&quot;',
+    'startDate': '1996-01-16',
+    'endDate': '1997-11-12'},
+   {'id': '72100024',
+    'name': 'Фракция Всероссийской политической партии &quot;ЕДИНАЯ РОССИЯ&quot;',
+    'startDate': '2011-12-04',
+    'endDate': '2013-01-27'}]}
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;В этом примере мы наблюдаем вложенный список по ключу factions, в который помещены два словаря, агрегирующих данные о вхождении депутата во фракции. Такое вложение развернуть сразу не получится. Ситуация осложняется еще и тем, что по части депутатов ключ factions отсутствует.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-преобразовать-json-в-pandas&quot;&gt;Как преобразовать json в Pandas?&lt;/h2&gt;
+
+&lt;p&gt;Мы можем разобрать json-объект с помощью &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html&quot;&gt;pandas.json_normalize&lt;/a&gt; — метода, который разбирает структурированные данные из JSON в табличный формат, а также &lt;a href=&quot;https://docs.python.org/3/library/json.html&quot;&gt;json.load&lt;/a&gt;, который десериализует текст или байткод, содержащий json-документ в python-объекты. Применим к нашему json-объекта.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Как и предполагалось, данные по factions остались неразвернутыми.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;id&lt;/th&gt;
+      &lt;th&gt;name&lt;/th&gt;
+      &lt;th&gt;position&lt;/th&gt;
+      &lt;th&gt;isCurrent&lt;/th&gt;
+      &lt;th&gt;factions&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;99100491&lt;/td&gt;
+      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
+      &lt;td&gt;Депутат ГД&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;[{‘id’: ‘72100020’, ‘name’: ‘Депутатская группа “Российские регионы”’, ‘startDate’: ‘1996-01-16’, ‘endDate’: ‘1997-11-12’}, {‘id’: ‘72100024’, ‘name’: ‘Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”’, ‘startDate’: ‘2011-12-04’, ‘endDate’: ‘2013-01-27’}]&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Что бы разобрать вложенный список из factions для начала избавимся от пропусков&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;is_factions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_factions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь развернем factions относительно айдишников депутатов (meta=’id’). Чтобы сохранить семантику в полученной таблице, будем использовать аргумент record_prefix=’factions.’, который добавим к вновь образуемым столбцам массива.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                             &lt;span class=&quot;n&quot;&gt;record_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                             &lt;span class=&quot;n&quot;&gt;meta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                             &lt;span class=&quot;n&quot;&gt;record_prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                             &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ignore&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Нам удалось развернуть список словарей в полноценную таблицу:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
+RangeIndex: 5031 entries, 0 to 5030
+Data columns (total 5 columns):
+factions.id           5031 non-null object
+factions.name         5031 non-null object
+factions.startDate    5031 non-null object
+factions.endDate      5031 non-null object
+id                    5031 non-null object
+dtypes: object(5)
+memory usage: 196.6+ KB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь в исходном массиве удалим колонку factions и с помощью метода merge() добавим в массив развернутые данные.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'columns'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'outer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
+Int64Index: 5703 entries, 0 to 5702
+Data columns (total 8 columns):
+id                    5703 non-null object
+name                  5703 non-null object
+position              5703 non-null object
+isCurrent             5703 non-null bool
+factions.id           5031 non-null object
+factions.name         5031 non-null object
+factions.startDate    5031 non-null object
+factions.endDate      5031 non-null object
+dtypes: bool(1), object(7)
+memory usage: 362.0+ KB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь все хорошо — данные извлечены и представлены в удобном, с точки зрения семантики, табличном виде:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;id&lt;/th&gt;
+      &lt;th&gt;name&lt;/th&gt;
+      &lt;th&gt;position&lt;/th&gt;
+      &lt;th&gt;isCurrent&lt;/th&gt;
+      &lt;th&gt;factions.id&lt;/th&gt;
+      &lt;th&gt;factions.name&lt;/th&gt;
+      &lt;th&gt;factions.startDate&lt;/th&gt;
+      &lt;th&gt;factions.endDate&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;99100491&lt;/td&gt;
+      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
+      &lt;td&gt;Депутат ГД&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;72100020&lt;/td&gt;
+      &lt;td&gt;Депутатская группа “Российские регионы”&lt;/td&gt;
+      &lt;td&gt;1996-01-16&lt;/td&gt;
+      &lt;td&gt;1997-11-12&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;99100491&lt;/td&gt;
+      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
+      &lt;td&gt;Депутат ГД&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;72100024&lt;/td&gt;
+      &lt;td&gt;Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”&lt;/td&gt;
+      &lt;td&gt;2011-12-04&lt;/td&gt;
+      &lt;td&gt;2013-01-27&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.</summary></entry><entry><title type="html">Подготовка и оптимизация данных для задач машинного обучения</title><link href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" rel="alternate" type="text/html" title="Подготовка и оптимизация данных для задач машинного обучения" /><published>2020-03-04T00:00:00+02:00</published><updated>2020-03-04T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html">&lt;p&gt;Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.&lt;/p&gt;
 
 &lt;h2 id=&quot;проблема-неоптимизированных-данных&quot;&gt;Проблема неоптимизированных данных&lt;/h2&gt;
 
@@ -516,7 +677,7 @@ Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
 
 &lt;p&gt;Как кодировать категории с помощью category_encoders читайте в &lt;a href=&quot;/2019/10/28/data-preprocessing-category-encoders.html&quot;&gt;этой статье&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Ну и, наконец, можно перегнать все в Numpy! :)&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><summary type="html">Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.</summary></entry><entry><title type="html">Термины статистики, которые пригодятся для data science. Часть 2</title><link href="https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two.html" rel="alternate" type="text/html" title="Термины статистики, которые пригодятся для data science. Часть 2" /><published>2020-01-16T00:00:00+02:00</published><updated>2020-01-16T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two.html">&lt;p&gt;Первую часть статьи можно найти &lt;a href=&quot;/2019/12/15/statistics-terms-for-data-science.html&quot;&gt;по ссылке&lt;/a&gt;. Источником для данного материала является книга &lt;a href=&quot;https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/&quot;&gt;Practical Statistics for Data Scientists&lt;/a&gt;, Andrew Bruce, Peter Bruce&lt;/p&gt;
+&lt;p&gt;Ну и, наконец, можно перегнать все в Numpy! :)&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.</summary></entry><entry><title type="html">Термины статистики, которые пригодятся для data science. Часть 2</title><link href="https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two.html" rel="alternate" type="text/html" title="Термины статистики, которые пригодятся для data science. Часть 2" /><published>2020-01-16T00:00:00+02:00</published><updated>2020-01-16T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/01/16/statistics-terms-for-data-science-part-two.html">&lt;p&gt;Первую часть статьи можно найти &lt;a href=&quot;/2019/12/15/statistics-terms-for-data-science.html&quot;&gt;по ссылке&lt;/a&gt;. Источником для данного материала является книга &lt;a href=&quot;https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/&quot;&gt;Practical Statistics for Data Scientists&lt;/a&gt;, Andrew Bruce, Peter Bruce&lt;/p&gt;
 
 &lt;h2 id=&quot;выборки-и-распределения-данных&quot;&gt;Выборки и распределения данных&lt;/h2&gt;
 
@@ -1104,117 +1265,4 @@ n &lt; 20 %]]&gt;&lt;/script&gt; — &lt;script type=&quot;math/tex&quot;&gt;O(n
 
 &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html&quot;&gt;MeanShift&lt;/a&gt;&lt;/strong&gt;. При использовании flat или ball tree кернелов, сложность по времени &lt;script type=&quot;math/tex&quot;&gt;O(t*n*\log(n))&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; — количество точек кластеризации. В многомерном пространстве сложность стремится к &lt;script type=&quot;math/tex&quot;&gt;O(t*n^2)&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;Статья будет дополняться…&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><summary type="html">Временная сложность определяет количество операций, которые необходимо выполнить алгоритму для обработки входных данных объемом n.</summary></entry><entry><title type="html">Основные термины машинного обучения. Часть №1</title><link href="https://konstantinklepikov.github.io/2019/08/31/machine_learning-terms.html" rel="alternate" type="text/html" title="Основные термины машинного обучения. Часть №1" /><published>2019-08-31T00:00:00+02:00</published><updated>2019-08-31T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/08/31/machine_learning-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/08/31/machine_learning-terms.html">&lt;p&gt;Практически все алгоритмы машинного обучения можно описать как комбинацию набора данных, функции стоимости, процедуры оптимизации и модели. Любой из этих компонентов можно заменить, как правило, независмо от других. Такая формула построения алгоритма обучения подходит для обучения как с учителем, так и без. Пройдем по терминам, которые позволяют определить machine learning.&lt;/p&gt;
-
-&lt;p&gt;Алгоритм обучается на опыте &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; относительно некоего класса задач &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; и меры качества &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt;, если качество на задачах из &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;, измеряемое с помощью &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt;, возрастает с ростом опыта &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;задача-t&quot;&gt;Задача &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;&lt;/h3&gt;
-
-&lt;p&gt;Есть несколько типов задач, которые можно решить с помощью машинного обучения.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Классификация&lt;/strong&gt;. В задачах этого типа алгоритм должен ответить, какой из &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; категорий принадлежит некоторый пример. Для решения этой задачи алгоритм обучения обычно просят породить функцию &lt;script type=&quot;math/tex&quot;&gt;f : \mathbb{R}^{n} \rightarrow \{1, ..., l\}&lt;/script&gt;. Если &lt;script type=&quot;math/tex&quot;&gt;y = f(\mathbf{x})&lt;/script&gt;, то модель относит входной пример, описываемый вектором &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt;, к категории с числовым кодом &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;. Есть и другие варианты классификации, например, когда &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt; — распределение вероятности принадлежности к классам.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Классификация при отсутствии части данных&lt;/strong&gt;. Если часть входных данных отсутствует, алгоритм должен обучить набор функций, вместо единственной, отображающей входной вектор на код категории. Один из способов обучить такое подмножество функций — обучить распределение вероятности всех релевантных величин, а затем решить задачу классификации, вычислив маргинальное распределение отсутствующих значений.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Регрессия&lt;/strong&gt;. Алгоритм должен предсказать числовое значение по входным данным. Для решения этой задачи необходимо породить функцию &lt;script type=&quot;math/tex&quot;&gt;f : \mathbb{R}^{n} \rightarrow \mathbb{R}&lt;/script&gt;. Результатом регрессии является прогноз некоего значения.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Транскрипция&lt;/strong&gt;. В задаче этого типа предлагается проанализировать неструктурированное представление данных и преобразовать его в текст.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Машинный перевод&lt;/strong&gt;. Входные данные — это последовательность данных на одном языке, а алгоритм должен преобразовать ее в последовательность символов на другом языке.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Структурный вывод&lt;/strong&gt;.  В этой задаче на выходе порождается вектор (или иная структура, содержащая несколько значений), между элеменатами которого существуют некие, имеющие значение, связи. В сущности, в эту задачу входят и транскрипция с машинным переводом, а также грамматический разбор.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Обнаружение аномалий&lt;/strong&gt;. В данной задаче алгоритм анализирует входные данные и размечает часть из них, как аномальные.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Синтез и выборка&lt;/strong&gt;. В данной задаче алгоритм генерирует новые данные, сходные с обучающими данными. Примером может служить создание текстур или образов для компьютерных игр.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Подстановка отсутствующих значений&lt;/strong&gt;. Алгоритму предъявляется новый пример &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x} \in \mathbb{R}^{n}&lt;/script&gt;, в котором некоторые элементы &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; отсутствуют. Алгоритм должен спрогнозировать значение отсутствующих элементов.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Шумоподавление&lt;/strong&gt;. В этой задаче алгоритму предъявляется не искаженный помехами пример &lt;script type=&quot;math/tex&quot;&gt;\mathbf{\tilde{x}} \in \mathbb{R}^{n}&lt;/script&gt;, полученный из чистого примера &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x} \in \mathbb{R}^{n}&lt;/script&gt;, в результате неизвестного процесса искажения. Алгоритм должен восстановить чистый пример &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt; по искаженному &lt;script type=&quot;math/tex&quot;&gt;\mathbf{\tilde{x}}&lt;/script&gt; либо вернуть &lt;script type=&quot;math/tex&quot;&gt;P(\mathbf{x}\vert\mathbf{\tilde{x}})&lt;/script&gt; условное распределение вероятности.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Оценка функции вероятности или плотности функции вероятности&lt;/strong&gt;. В данной задаче алгоритм должен обучить функцию &lt;script type=&quot;math/tex&quot;&gt;P{\tiny model} : \mathbb{R}^{n} \rightarrow \mathbb{R}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;P{\tiny model}(\mathbf{x})&lt;/script&gt; интерпретируется как функция плотности вероятности (если &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt; непрерывная случайная величина) или как функция вероятности (дискретная величина), в пространстве, из которого были взяты примеры. Для решения этой задачи алгоритм должен уметь оценивать структуру данных, хотя бы неявно улавливать структуру распределения вероятности, а в задаче оценки плотности — явно.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;мера-качества-p&quot;&gt;Мера качества &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt;&lt;/h3&gt;
-
-&lt;p&gt;Мера качества специфична для каждого алгоритма. Для задач классификации в основном измеряется accuracy (точность) модели — доля примеров, для которых модель выдала верное предсказание. Частота ошибок — противоположный вариант меры качества, показывающая долю примеров, для которых модель выдала неверное предсказание.&lt;/p&gt;
-
-&lt;h3 id=&quot;опыт-e&quot;&gt;Опыт &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt;&lt;/h3&gt;
-
-&lt;p&gt;Алгоритмы ML делятся на два больших класса:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Алгоритму обучения без учителя&lt;/strong&gt; предоставляются наборы данных, содержащих множество признаков, алгоритм должен выявить полезные структурные признаки набора.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Алгоритму обучения с учителем&lt;/strong&gt; предъявляются наборы данных, примеры в которых снабжены меткой (целевым классом)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Обучение без учителя означает наблюдение нескольких примеров случайного вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt; с последующей попыткой вывести, явно или неявно, распределение вероятности &lt;script type=&quot;math/tex&quot;&gt;P(\mathbf{x})&lt;/script&gt; или некие свойства этого распределения. Обучение с учителем сводится к наблюдению нескольких примеров случайного вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt; и ассоциированию с ним значения или вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{y}&lt;/script&gt; с последующей попыткой вывести оценку &lt;script type=&quot;math/tex&quot;&gt;P(\mathbf{x}\vert\mathbf{y})&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;Обучение с учителем и без — понятия довольно размытые, многие алгоритмы подходят для решения и той и другой задачи. Принято считать, что задачи классификации, регрессии и структурного вывода относятся к обучению с учителем, а задача оценки плотности — к обучению без учителя.&lt;/p&gt;
-
-&lt;p&gt;Возможны и другие парадигмы обучения: обучение с частичным привлечением учителя, обучение с подкреплением и т.д.&lt;/p&gt;
-
-&lt;h3 id=&quot;ёмкость-переобучение-и-недообучение&quot;&gt;Ёмкость, переобучение и недообучение&lt;/h3&gt;
-
-&lt;p&gt;Способность алгоритма ML хорошо работать на новых данных, которые он ранее не видел, называется &lt;strong&gt;обобщением&lt;/strong&gt;. Мера ошибки алгоритма на обучающем наборе данных называется &lt;strong&gt;ошибкой обучения&lt;/strong&gt; — ее необходимо минимизировать (задача оптимизации). &lt;strong&gt;Ошибкой обобщения&lt;/strong&gt; называют математическое ожидание ошибки алгоритма на новых входных данных. Считается справедливым предположение, что данные из обучающего и тестового набора одинаково распределены, т.е. выбраны из одного и того же распределения вероятности, которое называется &lt;strong&gt;порождающим распределением&lt;/strong&gt;. В этом контексте &lt;strong&gt;недообучение&lt;/strong&gt; имеет место, когда модель не позволяет получить достаточно малую ошибку на обучающем наборе, а &lt;strong&gt;переобучение&lt;/strong&gt; — когда разрыв между ошибками обучения и тестирования слишком велик. &lt;strong&gt;Емкость (capacity)&lt;/strong&gt; позволяет управлять склонностью модели к переобучению или недообучению. Емкость описывает способность модели к аппроксимации широкого спектра функций. При маленькой емкости модель слишком простая и недообучается, при высокой — слишком сложная и переобучается.&lt;/p&gt;
-
-&lt;p&gt;Один из способов контроля за емкостью — выбор &lt;strong&gt;пространства гипотез&lt;/strong&gt;, множества функций, которые алгоритм может рассматривать в качестве потенциального решения. &lt;strong&gt;Репрезентативная емкость&lt;/strong&gt; определяет семейство функций, из которой модель может выбрать алгоритм обучения в процессе варьирования параметров. Как правило, по причине дополнительных ограничений, например, из-за несовершенства оптимизации, эффективная емкость алгоритма оказывается меньше репрезентативной.&lt;/p&gt;
-
-&lt;h3 id=&quot;теорема-об-отсутствии-бесплатных-завтраков&quot;&gt;Теорема об отсутствии бесплатных завтраков&lt;/h3&gt;
-
-&lt;p&gt;В среднем, по всем возможным порождающим определениям у любого алгоритма классификации частота ошибок классификации ранее не наблюдавшихся примеров одинакова. Это означает, что самый сложный алгоритм, в среднем (по всем возможным задачам) дает такое же качество, как и простейший. Цель ML заключается не в том, чтобы построить самый сложный или самый эффективный алгоритм, а в том, чтобы понять, какие виды распределений характерны реальным данным.&lt;/p&gt;
-
-&lt;h3 id=&quot;регуляризация&quot;&gt;Регуляризация&lt;/h3&gt;
-
-&lt;p&gt;Регуляризация — это любая модификация алгоритма обучения, предпринятая с целью уменьшить его ошибку обобщения, не уменьшив при этом ошибку обучения. Из теоремы «об отсутствии бесплатных завтраках», в том числе вытекает то, что не существует наилучшего способа регуляризации.&lt;/p&gt;
-
-&lt;h3 id=&quot;гиперпараметры&quot;&gt;Гиперпараметры&lt;/h3&gt;
-
-&lt;p&gt;Гиперпараметры управляют поведением алгоритма ML, при этом сам алгоритм не ищет значений гиперпараметров.&lt;/p&gt;
-
-&lt;p&gt;Попытка обучить гиперпараметр на обучающем наборе приводит к максимизации емкости модели и переобучению. Чтобы решить эту проблему, используется &lt;strong&gt;контрольный набор&lt;/strong&gt;, который формируется из обучающего и никогда не используется в обучении. Если данных слишком мало, разделение на обучающий и тестовый наборы становится проблематичным, так как приводит к статистической недостоверности в оценке средней ошибки. Эту проблему решает &lt;strong&gt;перекрестная проверка&lt;/strong&gt; — разделение исходного набора данных на подмножества и случайный выбор обучающего и контрольного набора в процессе обучения.&lt;/p&gt;
-
-&lt;h3 id=&quot;точечная-оценка&quot;&gt;Точечная оценка&lt;/h3&gt;
-
-&lt;p&gt;Точечная оценка — это попытка найти единственное «наилучшее» представление интересующей величины. Это может быть один или несколько параметров либо некая функция.&lt;/p&gt;
-
-&lt;p&gt;Если &lt;script type=&quot;math/tex&quot;&gt;\tilde{\theta}&lt;/script&gt; — оценка параметра, а &lt;script type=&quot;math/tex&quot;&gt;\{\mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)}\}&lt;/script&gt; — множество &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; независимых т одинаково распределенных точек, то &lt;strong&gt;точечной оценкой&lt;/strong&gt; или &lt;strong&gt;статистикой&lt;/strong&gt; называется любая оценка этих данных: &lt;script type=&quot;math/tex&quot;&gt;\tilde{\theta} = g(\mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)})&lt;/script&gt;. В этом определении не требуется, чтобы &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; возвращала значение, близкое к истинному значению &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; или даже чтобы область значений &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; совпадала со множеством допустимых значений &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;. При этом хорошей оценкой будет та, которая близка к истинному распределению &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, из которого выбирались обучающие данные.&lt;/p&gt;
-
-&lt;p&gt;Точечную оценку также можно рассматривать как оценку связи между входной или выходной величинами. такой тип точечных оценок называется &lt;strong&gt;оценкой функций&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;смещение-оценки&quot;&gt;Смещение оценки&lt;/h3&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;bias(\tilde{\theta}{\tiny m}) = \mathbb{E}(\tilde{\theta}{\tiny m}) - \theta&lt;/script&gt;, где:&lt;/p&gt;
-
-&lt;p&gt;математическое ожидание вычисляется по данным (рассматриваемым как выборка из случайной величины), &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; — истинное значение параметра, которое определяет порождающее определение. &lt;script type=&quot;math/tex&quot;&gt;\tilde{\theta}&lt;/script&gt; является &lt;strong&gt;несмещаной&lt;/strong&gt;, если &lt;script type=&quot;math/tex&quot;&gt;bias(\tilde{\theta}{\tiny m}) = 0&lt;/script&gt;. Напротив, &lt;script type=&quot;math/tex&quot;&gt;\tilde{\theta}&lt;/script&gt; &lt;strong&gt;асимптотически смещена&lt;/strong&gt;, если &lt;script type=&quot;math/tex&quot;&gt;\lim{\scriptscriptstyle m\rightarrow\infty}\mathbb{E}(\tilde{\theta}{\tiny m}) = 0&lt;/script&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;дисперсия-и-стандартная-ошибка&quot;&gt;Дисперсия и стандартная ошибка&lt;/h3&gt;
-
-&lt;p&gt;Дисперсия оценки измеряет, как будет изменяться оценка, вычисленная по данным, при независимой повторной выборке из набора данных, генерируемого порождающим процессом. Желательны оценки, обладающие не только маленьким смещением, но и маленькой дисперсией.&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;Var(\tilde{\theta})&lt;/script&gt;, где случайной величиной является обучающий набор.&lt;/p&gt;
-
-&lt;p&gt;Стандартная ошибка — это квадратный корень из дисперсии. &lt;script type=&quot;math/tex&quot;&gt;SE(\tilde{\theta})&lt;/script&gt;. На практике часто используется &lt;strong&gt;стандартная ошибка среднего&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;SE(\tilde{\mu}{\scriptscriptstyle m})&lt;/script&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;состоятельность&quot;&gt;Состоятельность&lt;/h3&gt;
-
-&lt;p&gt;Схождение точечной оценки к истинным значениям при увеличении числа примеров называется состоятельностью: &lt;script type=&quot;math/tex&quot;&gt;\lim{\scriptscriptstyle m\rightarrow\infty}\tilde{\theta}{\scriptscriptstyle m} = 0&lt;/script&gt;. Состоятельность гарантирует, что смещение оценки уменьшается с ростом числа примеров. При этом обратное неверно.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Данное краткое описание составлено на основе книги «Глубокое обучение» за авторством Я.Гудфеллоу, И.Бенджио, А.Курвилль&lt;/strong&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><summary type="html">Практически все алгоритмы машинного обучения можно описать как комбинацию набора данных, функции стоимости, процедуры оптимизации и модели. Любой из этих компонентов можно заменить, как правило, независмо от других. Такая формула построения алгоритма обучения подходит для обучения как с учителем, так и без. Пройдем по терминам, которые позволяют определить machine learning.</summary></entry></feed>
+&lt;p&gt;Статья будет дополняться…&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><summary type="html">Временная сложность определяет количество операций, которые необходимо выполнить алгоритму для обработки входных данных объемом n.</summary></entry></feed>
