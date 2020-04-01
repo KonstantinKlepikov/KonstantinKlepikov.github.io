@@ -12,15 +12,15 @@
 <meta property="og:title" content="Аргументы функций в Python 3.x. Шпаргалка" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
-<meta name="description" content="Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x." />
-<meta property="og:description" content="Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x." />
+<meta name="description" content="Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x." />
+<meta property="og:description" content="Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x." />
 <link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" />
 <meta property="og:url" content="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" />
 <meta property="og:site_name" content="My deep learning" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-31T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html","headline":"Аргументы функций в Python 3.x. Шпаргалка","dateModified":"2020-03-31T00:00:00+02:00","datePublished":"2020-03-31T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html","headline":"Аргументы функций в Python 3.x. Шпаргалка","dateModified":"2020-03-31T00:00:00+02:00","datePublished":"2020-03-31T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="python">
@@ -190,7 +190,7 @@
   </div>
 
   <div class="prose" itemprop="articleBody">
-      <p>Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.</p>
+      <p>Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x.</p>
 
 <h2 id="основные-правила">Основные правила</h2>
 
@@ -272,10 +272,10 @@
 
 <ul>
   <li>
-    <p>обязательные аргументы сопоставляются слева направо с любыми переданными позиционными аргументами <em>def func{имя)</em></p>
+    <p>обязательные аргументы будут сопоставляться слева направо с любыми переданными позиционными аргументами при вызове функции <em>def func{имя)</em></p>
   </li>
   <li>
-    <p>стандартные аргументы, которые будут присвоены аргументу, если в вызове функции аргумент не передавался <em>def func{имя=значение)</em></p>
+    <p>стандартные значения, которые будут присвоены аргументу, если в вызове функции аргумент не передавался <em>def func{имя=значение)</em></p>
   </li>
   <li>
     <p><em>def func(*имя)</em> — собирает произвольное количество оставшихся позиционных аргументов в кортеж</p>
@@ -352,23 +352,23 @@
     <p>Присваивание ключевых аргументов по совпадающим именам (порядок следования аргументов не имеет значения, так как сопоставление происходит по имени, а не по позиции)</p>
   </li>
   <li>
-    <p>Присваивание добавочных неключевых аргументов кортежу *имя</p>
+    <p>Присваивание оставшихся неключевых аргументов кортежу *имя</p>
   </li>
   <li>
-    <p>Присваивание добавочных ключевых аргументов словарю **имя</p>
+    <p>Присваивание оставшихся ключевых аргументов словарю **имя</p>
   </li>
   <li>
-    <p>Присваивание стандартных значений не присвоенным аргументам в заголовке</p>
+    <p>Присваивание стандартных значений не присвоенным аргументам</p>
   </li>
   <li>
     <p>Проверка, передается ли каждому аргументу только одно значение — если нет, тогда возникает ошибка</p>
   </li>
   <li>
-    <p>Присваивание именам аргументов переданные для них объекты</p>
+    <p>Присваивание именам аргументов переданных для них объектов</p>
   </li>
 </ol>
 
-<p>При этом учитывается то, какие из аргументов могут быть присвоены только по ключевым словам. Аргументы с передачей только по ключевым словам должны указываться после *, но не могут указываться после или **аргументы. Также, конструкция ** не может появляться в списке аргументов сама посебе.</p>
+<p>При этом учитывается то, какие из аргументов могут быть присвоены только по ключевым словам. Аргументы с передачей только по ключевым словам должны указываться после *, но не могут указываться после <em>**аргументы</em>. Также, конструкция ** не может появляться в списке аргументов сама по себе.</p>
 
 <h2 id="примеры">Примеры</h2>
 
@@ -500,7 +500,7 @@
 
 <p>В python 3.8 добавлена возможность указывать аргументы, которые могут быть переданы только как позиционные. Это выполняется с помощью маркера / который указывает, что все аргументы слева от него передаются исключительно как позиционные.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">/</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
   <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -508,7 +508,7 @@
 <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="err">с</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">TypeError</span>
 </code></pre></div></div>
 

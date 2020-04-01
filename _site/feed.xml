@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-01T02:36:09+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Аргументы функций в Python 3.x. Шпаргалка</title><link href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" rel="alternate" type="text/html" title="Аргументы функций в Python 3.x. Шпаргалка" /><published>2020-03-31T00:00:00+02:00</published><updated>2020-03-31T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html">&lt;p&gt;Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-01T19:49:27+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Аргументы функций в Python 3.x. Шпаргалка</title><link href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" rel="alternate" type="text/html" title="Аргументы функций в Python 3.x. Шпаргалка" /><published>2020-03-31T00:00:00+02:00</published><updated>2020-03-31T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html">&lt;p&gt;Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x.&lt;/p&gt;
 
 &lt;h2 id=&quot;основные-правила&quot;&gt;Основные правила&lt;/h2&gt;
 
@@ -80,10 +80,10 @@
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;обязательные аргументы сопоставляются слева направо с любыми переданными позиционными аргументами &lt;em&gt;def func{имя)&lt;/em&gt;&lt;/p&gt;
+    &lt;p&gt;обязательные аргументы будут сопоставляться слева направо с любыми переданными позиционными аргументами при вызове функции &lt;em&gt;def func{имя)&lt;/em&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;стандартные аргументы, которые будут присвоены аргументу, если в вызове функции аргумент не передавался &lt;em&gt;def func{имя=значение)&lt;/em&gt;&lt;/p&gt;
+    &lt;p&gt;стандартные значения, которые будут присвоены аргументу, если в вызове функции аргумент не передавался &lt;em&gt;def func{имя=значение)&lt;/em&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;em&gt;def func(*имя)&lt;/em&gt; — собирает произвольное количество оставшихся позиционных аргументов в кортеж&lt;/p&gt;
@@ -160,23 +160,23 @@
     &lt;p&gt;Присваивание ключевых аргументов по совпадающим именам (порядок следования аргументов не имеет значения, так как сопоставление происходит по имени, а не по позиции)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Присваивание добавочных неключевых аргументов кортежу *имя&lt;/p&gt;
+    &lt;p&gt;Присваивание оставшихся неключевых аргументов кортежу *имя&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Присваивание добавочных ключевых аргументов словарю **имя&lt;/p&gt;
+    &lt;p&gt;Присваивание оставшихся ключевых аргументов словарю **имя&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Присваивание стандартных значений не присвоенным аргументам в заголовке&lt;/p&gt;
+    &lt;p&gt;Присваивание стандартных значений не присвоенным аргументам&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Проверка, передается ли каждому аргументу только одно значение — если нет, тогда возникает ошибка&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Присваивание именам аргументов переданные для них объекты&lt;/p&gt;
+    &lt;p&gt;Присваивание именам аргументов переданных для них объектов&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;При этом учитывается то, какие из аргументов могут быть присвоены только по ключевым словам. Аргументы с передачей только по ключевым словам должны указываться после *, но не могут указываться после или **аргументы. Также, конструкция ** не может появляться в списке аргументов сама посебе.&lt;/p&gt;
+&lt;p&gt;При этом учитывается то, какие из аргументов могут быть присвоены только по ключевым словам. Аргументы с передачей только по ключевым словам должны указываться после *, но не могут указываться после &lt;em&gt;**аргументы&lt;/em&gt;. Также, конструкция ** не может появляться в списке аргументов сама по себе.&lt;/p&gt;
 
 &lt;h2 id=&quot;примеры&quot;&gt;Примеры&lt;/h2&gt;
 
@@ -308,7 +308,7 @@
 
 &lt;p&gt;В python 3.8 добавлена возможность указывать аргументы, которые могут быть переданы только как позиционные. Это выполняется с помощью маркера / который указывает, что все аргументы слева от него передаются исключительно как позиционные.&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -316,11 +316,11 @@
 &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;с&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Статья подготовлена на основе книги «Изучаем Python» Lutz, Mark&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="phyton" /><summary type="html">Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.</summary></entry><entry><title type="html">Как преобразовать вложенные структуры JSON в массив Pandas на Python</title><link href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" rel="alternate" type="text/html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python" /><published>2020-03-30T00:00:00+02:00</published><updated>2020-03-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html">&lt;p&gt;Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье &lt;a href=&quot;/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&quot;&gt;подготовка и оптимизация данных для задач машинного обучения&lt;/a&gt;. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.&lt;/p&gt;
+&lt;p&gt;Статья подготовлена на основе книги «Изучаем Python» Lutz, Mark&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="phyton" /><summary type="html">Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал сеье шпаргалк. Для упрощения ситуации речь пойдет про python 3.x.</summary></entry><entry><title type="html">Как преобразовать вложенные структуры JSON в массив Pandas на Python</title><link href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" rel="alternate" type="text/html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python" /><published>2020-03-30T00:00:00+02:00</published><updated>2020-03-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html">&lt;p&gt;Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье &lt;a href=&quot;/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&quot;&gt;подготовка и оптимизация данных для задач машинного обучения&lt;/a&gt;. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.&lt;/p&gt;
 
 &lt;h2 id=&quot;вложенные-структуры-json-с-которыми-придется-повозиться&quot;&gt;Вложенные структуры JSON с которыми придется повозиться&lt;/h2&gt;
 
