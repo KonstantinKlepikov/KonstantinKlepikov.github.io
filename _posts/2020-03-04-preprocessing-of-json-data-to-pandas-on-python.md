@@ -4,7 +4,7 @@ title: "Как преобразовать вложенные структуры 
 date: 2020-03-30
 tags: ml-data phyton preprocessing machine-learning pandas json
 tag-for-sollecting: preprocessing
-keywords: optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas python
+keywords: optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas
 ---
 
 Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье [подготовка и оптимизация данных для задач машинного обучения]({{site.baseurl}}{% link _posts/2020-03-04-data-preprocessing-and-compression-in-machine-learning.md %}). В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.

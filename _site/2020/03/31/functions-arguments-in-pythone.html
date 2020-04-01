@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Аргументы функций в Python 3.x. Шпаргалка | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Аргументы функций в Python 3.x. Шпаргалка" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x." />
+<meta property="og:description" content="Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x." />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-31T00:00:00+02:00" />
+<script type="application/ld+json">
+{"url":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html","headline":"Аргументы функций в Python 3.x. Шпаргалка","dateModified":"2020-03-31T00:00:00+02:00","datePublished":"2020-03-31T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="python">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Аргументы функций в Python 3.x. Шпаргалка</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2020-03-31T00:00:00+02:00" itemprop="datePublished">Mar 31, 2020</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/phyton" title="phyton" class="link-tags">phyton&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>Эта статья создана потому, что я постоянно забываю как обращаться к аругментам функций в разных сложных случаях. Для упрощения ситуации речь пойдет про python 3.x.</p>
+
+<h2 id="основные-правила">Основные правила</h2>
+
+<ul>
+  <li>
+    <p>аргументы передаются через присваивание объектов именам локальных переменных функций</p>
+  </li>
+  <li>
+    <p>при передаче объекты никогда не копируются автоматически</p>
+  </li>
+  <li>
+    <p>присваивание аргументов внутри функции не затрагивает вызывающий код</p>
+  </li>
+  <li>
+    <p>при выполнении функции аргументы функции становятся ее локальными переменными в области видимости функции</p>
+  </li>
+  <li>
+    <p>имена аргументов функции и имена переменных в области видимости функции не совмещаются</p>
+  </li>
+  <li>
+    <p>модификация изменяемого объекта внутри функции может затронуть вызывающий код</p>
+  </li>
+</ul>
+
+<p>В примере аргументы присвоен объект, на который указывает переменная из другого контекста. Внутри функции произошло присваивание локальной переменной нового объекта, что не затронуло вызывающий код:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mi">100</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">10</span>
+<span class="mi">100</span>
+<span class="mi">10</span>
+</code></pre></div></div>
+
+<p>В следующем примере видно, как изменение на месте изменяемого объекта внутри функции приводит к последствиям определенного рода.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'that'</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">'this'</span><span class="p">]</span>
+<span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">'this'</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Оператор return поддерживает возврат множественных значений, упаковывая их в коллекцию. Естественно, это можно распаковать в вызывающем коде. Например, так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+ <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+ <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">4</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<h2 id="режимы-сопоставления-аргументов">Режимы сопоставления аргументов</h2>
+
+<p>При объявлении функции:</p>
+
+<ul>
+  <li>
+    <p>обязательные аргументы сопоставляются слева направо с любыми переданными позиционными аргументами <em>def func{имя)</em></p>
+  </li>
+  <li>
+    <p>стандартные аргументы, которые будут присвоены аргументу, если в вызове функции аргумент не передавался <em>def func{имя=значение)</em></p>
+  </li>
+  <li>
+    <p><em>def func(*имя)</em> — собирает произвольное количество оставшихся позиционных аргументов в кортеж</p>
+  </li>
+  <li>
+    <p><em>def func{**имя)</em> — собирает произвольное количество оставшихся ключевых аргументов в словарь</p>
+  </li>
+  <li>
+    <p><em>def func(*остальные, имя)</em> или <em>def func(*, имя=значение)</em> — аргументы, которые должны быть переданы только по ключевому слову</p>
+  </li>
+</ul>
+
+<p>При вызове функции:</p>
+
+<ul>
+  <li>
+    <p>позиционные аргументы сопоставляются слева направо <em>func{значение)</em></p>
+  </li>
+  <li>
+    <p>ключевые сопоставляются по имени аргумента <em>func{имя=значение)</em></p>
+  </li>
+  <li>
+    <p><em>func(*итерируемый_объект)</em> — передает все объекты в итерируемом объекте как отдельные позиционные аргументы</p>
+  </li>
+  <li>
+    <p><em>func{**словарь)</em> — передает все объекты в итерируемом объекте как отдельные ключевые аргументы</p>
+  </li>
+</ul>
+
+<p>При объявлении функции аргументы должны указываться в следующем порядке:</p>
+
+<ul>
+  <li>
+    <p>любые позиционные аргументы <em>имя</em></p>
+  </li>
+  <li>
+    <p>любые стандартные аргументы <em>имя=значение</em></p>
+  </li>
+  <li>
+    <p>форма <em>*имя</em> или <em>*</em></p>
+  </li>
+  <li>
+    <p>аргументы, которые должны передаваться только по ключевым словам <em>имя</em> или <em>имя=значение</em></p>
+  </li>
+  <li>
+    <p>форма <em>**имя</em></p>
+  </li>
+</ul>
+
+<p>При вызофе функции аргументы должны указываться в следующем порядке:</p>
+
+<ul>
+  <li>
+    <p>любые позиционные аргументы <em>значение</em></p>
+  </li>
+  <li>
+    <p>комбинация любых ключевых аргументов <em>имя=значение</em></p>
+  </li>
+  <li>
+    <p><em>*итерируемый_объект</em></p>
+  </li>
+  <li>
+    <p><em>**словарь</em></p>
+  </li>
+</ul>
+
+<p>При несоблюдении указанного порядка выводится синтаксическая ошибка. При этом сопоставляться аргументы будут в следующем порядке:</p>
+
+<ol>
+  <li>
+    <p>Присваивание неключевых аргументов по позиции слева направо (порядок следования имеет значение, так как сопоставление осуществляется по позиции)</p>
+  </li>
+  <li>
+    <p>Присваивание ключевых аргументов по совпадающим именам (порядок следования аргументов не имеет значения, так как сопоставление происходит по имени, а не по позиции)</p>
+  </li>
+  <li>
+    <p>Присваивание добавочных неключевых аргументов кортежу *имя</p>
+  </li>
+  <li>
+    <p>Присваивание добавочных ключевых аргументов словарю **имя</p>
+  </li>
+  <li>
+    <p>Присваивание стандартных значений не присвоенным аргументам в заголовке</p>
+  </li>
+  <li>
+    <p>Проверка, передается ли каждому аргументу только одно значение — если нет, тогда возникает ошибка</p>
+  </li>
+  <li>
+    <p>Присваивание именам аргументов переданные для них объекты</p>
+  </li>
+</ol>
+
+<p>При этом учитывается то, какие из аргументов могут быть присвоены только по ключевым словам. Аргументы с передачей только по ключевым словам должны указываться после *, но не могут указываться после или **аргументы. Также, конструкция ** не может появляться в списке аргументов сама посебе.</p>
+
+<h2 id="примеры">Примеры</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+  <span class="k">pass</span>
+
+<span class="c1"># a обязательный, остальные нет
+# предоставим значение a по позиции
+</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># предоставим значение a по ключу
+</span><span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># переопределим все три значения
+</span><span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># передадим a и переопределим c
+</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># такой вариант вызовет ошибку
+</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># это тоже неверно
+</span><span class="n">func</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>В данном примере все аргументы, которым присвоено стандартное значение, необязательны при вызове функции. Объекты можно передавать в функцию как по позиции, так и по ключу.</p>
+
+<p>Примеры с произвольным количеством аргументов:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">():</span>
+<span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Тоже для ключевых аргументов:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">():</span>
+<span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)):</span>
+<span class="p">{</span><span class="s">'a'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Все вместе:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">():</span>
+<span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="mi">1</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span><span class="s">'a'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Распаковка аргументов при вызове функции:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>Естественно можно сочетать позиционные, ключевые и агрегированные аргументы</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
+</code></pre></div></div>
+
+<p>Наконец, мы можем указать какие из аргументов могут быть использованы только как ключевые:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">1</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">func</span><span class="p">()</span> <span class="n">missing</span> <span class="mi">1</span> <span class="n">required</span> <span class="n">keyword</span><span class="o">-</span><span class="n">only</span> <span class="n">argument</span><span class="p">:</span> <span class="s">'c'</span>
+</code></pre></div></div>
+
+<p>Кроме того, для аргументов «только по ключу» можно задавать стандартные значения:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Аргументы «только по ключу» должны быть записаны после формы с произвольным количеством позиционных аргументов <em>*аргументы</em> и перед формой с произвольным количеством ключевых аргументов <em>**аргументы</em>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="mi">1</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">6</span> <span class="p">{</span><span class="s">'x'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'y'</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="nb">SyntaxError</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">syntax</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="изменения-в-python-38">Изменения в Python 3.8</h2>
+
+<p>В python 3.8 добавлена возможность указывать аргументы, которые могут быть переданы только как позиционные. Это выполняется с помощью маркера / который указывает, что все аргументы слева от него передаются исключительно как позиционные.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">/</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="err">с</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">TypeError</span>
+</code></pre></div></div>
+
+<p>Статья подготовлена на основе книги «Изучаем Python» Lutz, Mark</p>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html&title=Аргументы функций в Python 3.x. Шпаргалка" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Аргументы функций в Python 3.x. Шпаргалка&url=https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html&title=Аргументы функций в Python 3.x. Шпаргалка" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Аргументы функций в Python 3.x. Шпаргалка&body=Check out this site https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/preprocessing" class="link-tags">preprocessing</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python">Как преобразовать вложенные структуры JSON в массив Pandas на Python</a> (30 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" title="Подготовка и оптимизация данных для задач машинного обучения">Подготовка и оптимизация данных для задач машинного обучения</a> (04 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/28/data-preprocessing-category-encoders.html" title="Подготовка данных: кодирование категориальных признаков">Подготовка данных: кодирование категориальных признаков</a> (28 Oct 2019)<br>
+            
+        </li>
+        
+        <li><a href="/2019/10/08/scikit-learn-preprocessing.html" title="Особенности препроцессинга данных в scikit-learn">Особенности препроцессинга данных в scikit-learn</a> (08 Oct 2019)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Как преобразовать вложенные структуры JSON в массив Pandas на Python</p>
+      <p>Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
