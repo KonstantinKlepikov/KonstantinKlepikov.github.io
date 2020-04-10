@@ -496,6 +496,33 @@
   <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 </code></pre></div></div>
 
+<p>Важный аспект распаковки итерируемых аргументов в индивидуальные аргументы заключается в том, что есть возможность использовать генераторы в качестве аргументов. В данном случае мы распаковали значения генераторного выражения:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>Еще один фокус — распаковка итератора ключей:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="n">some_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># распаковка словаря
+</span><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">some_dict</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+
+<span class="c1"># распаковка итератора ключей
+</span><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">some_dict</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+
+<span class="c1"># или так
+</span><span class="o">&gt;&gt;&gt;</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">some_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+</code></pre></div></div>
+
 <h2 id="изменения-в-python-38">Изменения в Python 3.8</h2>
 
 <p>В python 3.8 добавлена возможность указывать аргументы, которые могут быть переданы только как позиционные. Это выполняется с помощью маркера / который указывает, что все аргументы слева от него передаются исключительно как позиционные.</p>
