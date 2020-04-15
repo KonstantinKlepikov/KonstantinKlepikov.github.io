@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-10T22:12:56+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Аргументы функций в Python 3.x. Шпаргалка</title><link href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" rel="alternate" type="text/html" title="Аргументы функций в Python 3.x. Шпаргалка" /><published>2020-03-31T00:00:00+02:00</published><updated>2020-03-31T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html">&lt;p&gt;Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал себе шпаргалку. Для упрощения ситуации речь пойдет про python 3.x.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-15T20:56:30+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" rel="alternate" type="text/html" title="Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" /><published>2020-04-15T00:00:00+02:00</published><updated>2020-04-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html">&lt;p&gt;В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.&lt;/p&gt;
+
+&lt;h2 id=&quot;данные-для-исследования&quot;&gt;Данные для исследования&lt;/h2&gt;
+
+&lt;p&gt;В качестве данных будет использоваться совместная работа Ю.Е. Березкина, Е.Н. Дувакина «Тематическая классификация и распределение фольклорно-мифологических мотивов по ареалам». В &lt;a href=&quot;http://www.ruthenia.ru/folklore/berezkin/&quot;&gt;каталоге&lt;/a&gt; содержатся обобщенные тексты, категоризированные по различным признакам.&lt;/p&gt;
+
+&lt;p&gt;Идею рассмотрим на основе данного текста (приведен сокращенно):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Монтанья. Амуэша: Santos-Granero 1991, № 3 [во времена древнего солнца Yompor Pret женщины рожали гнилое дерево, ящериц или волосатых обезьян; жрец велел воспитывать брата с сестрой в особом доме; пойдя за водой, сестра нашла два цветка, спрятала на теле, забеременела; жрец признал, что это случилось по воле верховного бога, … близнецы прыгнули за озеро, сделали мост из лиан; ягуары пошли по нему, те его обрушили, спаслась одна беременная ягуариха; близнецы стали взрослыми, поднялись на небо, брат стал Солнцем, сестра - Луной]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Весть препроцессинг, который касается данной статьи, опубликован &lt;a href=&quot;https://github.com/KonstantinKlepikov/SGmyth/blob/master/kernels/story_graph_prototype.ipynb&quot;&gt;в этой&lt;/a&gt; тетрадке на github.&lt;/p&gt;
+
+&lt;h2 id=&quot;проблема-данных-и-задача&quot;&gt;Проблема данных и задача&lt;/h2&gt;
+
+&lt;p&gt;Тексты не относятся ни к точным ни, к адаптированным переводам. По сути они представляют из себя русскоязычное изложение сюжета оригинальных историй, записанных со слов носителей языка в разные исторические периоды и разными исследователями. Авторы ставят задачу поиска общностей, связывающих между собой разные группы текстов.&lt;/p&gt;
+
+&lt;p&gt;Проблемы данных:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;неточность перевода&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;сокращения терминов в тексте&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;краткое изложение&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;переосмысление текста и адаптация слов&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ошибки и опечатки&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;использование множества терминов по отношению к одному субъекту/объекту&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;У меня возникла идея построить сюжетный граф для каждой истории и на основе метрик графов выявить структурные связи. Предположение заключается в том, что термины могут меняться при переносе из одного источника в другой или при переводе, а сюжетная структура сохраняется.&lt;/p&gt;
+
+&lt;h2 id=&quot;модель-для-исследования&quot;&gt;Модель для исследования&lt;/h2&gt;
+
+&lt;p&gt;Походив туда-сюда и поковыряв вручную текст у меня получился такой сюжетный граф:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/150420-01.png&quot; alt=&quot;story_graph&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;В качестве тестовой модели построения графа были выбраны следующие правила:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;в тексте есть субъекты (‘древнеe солнце’, ‘женщины’) и объекты (‘вода’, ‘два цветка’)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;субьекты совершают действия по отношению к субъектам или объектам (‘близнецы стали взрослыми, поднялись на небо, брат стал Солнцем, сестра - Луной’)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;субъекты совершают действия по отношению к субъектам через объекты или другие субъекты (‘жрец велел воспитывать брата с сестрой в особом доме’)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;субъекты совершают действия без цели (‘близнецов поймали, но они не росли’)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Таким образом, нодами графа становятся субъекты и объекты, ребрами - действия, связывающие между собой ноды. При этом часть связей субъектов устанавливается через объекты, а некоторые связи образуют петли, так как не имеют цели. Граф можно построить как направленный, так и не направленный.&lt;/p&gt;
+
+&lt;p&gt;В построении такого графа имеет значения выбранные правила следования сюжету, а понимание текста во многом субъективно, поэтому то, что на картинке - это, скажем так, мое поверхностное представление развития сюжета в тестовой истории.&lt;/p&gt;
+
+&lt;h2 id=&quot;что-можно-из-этого-извлечь&quot;&gt;Что можно из этого извлечь&lt;/h2&gt;
+
+&lt;p&gt;Аналитические метрики графов, по которым можно сравнивать различные истории, не привязываясь к семантике&lt;/p&gt;
+
+&lt;p&gt;Можно выделить различные внутренние структуры сюжетного графа, получить по ним метрики и найти подобия.&lt;/p&gt;
+
+&lt;p&gt;Рудименты, архаизмы, вводные части и другие несвязанные компоненты в сюжете (1). Ключевые субъекты и объекты и образуемые между ними структуры (2). Специфичные сюжетные структуры (3). Ну и т.д. Все это, даже при частичной потере семантической связи, может указывать на связность различных историй между собой, выявить как последовательный перенос сюжетов от истории к истории, так и горизонтальный обмен между разными историями.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/150420-02.png&quot; alt=&quot;story_graph&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;что-нужно-сделать-дальше&quot;&gt;Что нужно сделать дальше&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Получить более чистые тексты&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Формализовать объективные правила построения графа&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Построить модель выявления нод для графа и получить список нод&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Построить модель выявления действий, связывающих между собой ноды&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Получить список вида ‘нода - действие - нода’&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Выделить ключевые метрики для оценки графов&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Пока всё.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graph-theory" /><category term="nlp" /><category term="cs224w" /><summary type="html">В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.</summary></entry><entry><title type="html">Аргументы функций в Python 3.x. Шпаргалка</title><link href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" rel="alternate" type="text/html" title="Аргументы функций в Python 3.x. Шпаргалка" /><published>2020-03-31T00:00:00+02:00</published><updated>2020-03-31T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html">&lt;p&gt;Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал себе шпаргалку. Для упрощения ситуации речь пойдет про python 3.x.&lt;/p&gt;
 
 &lt;h2 id=&quot;основные-правила&quot;&gt;Основные правила&lt;/h2&gt;
 
@@ -1499,60 +1602,4 @@ Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
 
 &lt;p&gt;Основной способ повышения пропускной способности предсказывающей модели - это увеличение количества экземпляров модели и распределение запросов на предсказания между экземплярами.&lt;/p&gt;
 
-&lt;p&gt;Больше информации и примеров про производительность вычислений scikit-learn можно прочитать в &lt;a href=&quot;https://scikit-learn.org/stable/documentation.html&quot;&gt;технической документации&lt;/a&gt; (смотрите &lt;a href=&quot;https://scikit-learn.org/stable/modules/computing.html&quot;&gt;раздел 7&lt;/a&gt; user guide).&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><category term="ml-data" /><category term="computation-performance" /><summary type="html">Производительность вычислений</summary></entry><entry><title type="html">Основные термины машинного обучения. Часть №2</title><link href="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html" rel="alternate" type="text/html" title="Основные термины машинного обучения. Часть №2" /><published>2019-09-14T00:00:00+02:00</published><updated>2019-09-14T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/09/14/machine_learning-terms-part-two.html">&lt;p&gt;В &lt;a href=&quot;/2019/08/31/machine_learning-terms.html&quot;&gt;первой части&lt;/a&gt; статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку, смещение оценки, дисперсию, стандартную ошибку и состоятельность, а так-же важные термины, определяемые в рамках этих терминов. Продолжим.&lt;/p&gt;
-
-&lt;h2 id=&quot;оценка-максимального-правдоподобия&quot;&gt;Оценка максимального правдоподобия&lt;/h2&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta{\tiny ML} = \underset{\theta}{\arg\max}\ p{\tiny model}(\mathbb{X};\theta) =&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;\underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\prod}}\ p{\tiny model}(\mathbf{x}^{(i)};\theta)&lt;/script&gt;, где:&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\mathbb{X} = \{ x^{(1)}, ... x^{(m)} \}&lt;/script&gt; — множество, состоящее из &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; примеров, независимо выбираемых из неизвестного порождающего распределения &lt;script type=&quot;math/tex&quot;&gt;p{\tiny data}(\mathbf{x})&lt;/script&gt;. В выражении максимального правдоподобия &lt;script type=&quot;math/tex&quot;&gt;p{\tiny model}(\mathbf{x};\theta)&lt;/script&gt; — параметрическое семейство распределений вероятности над  одним и тем же пространством, индексированное параметром &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Произведение неудобно по причине, т.к. подвержено потере значимости. Взятие логарифма не изменяет &lt;script type=&quot;math/tex&quot;&gt;\arg\max&lt;/script&gt;, но позволяет преобразовать произведение в сумму: &lt;script type=&quot;math/tex&quot;&gt;\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\sum}}\ \log\ p{\tiny model}(\mathbf{x}^{(i)};\theta)&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Если разделить правую часть на &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; (умножение функции стоимости на константу не изменяет &lt;script type=&quot;math/tex&quot;&gt;\arg\max&lt;/script&gt;), мы получаем математическое ожидание относительного эмпирического распределения &lt;script type=&quot;math/tex&quot;&gt;\hat{p}{\tiny data}&lt;/script&gt; определяемого обучающими данными: &lt;script type=&quot;math/tex&quot;&gt;\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \mathbb{E}{\scriptsize x-\hat{p}{\tiny data}}\ \log\ p{\tiny model}(\mathbf{x};\theta)&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Максимальное правдоподобие — это попытка совместить модельное распределение с эмпирическим &lt;script type=&quot;math/tex&quot;&gt;\hat{p}{\tiny data}&lt;/script&gt;, в идеале мы хотим получить совпадение истинного и порождающего распределения &lt;script type=&quot;math/tex&quot;&gt;p{\tiny data}&lt;/script&gt;. Это интерпретируется с помощью минимизации расхождения Кульбака-Лейблера.&lt;/p&gt;
-
-&lt;h3 id=&quot;условное-логарифмическое-правдоподобие&quot;&gt;Условное логарифмическое правдоподобие&lt;/h3&gt;
-
-&lt;p&gt;Если &lt;script type=&quot;math/tex&quot;&gt;\mathbf{X}&lt;/script&gt; представляет все входы, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{Y}&lt;/script&gt; все наблюдаемые выходы, а все примеры независимы и одинаково распределены, то условное логарифмическое правдоподобие: &lt;script type=&quot;math/tex&quot;&gt;\theta{\tiny ML} = \underset{\theta}{\arg\max}\ \underset{i=1}{\overset{m}{\sum}}\ \log\ P(\mathbf{y}^{(i)}\mid\mathbf{x}^{(i)};\theta)&lt;/script&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;байесовская-статистика&quot;&gt;Байесовская статистика&lt;/h2&gt;
-
-&lt;p&gt;В отличие от частотного метода, в котором предполагается, что истинное значение &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; фиксировано хотя и неизвестно, а точечная оценка &lt;script type=&quot;math/tex&quot;&gt;\hat{\theta}&lt;/script&gt; — случайная величина, в байесовском подходе к статистике истинный параметр &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; неизвестен или недостоверен и представляется случайной величиной, а набор данных случайной величиной не является, т.к. доступен прямому наблюдению. До наблюдения данных  мы представляем свое знание о &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; в качестве априорного распределения вероятности &lt;script type=&quot;math/tex&quot;&gt;p(\theta)&lt;/script&gt;. Тогда можно реконструировать влияние данных на наши гипотезы о &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, объединив правдоподобие данных с априорным посредством теоремы Байеса:&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\theta\mid x^{(1)}, ... x^{(m)}) =&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;\frac{p(x^{(1)}, ... x^{(m)}\mid\theta)p(\theta)}{p(x^{(1)}, ... x^{(m)})}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;x^{(1)}, ... x^{(m)}&lt;/script&gt; — набор наблюдаемых примеров.&lt;/p&gt;
-
-&lt;p&gt;В отличие от оценки максимального правдоподобия, где предсказания делаются с использованием точечной оценки &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, в байесовской оценке  предсказания делаются с помощью полного распределения &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;. к примеру, после наблюдения &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; примеров предсказанное распределение следующего &lt;script type=&quot;math/tex&quot;&gt;x^{m+1}&lt;/script&gt; примера описывается формулой: &lt;script type=&quot;math/tex&quot;&gt;p(x^{m+1}\mid x^{(1)}, ... x^{(m)}) =&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;\int p(x^{m+1}\mid\theta)p(\theta\mid x^{(1)}, ... x^{(m)})d\theta&lt;/script&gt;. Если после наблюдения &lt;script type=&quot;math/tex&quot;&gt;x^{(1)}, ... x^{(m)}&lt;/script&gt; примеров мы все еще не знаем &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, то эта неопределенность включается непосредственно в предсказания.&lt;/p&gt;
-
-&lt;p&gt;Кроме того, при байесовской оценке происходит сдвиг плотности вероятности в сторону тех областей пространства параметров, которые априори предпочтительны, что обусловлено значительным влиянием байесовского априорного распределения. Зачастую это приводит к предпочтению более простых и гладких моделей.&lt;/p&gt;
-
-&lt;p&gt;Байесовские модели обобщаются лучше при ограниченном числе обучающих данных, но с ростом данных обучение становится вычислительно более накладным.&lt;/p&gt;
-
-&lt;h3 id=&quot;оценка-априорного-максимума&quot;&gt;Оценка априорного максимума&lt;/h3&gt;
-
-&lt;p&gt;В большинстве случаев операции, включающие апостериорное байесовское распределение, недопустимы с точки зрения временной сложности алгоритмов. В этом случае точечная оценка &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; дает разрешимую апроксимацию. Чтобы использовать преимущества байесовской оценки, разрешив априорному распределению влиять на выбор точечной оценки, применяют оценку апостериорного максимум (MAP):&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta{\tiny MAP} = \underset{\theta}{\arg\max}\ p(\theta\mid\mathbf{x})\ =&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;\underset{\theta}{\arg\max}\ \log\ p(\theta\mid\mathbf{x})&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;+ \log\ p(\theta)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\log\ p(\theta\mid\mathbf{x})&lt;/script&gt; — стандартное логарифмическое правдоподобие, а &lt;script type=&quot;math/tex&quot;&gt;\log\ p(\theta)&lt;/script&gt; соответствует априорному распределению.&lt;/p&gt;
-
-&lt;h2 id=&quot;проблемы-требующие-глубокого-изучения&quot;&gt;Проблемы, требующие глубокого изучения&lt;/h2&gt;
-
-&lt;h3 id=&quot;проклятие-размерности&quot;&gt;Проклятие размерности&lt;/h3&gt;
-
-&lt;p&gt;С увеличением размерности данных количество представляющих интерес конфигураций растет экспоненциально. Если имеется &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; измерений и нужно различать &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt; значений вдоль каждой оси, то потребуется &lt;script type=&quot;math/tex&quot;&gt;O(v^{d})&lt;/script&gt; областей и примеров.&lt;/p&gt;
-
-&lt;h3 id=&quot;регуляризация-для-достижения-локального-постоянства-и-гладкости&quot;&gt;Регуляризация для достижения локального постоянства и гладкости&lt;/h3&gt;
-
-&lt;p&gt;Чтобы алгоритм хорошо обобщался, необходимо иметь априорное представление о том, какого рода функцию он должен обучить. Самое распространенные априорные предположения — &lt;strong&gt;априорное предположение о гладкости&lt;/strong&gt; или &lt;strong&gt;априорное предположение о локальном постоянстве&lt;/strong&gt;. Это означает, что обучаемая функция не должна сильно изменяться в небольшой области.&lt;/p&gt;
-
-&lt;p&gt;Обобщаемость большинства алгоритмов опирается на этот принцип, поэтому они плохо масштабируются на многие статистические задачи.&lt;/p&gt;
-
-&lt;h3 id=&quot;обучение-многообразий&quot;&gt;Обучение многообразий&lt;/h3&gt;
-
-&lt;p&gt;В основе ML лежит концепция &lt;strong&gt;многообразия&lt;/strong&gt; — множества точек, ассоциированных с окрестностью каждой точки. Из этой концепции вытекает существование преобразований для перемещения из одного места многообразия в другое.&lt;/p&gt;
-
-&lt;p&gt;В ML многообразие — это связное множество точек в пространстве высокой размерности, которое можно хорошо аппроксимировать, вводя в рассмотрение лишь небольшое число степеней свободы, или измерений. В машинном обучении допускаются многообразия, размерность которых различна в разных точках.&lt;/p&gt;
-
-&lt;p&gt;Многие алгоритмы ML безнадежны, если ожидается, что в результате обучения алгоритм должен найти функции с нетривиальными изменениями во всем пространстве &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^{n}&lt;/script&gt;. Алгоритмы обучения многообразий преодолевают это препятствие, предполагая, что большая часть &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^{n}&lt;/script&gt; — недопустимые входные данные, а интересующие нас входы сосредоточены только в наборе многообразий, содержащем небольшое подмножество точек, причем интересные изменения результирующей функции будут происходить только вдоль направлений, принадлежащих какому-то одному многообразию, или при переходе с одного многообразия на другое.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Данное краткое описание составлено на основе книги «Глубокое обучение» за авторством Я.Гудфеллоу, И.Бенджио, А.Курвилль&lt;/strong&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><summary type="html">В первой части статьи я разобрал базовую терминологию ML: постановку задачи, емкость, переобучение и недообучение, регуляризацию и гиперпараметры, точечную оценку, смещение оценки, дисперсию, стандартную ошибку и состоятельность, а так-же важные термины, определяемые в рамках этих терминов. Продолжим.</summary></entry></feed>
+&lt;p&gt;Больше информации и примеров про производительность вычислений scikit-learn можно прочитать в &lt;a href=&quot;https://scikit-learn.org/stable/documentation.html&quot;&gt;технической документации&lt;/a&gt; (смотрите &lt;a href=&quot;https://scikit-learn.org/stable/modules/computing.html&quot;&gt;раздел 7&lt;/a&gt; user guide).&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><category term="ml-data" /><category term="computation-performance" /><summary type="html">Производительность вычислений</summary></entry></feed>

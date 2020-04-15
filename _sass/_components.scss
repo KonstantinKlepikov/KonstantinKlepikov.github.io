@@ -67,7 +67,7 @@ code {
     font-style: italic;
 
     p {
-      font-size: 24px;
+      font-size: 16px;
     }
 
     @media (min-width: $breakpoint-lg) {
@@ -76,7 +76,7 @@ code {
       max-width: (11 / 10 * 100%);
 
       p {
-        font-size: 32px;
+        font-size: 20px;
       }
 
     }

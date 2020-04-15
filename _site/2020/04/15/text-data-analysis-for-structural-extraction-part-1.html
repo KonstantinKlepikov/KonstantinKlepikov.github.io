@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1 | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования." />
+<meta property="og:description" content="В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования." />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-15T00:00:00+02:00" />
+<script type="application/ld+json">
+{"url":"https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html","headline":"Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1","dateModified":"2020-04-15T00:00:00+02:00","datePublished":"2020-04-15T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="теория графов nlp text data natural language preprocessing направленный граф cs224w">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2020-04-15T00:00:00+02:00" itemprop="datePublished">Apr 15, 2020</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/graph-theory" title="graph-theory" class="link-tags">graph-theory&nbsp;</a>
+    
+      
+      <a href="/tag/nlp" title="nlp" class="link-tags">nlp&nbsp;</a>
+    
+      
+      <a href="/tag/cs224w" title="cs224w" class="link-tags">cs224w&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p>В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.</p>
+
+<h2 id="данные-для-исследования">Данные для исследования</h2>
+
+<p>В качестве данных будет использоваться совместная работа Ю.Е. Березкина, Е.Н. Дувакина «Тематическая классификация и распределение фольклорно-мифологических мотивов по ареалам». В <a href="http://www.ruthenia.ru/folklore/berezkin/">каталоге</a> содержатся обобщенные тексты, категоризированные по различным признакам.</p>
+
+<p>Идею рассмотрим на основе данного текста (приведен сокращенно):</p>
+
+<blockquote>
+  <p>Монтанья. Амуэша: Santos-Granero 1991, № 3 [во времена древнего солнца Yompor Pret женщины рожали гнилое дерево, ящериц или волосатых обезьян; жрец велел воспитывать брата с сестрой в особом доме; пойдя за водой, сестра нашла два цветка, спрятала на теле, забеременела; жрец признал, что это случилось по воле верховного бога, … близнецы прыгнули за озеро, сделали мост из лиан; ягуары пошли по нему, те его обрушили, спаслась одна беременная ягуариха; близнецы стали взрослыми, поднялись на небо, брат стал Солнцем, сестра - Луной]</p>
+</blockquote>
+
+<p>Весть препроцессинг, который касается данной статьи, опубликован <a href="https://github.com/KonstantinKlepikov/SGmyth/blob/master/kernels/story_graph_prototype.ipynb">в этой</a> тетрадке на github.</p>
+
+<h2 id="проблема-данных-и-задача">Проблема данных и задача</h2>
+
+<p>Тексты не относятся ни к точным ни, к адаптированным переводам. По сути они представляют из себя русскоязычное изложение сюжета оригинальных историй, записанных со слов носителей языка в разные исторические периоды и разными исследователями. Авторы ставят задачу поиска общностей, связывающих между собой разные группы текстов.</p>
+
+<p>Проблемы данных:</p>
+
+<ul>
+  <li>
+    <p>неточность перевода</p>
+  </li>
+  <li>
+    <p>сокращения терминов в тексте</p>
+  </li>
+  <li>
+    <p>краткое изложение</p>
+  </li>
+  <li>
+    <p>переосмысление текста и адаптация слов</p>
+  </li>
+  <li>
+    <p>ошибки и опечатки</p>
+  </li>
+  <li>
+    <p>использование множества терминов по отношению к одному субъекту/объекту</p>
+  </li>
+</ul>
+
+<p>У меня возникла идея построить сюжетный граф для каждой истории и на основе метрик графов выявить структурные связи. Предположение заключается в том, что термины могут меняться при переносе из одного источника в другой или при переводе, а сюжетная структура сохраняется.</p>
+
+<h2 id="модель-для-исследования">Модель для исследования</h2>
+
+<p>Походив туда-сюда и поковыряв вручную текст у меня получился такой сюжетный граф:</p>
+
+<p><img src="../../../assets/img/150420-01.png" alt="story_graph" /></p>
+
+<p>В качестве тестовой модели построения графа были выбраны следующие правила:</p>
+
+<ul>
+  <li>
+    <p>в тексте есть субъекты (‘древнеe солнце’, ‘женщины’) и объекты (‘вода’, ‘два цветка’)</p>
+  </li>
+  <li>
+    <p>субьекты совершают действия по отношению к субъектам или объектам (‘близнецы стали взрослыми, поднялись на небо, брат стал Солнцем, сестра - Луной’)</p>
+  </li>
+  <li>
+    <p>субъекты совершают действия по отношению к субъектам через объекты или другие субъекты (‘жрец велел воспитывать брата с сестрой в особом доме’)</p>
+  </li>
+  <li>
+    <p>субъекты совершают действия без цели (‘близнецов поймали, но они не росли’)</p>
+  </li>
+</ul>
+
+<p>Таким образом, нодами графа становятся субъекты и объекты, ребрами - действия, связывающие между собой ноды. При этом часть связей субъектов устанавливается через объекты, а некоторые связи образуют петли, так как не имеют цели. Граф можно построить как направленный, так и не направленный.</p>
+
+<p>В построении такого графа имеет значения выбранные правила следования сюжету, а понимание текста во многом субъективно, поэтому то, что на картинке - это, скажем так, мое поверхностное представление развития сюжета в тестовой истории.</p>
+
+<h2 id="что-можно-из-этого-извлечь">Что можно из этого извлечь</h2>
+
+<p>Аналитические метрики графов, по которым можно сравнивать различные истории, не привязываясь к семантике</p>
+
+<p>Можно выделить различные внутренние структуры сюжетного графа, получить по ним метрики и найти подобия.</p>
+
+<p>Рудименты, архаизмы, вводные части и другие несвязанные компоненты в сюжете (1). Ключевые субъекты и объекты и образуемые между ними структуры (2). Специфичные сюжетные структуры (3). Ну и т.д. Все это, даже при частичной потере семантической связи, может указывать на связность различных историй между собой, выявить как последовательный перенос сюжетов от истории к истории, так и горизонтальный обмен между разными историями.</p>
+
+<p><img src="../../../assets/img/150420-02.png" alt="story_graph" /></p>
+
+<h2 id="что-нужно-сделать-дальше">Что нужно сделать дальше</h2>
+
+<ol>
+  <li>
+    <p>Получить более чистые тексты</p>
+  </li>
+  <li>
+    <p>Формализовать объективные правила построения графа</p>
+  </li>
+  <li>
+    <p>Построить модель выявления нод для графа и получить список нод</p>
+  </li>
+  <li>
+    <p>Построить модель выявления действий, связывающих между собой ноды</p>
+  </li>
+  <li>
+    <p>Получить список вида ‘нода - действие - нода’</p>
+  </li>
+  <li>
+    <p>Выделить ключевые метрики для оценки графов</p>
+  </li>
+</ol>
+
+<p>Пока всё.</p>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html&title=Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1&url=https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html&title=Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1&body=Check out this site https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/graph-theory" class="link-tags">graph-theory</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" title="Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1">Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1</a> (15 Apr 2020)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/03/31/functions-arguments-in-pythone.html" title="Аргументы функций в Python 3.x. Шпаргалка">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Аргументы функций в Python 3.x. Шпаргалка</p>
+      <p>Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
