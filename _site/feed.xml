@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-15T20:56:30+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" rel="alternate" type="text/html" title="Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" /><published>2020-04-15T00:00:00+02:00</published><updated>2020-04-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html">&lt;p&gt;В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-04-18T22:49:04+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Столбец Unnamed в датафрейме Pandas</title><link href="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html" rel="alternate" type="text/html" title="Столбец Unnamed в датафрейме Pandas" /><published>2020-04-18T00:00:00+02:00</published><updated>2020-04-18T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html">&lt;p&gt;Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.&lt;/p&gt;
+
+&lt;p&gt;Все дело в индексе по умолчанию при чтении или записи .csv файла!&lt;/p&gt;
+
+&lt;p&gt;Формируя дата-фрейм из какого-либо источника данных, необходимо не забывать сохранять его без индекса, вот так:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Если этого не сделать, при сохранении будет добавлен «безымянный» индекс по умолчанию:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;Unnamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;И тогда с этим придется бороться при чтении, вот так:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Либо путем выкидывания столбца inplace:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Unnamed: 0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;А это неудобно…&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><summary type="html">Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.</summary></entry><entry><title type="html">Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html" rel="alternate" type="text/html" title="Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1" /><published>2020-04-15T00:00:00+02:00</published><updated>2020-04-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/15/text-data-analysis-for-structural-extraction-part-1.html">&lt;p&gt;В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.&lt;/p&gt;
 
 &lt;h2 id=&quot;данные-для-исследования&quot;&gt;Данные для исследования&lt;/h2&gt;
 
@@ -1555,51 +1607,4 @@ Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
   &lt;li&gt;l1&lt;/li&gt;
   &lt;li&gt;l2&lt;/li&gt;
   &lt;li&gt;MaxAbsScaler&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="scikit-learn" /><category term="ml-data" /><category term="preprocessing" /><summary type="html">В статье кратко раскрываются некоторые вопросы подготовки данных с помощью scikit-learn.</summary></entry><entry><title type="html">Зависимость вычислений в scikit-learn от данных и модели</title><link href="https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions.html" rel="alternate" type="text/html" title="Зависимость вычислений в scikit-learn от данных и модели" /><published>2019-09-28T00:00:00+02:00</published><updated>2019-09-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/09/28/computation-performance-of-scikit-learn-functions.html">&lt;h2 id=&quot;производительность-вычислений&quot;&gt;Производительность вычислений&lt;/h2&gt;
-
-&lt;p&gt;В scikit-learn производительность вычисления предсказаний зависит от:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;количества фичей&lt;/li&gt;
-  &lt;li&gt;распределения и разреженности данных&lt;/li&gt;
-  &lt;li&gt;временной сложности алгоритма&lt;/li&gt;
-  &lt;li&gt;извлечения фичей&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;количество-фичей&quot;&gt;Количество фичей&lt;/h3&gt;
-
-&lt;p&gt;Библиотека хорошо оптимизирована под небольшие дата-сеты, поэтому количество фичей начинает оказывать значительное влияние на время предсказания для данных с 250+ фичами.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-01.jpg&quot; alt=&quot;Влияние количества фичей на время предсказания&quot; title=&quot;Влияние количества фичей на время предсказания&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;распределение-и-разреженность-данных&quot;&gt;Распределение и разреженность данных&lt;/h3&gt;
-
-&lt;p&gt;Вычисления по разреженным дата-сетам (более 90% значений) можно улучшить по времени с помощью ScyPy, т.к. библиотека оптимизирована по потреблению кеша CPU. Подробнее о том, как готовить разреженные данные, можно посмотреть в &lt;a href=&quot;https://docs.scipy.org/doc/scipy/reference/sparse.html&quot;&gt;документации ScyPy&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;временная-сложность-алгоритмов&quot;&gt;Временная сложность алгоритмов&lt;/h3&gt;
-
-&lt;p&gt;С ростом временной сложности падает производительность вычислений алгоритма на предсказаниях. В примерах - зависимость задержки вычисления предсказания от временной сложности линейных моделей, SVM и ансамблей.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-02.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для линейных моделей&quot; title=&quot;Зависимость от временной сложности для линейных моделей&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-03.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для SVM&quot; title=&quot;Зависимость от временной сложности для SVM&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-04.jpg&quot; alt=&quot;Зависимость задержки вычислений предсказаний от временной сложности для ансамблей&quot; title=&quot;Зависимость от временной сложности для ансамблей&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;В линейных моделях используется схожая решающая функция, поэтому время предсказаний для разных линейных моделей зависит примерно одинаково от временной сложности модели. В алгоритмах с нелинейными кернелами вычислительная производительность зависит от количества векторов (чем больше, тем производительность меньше). Задержка вычисления предсказания возрастает линейно для SVM (для регрессора и классификатора) с ростом числа саппортных векторов. Для ансамблей наибольшее значение имеет количество решающих деревьев и их глубина.&lt;/p&gt;
-
-&lt;p&gt;Про временную сложность построения алгоритмов и подробнее про сложность расчета предсказаний можно почитать в &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;отдельной статье&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;извлечение-фичей&quot;&gt;Извлечение фичей&lt;/h3&gt;
-
-&lt;p&gt;На самом деле, препроцессинг данных занимает самую значительную часть времени в выдаче предсказаний. Часто очистка и трансформация данных может увеличивать задержку выдачи предсказаний в сотни раз, поэтому этот процесс необходимо постоянно внимательно и аккуратно улучшать.&lt;/p&gt;
-
-&lt;h2 id=&quot;пропускная-способность-предсказаний&quot;&gt;Пропускная способность предсказаний&lt;/h2&gt;
-
-&lt;p&gt;Еще одна важная метрика производительности алгоритма - это пропускная способность, определяющая количество предсказаний за заданное время. В примере пропускная способность различных алгоритмов scikit-learn.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/280919-05.jpg&quot; alt=&quot;Пропускная способность различных алгоритмов scikit-learn&quot; title=&quot;Пропускная способность различных алгоритмов scikit-learn&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Основной способ повышения пропускной способности предсказывающей модели - это увеличение количества экземпляров модели и распределение запросов на предсказания между экземплярами.&lt;/p&gt;
-
-&lt;p&gt;Больше информации и примеров про производительность вычислений scikit-learn можно прочитать в &lt;a href=&quot;https://scikit-learn.org/stable/documentation.html&quot;&gt;технической документации&lt;/a&gt; (смотрите &lt;a href=&quot;https://scikit-learn.org/stable/modules/computing.html&quot;&gt;раздел 7&lt;/a&gt; user guide).&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><category term="scikit-learn" /><category term="ml-data" /><category term="computation-performance" /><summary type="html">Производительность вычислений</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="scikit-learn" /><category term="ml-data" /><category term="preprocessing" /><summary type="html">В статье кратко раскрываются некоторые вопросы подготовки данных с помощью scikit-learn.</summary></entry></feed>
