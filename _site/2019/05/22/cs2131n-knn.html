@@ -257,7 +257,7 @@
                      <span class="n">subtract_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
 
     <span class="c1"># Load the raw CIFAR-10 data
-</span>    <span class="n">cifar10_dir</span> <span class="o">=</span> <span class="s">'cs231n/datasets/cifar-10-batches-py'</span> 
+</span>    <span class="n">cifar10_dir</span> <span class="o">=</span> <span class="s">'cs231n/datasets/cifar-10-batches-py'</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span> <span class="c1">#1
 </span>        
     <span class="c1"># Subsample the data
@@ -333,25 +333,50 @@
 
 <p>Зачем такое разнообразие? Авторы курса хотят продемонстрировать множество разных подходов и их влияние на сложность вычислений. Окей. Первую функцию, которую необходимо реализовать — это compute_distances_two_loops(). Тут идея в следующем: мы пишем два цикла, один вложен в другой. Во внешнем цикле мы обходим тренировочный сет на глубину тестового сета, во внутреннем на глубину тренировочного. Считаем дистанцию между тренировочными изображениями и искомым.</p>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compute_distances_two_loops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+  <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_test</span><span class="p">,</span> <span class="n">num_train</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train</span><span class="p">):</span>
+      <span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:])))</span> <span class="c1"># this!
+</span>  <span class="k">return</span> <span class="n">dists</span>
+</code></pre></div></div>
+
 <p>Обратите внимание, что в задаче требуют посчитать не L1 distance, а L2 distance. В лекции об этом подробно рассказывается. О чем идет речь? L2 distance - это геометрическая интерпретация евклидового расстояния между двумя векторами. Более простым языком:</p>
 
 <p><img src="../../../assets/img/220519-3.jpg" alt="L2 distance" /></p>
 
 <p>L2 более строго оценивает расстояние между двумя векторами. Почему это так в курсе объясняется позже, я соответственно тоже разберу этот аспект в других статьях.</p>
 
-<p>Далее, построив функцию в два цикла, строим compute_distances_one_loop(). Она ничем не отличается от функции в два цикла. Разница лишь в том, что мы обходим в один цикл на глубину тестового сета.</p>
+<p>Далее, построив функцию в два цикла, строим compute_distances_one_loop(). Она ничем не отличается от функции в два цикла. Разница лишь в том, что мы обходим в один цикл на глубину тестового сета, примерно вот так:</p>
 
-<p>И, наконец, в функции compute_distances_no_loops() необходимо посчитать дистанцию без циклов, используя инструменты numpy. Чтобы решить эту задачу, надо знать, как расписать формулу L2 дистанции, и немного покрутить с размерностью массивов :) Можно как-то так:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compute_distances_one_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+  <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">num_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_test</span><span class="p">,</span> <span class="n">num_train</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+    <span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># this
+</span>  <span class="k">return</span> <span class="n">dists</span>
+</code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> 
-        <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<p>Вы уже наверное догадались, что авторы курса постепенно приучают вас писать функции, которые потребляют меньше памяти. Пишем compute_distances_no_loops(). Для нее необходимо посчитать дистанцию без циклов, используя инструменты numpy. Чтобы решить эту задачу, надо знать, как расписать формулу L2 дистанции, и немного покрутить с размерностью массивов :) Можно как-то так:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">compute_distances_no_loops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_test</span><span class="p">,</span> <span class="n">num_train</span><span class="p">))</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+            <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="o">.</span><span class="n">T</span><span class="p">))</span> <span class="c1"># this
+</span>    <span class="k">return</span> <span class="n">dists</span>
 </code></pre></div></div>
 
 <p>Всё, осталось добавить в наш k_nearest_neighbor.py функцию predict_labels. Для этого надо проитерировать по всей тестовой выборке и вернуть индексы ближайшего <script type="math/tex">k</script>-го соседа <script type="math/tex">i</script>-го изображения. В комментарии к задаче прямо пишут как это сделать (Hint: Look up the function numpy.argsort). Предсказываем метку, а затем возвращаем количество успешных предсказаний для каждой метки.</p>
 
 <p>Запускаем ячейки, смотрим визуализации и через import time считаем время исполнения функций. Oneloop должен получиться где-то примерно в два раза дольше twoloop и в 100 раз хуже, чем noloop.</p>
 
-<p>Про валидацию в задаче вопросов нет, зато есть про кроссвалидацию. Авторы курса объясняют этот метод следующим образом: вместо того, чтобы проходить валидацию по одному сету, можно сделать несколько, пройти по ним, а затем усреднить результат. Это долго, зато менее шумно. Ок.</p>
+<p>Про валидацию в задаче вопросов нет, зато есть про кроссвалидацию. Авторы курса объясняют этот метод следующим образом: вместо того, что бы проходить валидацию по одному сету, можно сделать несколько, пройти по ним, а затем усреднить результат. Это долго, зато менее шумно. Ок.</p>
 
 <p>Что надо сделать? В knn.ipynb необходимо разделить тренировочный сет на 5 сабсетов. Затем нужно прогнать по каждому сабсету наш алгоритм.</p>
 
