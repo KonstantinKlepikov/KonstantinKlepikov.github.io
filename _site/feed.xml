@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-05-06T21:56:32+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Столбец Unnamed в датафрейме Pandas</title><link href="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html" rel="alternate" type="text/html" title="Столбец Unnamed в датафрейме Pandas" /><published>2020-04-18T00:00:00+02:00</published><updated>2020-04-18T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html">&lt;p&gt;Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-05-16T02:35:20+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
+
+&lt;p&gt;Для этих задач требуется инструмент построения моделей, способный анализировать структуры и вычисленять метрики, который к тому же будет оптимизирован по потреблению памяти и дискового пространства, так как графы как правило весьма объемны.&lt;/p&gt;
+
+&lt;p&gt;Именно такими инструментами являются библиотеки Snap и Networkx.&lt;/p&gt;
+
+&lt;h2 id=&quot;snap&quot;&gt;Snap&lt;/h2&gt;
+
+&lt;p&gt;Фреймворк &lt;a href=&quot;http://snap.stanford.edu/&quot;&gt;Stanford Network Analysis Platform (SNAP)&lt;/a&gt;, как следует из названия, разработан в рамках Stanford University проекта по изучению графовых структур. В Стенфорде преподается специальный курс &lt;a href=&quot;http://web.stanford.edu/class/cs224w/&quot;&gt;cs224w&lt;/a&gt;, в котором студенты проходят алгоритмы и методы построения, обработки и оптимизации графов.&lt;/p&gt;
+
+&lt;p&gt;Фреймворк Snap написан на C++ и имеет обертку на python. Вообще, сам проект не очень активно поддерживается и пишется в основном силами студентов (один из вариантов защиты на курсе).&lt;/p&gt;
+
+&lt;p&gt;Документация проекта существует в довольно сумбурном виде: есть автосгенерированная сишная и &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/index.html&quot;&gt;вот такая для python&lt;/a&gt;. Вот тут находится &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/tutorial/tutorial.html#computing-structural-properties&quot;&gt;краткое описание&lt;/a&gt; как работать со Snap.&lt;/p&gt;
+
+&lt;p&gt;Фреймворк поддерживает четыре типа графов - направленный, ненаправленный, и аналогичные «сети» (так называемые мультиграфы). Описание классов этих четырех сущностей и производных можно найти &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/reference/graphs.html&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Важный аспект — так как фреймворк написан на c++, а питоном только обернут, большинство питоновских методов во фреймворке недоступно. Все объекты, используемые для построения моделей требуют собственных типов, определенных в Snap. При первом знакомстве это очень сильно сбивает с толку. Кроме того, не все методы Snap, имеющиеся в наборе, обернуты в python. В некоторых аспектах (например, при итерации или манипуляциях с random) придется изобретать что-то неочевидное.&lt;/p&gt;
+
+&lt;p&gt;Питонья обертка написана в сишном стиле. Опять-таки, будет сложно запомнить нотацию. Пример:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;snap&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GenFull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PNEANet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Randomize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetRndNId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;В Snap есть интерфейс к &lt;a href=&quot;https://graphviz.gitlab.io/&quot;&gt;Graphviz&lt;/a&gt;, с помощью которого можно отрисовывать модели. Обратите внимание, что для того, чтобы graphviz сросся с вашим python, потребуется установить pydot и python-graphviz.&lt;/p&gt;
+
+&lt;p&gt;Основное преимущество Snap — это скорость расчетов графовых структур. Во фреймворке не сильно богатый набор готовых решений для моделирования, поэтому, если потребуется что-то доработать, придется знать c++.&lt;/p&gt;
+
+&lt;p&gt;Еще один нюанс — Snap не всегда дружит с путями к системному питону. Если у вас не получилось запустить фреймворк, то вам необходимо найти в папке размещения Snap два файла _snap.pyd и snap.py, после чего скопировать их в корень проекта, в котором вы ведете разработку с применением Snap. Все должно заработать.&lt;/p&gt;
+
+&lt;h2 id=&quot;networkx&quot;&gt;Networkx&lt;/h2&gt;
+
+&lt;p&gt;Фреймворк &lt;a href=&quot;https://networkx.github.io/&quot;&gt;Networkx&lt;/a&gt; — более дружелюбный сородич Snap, написанный на чистом python. Проект поддерживается обширным комьюнити, регулярно &lt;a href=&quot;https://github.com/networkx/networkx&quot;&gt;обновляется&lt;/a&gt; и имеет отличную &lt;a href=&quot;https://networkx.github.io/documentation/stable/tutorial.html&quot;&gt;документацию&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;По вычислениям Networkx не такой бодрый, как Snap, но благодаря значительной оптимизации, довольно шустро справляется с графами среднего размера. Основное его преимущество — он написан в python стиле, к объектам фреймворка применимы все методы и функции питона. Это позволяет итерировать, писать собственные решения, наследуя поведение, а так же наслаждаться всеми преимуществами языка.&lt;/p&gt;
+
+&lt;p&gt;В Networkx также доступны все четыре типа графов из Snap - ненаправленный, направленный, и два аналога для мультиграфа. Нодами, в отличие от Snap, могут быть любые хешируемые объекты. Специальных типов создавать не нужно. Фреймворк позволяет добавлять ноды и ребра «на лету» используя несколько интерфейсов, включая списки кортежей, словари и другие графы. Можно добавлять любые атрибуты к нодам, ребрам и графам.&lt;/p&gt;
+
+&lt;p&gt;Пример использования разных методов при создании графа:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;networkx&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MultiDiGraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path_graph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;edges&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;282&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;AdjacencyView({5: {0: {}, 1: {'route': 282}, 2: {'route': 37}}})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;В «build-in» входит довольно внушительное число инструментов для моделирования и изучения структуры графов. Также фреймворк позволяет отрисовывать модели в matplotlib и graphviz. Можно читать и писать различные структуры, такие как JSON, yaml, сериализованные объекты и различные другие форматы хранения графовых моделей. Есть интеграция с Numpy, Scypy и Pandas.&lt;/p&gt;
+
+&lt;h2 id=&quot;вывод&quot;&gt;Вывод&lt;/h2&gt;
+
+&lt;p&gt;Скорее всего, вы познакомитесь со Snap, если проходите курс cs224w, так как домашние работы требуется выполнить именно в этом фреймворке. Пройдя курс, с большой долей вероятности вы забудете про Snap и перейдете на Networkx.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="networkx" /><category term="snap" /><category term="phyton" /><category term="graphs" /><category term="sc224w" /><summary type="html">Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.</summary></entry><entry><title type="html">Столбец Unnamed в датафрейме Pandas</title><link href="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html" rel="alternate" type="text/html" title="Столбец Unnamed в датафрейме Pandas" /><published>2020-04-18T00:00:00+02:00</published><updated>2020-04-18T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html">&lt;p&gt;Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.&lt;/p&gt;
 
 &lt;p&gt;Все дело в индексе по умолчанию при чтении или записи .csv файла!&lt;/p&gt;
 
@@ -1536,75 +1604,4 @@ Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
 
 &lt;p&gt;В таком случае можно сказать, что алгоритм &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; эффективен на последовательности &lt;script type=&quot;math/tex&quot;&gt;({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})&lt;/script&gt;, если его время работы равно &lt;script type=&quot;math/tex&quot;&gt;O(p(n, 1/\epsilon, 1/\delta))&lt;/script&gt; для некоторого полинома p. Очевидно, что вопрос об эффективном решении проблемы обучения зависит от того, как именно задача обучения представлена в виде последовательности конкретных проблем.&lt;/p&gt;
 
-&lt;p&gt;Более подробную информацию на эту тему можно найти в учебнике «Understanding Machine Learning», изданном в Cambridge University Press в 2014-ом году.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><summary type="html">Чуть ранее, в статье временная сложность алгоритмов машинного обучения, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.</summary></entry><entry><title type="html">Особенности препроцессинга данных в scikit-learn</title><link href="https://konstantinklepikov.github.io/2019/10/08/scikit-learn-preprocessing.html" rel="alternate" type="text/html" title="Особенности препроцессинга данных в scikit-learn" /><published>2019-10-08T00:00:00+02:00</published><updated>2019-10-08T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/08/scikit-learn-preprocessing</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/08/scikit-learn-preprocessing.html">&lt;p&gt;В статье кратко раскрываются некоторые вопросы подготовки данных с помощью scikit-learn.&lt;/p&gt;
-
-&lt;h3 id=&quot;замена-пропусков&quot;&gt;Замена пропусков&lt;/h3&gt;
-
-&lt;p&gt;Scikit-learn не поддерживает замену пропусков с разными значениями. Сначала придется последовательно перегнать все интересующие пропуски, к примеру, в &lt;em&gt;NaN&lt;/em&gt;, а затем использовать инструменты препроцессинга.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html&quot;&gt;MissingIndicator&lt;/a&gt; позволяет сделать разметку пропусков. С помощью &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html&quot;&gt;SimpleImputer&lt;/a&gt; можно выполнить замену. Поддерживаются четыре основных метода:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;mean&lt;/li&gt;
-  &lt;li&gt;most_frequent&lt;/li&gt;
-  &lt;li&gt;median&lt;/li&gt;
-  &lt;li&gt;constant (необходимо задать fill_value, чтобы не получить дефолтное значение)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Препроцессинг перегоняет данные в Numpy-формат, что означает потерю метаданных. Если это представляет проблему - препроцессинг делать средствами Pandas.&lt;/p&gt;
-
-&lt;p&gt;Есть еще несколько популярных методов, например, кластеризация с использованием K ближайших соседей и интерполяция. Оба метода не поставляются в scikit-learn. придется поискать реализации поверх.&lt;/p&gt;
-
-&lt;h3 id=&quot;полиномиальные-признаки&quot;&gt;Полиномиальные признаки&lt;/h3&gt;
-
-&lt;p&gt;Перед работой с &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html&quot;&gt;PolynomialFeatures&lt;/a&gt; надо иметь представление о том, как будут обрабатываться пропуски, так как NaN поднимет ошибку, а 0 для полиномов всех степеней останется нулем.&lt;/p&gt;
-
-&lt;p&gt;Есть возможность создавать матрицу без степенных вариаций (для этого необходимо задать interaction_only=True).&lt;/p&gt;
-
-&lt;p&gt;Весь процесс очень затратен по оперативной памяти и на нем довольно легко столкнуться нехваткой, поэтому, если дата-сет большой, придется предварительно подумать как с ним работать.&lt;/p&gt;
-
-&lt;h3 id=&quot;категориальные-признаки&quot;&gt;Категориальные признаки&lt;/h3&gt;
-
-&lt;p&gt;Scikit-learn не поддерживает обработку категориальных признаков, только замену на численное представление. Вариантов два:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html&quot;&gt;OrdinalEncoder&lt;/a&gt; для численного представления без разделения на отдельные признаки (пропуски тоже кодируются в собственный отдельный класс)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html&quot;&gt;OneHotEncoder&lt;/a&gt; для численного представления с разделением на отдельные признаки с бинарными классами для каждого признака.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;обработка-численных-признаков&quot;&gt;Обработка численных признаков&lt;/h3&gt;
-
-&lt;p&gt;Численные признаки могут можно дискретизировать с помощью scikit-learn и, таким образом, перегонять их в категориальные. Поддерживаются два основных способа:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;discretisation (или квантилизация или биннинг). Доступно в виде &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html&quot;&gt;KBinsDiscretizer&lt;/a&gt; с тремя методами: uniform (одинаковая длина бинов), quantile (одинаковое число точек в бинах), kmeans (значение определяется кластеризацией).&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;binarisation с помощью &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.binarize.html&quot;&gt;binarize&lt;/a&gt; — задается trashold, все что ниже или рано 0, все что выше 1.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;препроцессинг&quot;&gt;Препроцессинг&lt;/h2&gt;
-
-&lt;p&gt;Собственно непосредственно сам препроцессинг описан в &lt;a href=&quot;https://scikit-learn.org/stable/modules/preprocessing.html&quot;&gt;разделе Preprocessing data&lt;/a&gt;. В scikit-learn это трансформация и нормализация данных. Делать это необходимо, так как многие алгоритмы чувствительны к выбросам, а так же распределению данных в выборке.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html&quot;&gt;StandardScaler&lt;/a&gt; центрирует данные, удаляет среднее значение для каждого объекта, а затем масштабирует, деля на среднее отклонение. &lt;script type=&quot;math/tex&quot;&gt;x{\scriptstyle scaled} = \frac{x - u}{s}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;u&lt;/script&gt; среднее, а &lt;script type=&quot;math/tex&quot;&gt;s&lt;/script&gt; отклонение.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html&quot;&gt;MinMaxScaler&lt;/a&gt; трансформирует признаки в выбранном диапазоне. &lt;script type=&quot;math/tex&quot;&gt;x{\scriptstyle scaled} = \frac{x - \min(x)}{\max(x) - \min(x)}&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html&quot;&gt;MaxAbsScaler&lt;/a&gt; трансформирует в диапазон &lt;script type=&quot;math/tex&quot;&gt;[-1, 1]&lt;/script&gt;. Используется для центрированных вокруг нуля или разреженных данных. &lt;script type=&quot;math/tex&quot;&gt;x{\scriptstyle scaled} = \frac{x}{\max(abs(x))}&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html&quot;&gt;RobustScaler&lt;/a&gt;. Для данных, в которых много выбросов.&lt;/p&gt;
-
-&lt;p&gt;Для нормализации данных можно использовать &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html&quot;&gt;Normalizer&lt;/a&gt;. Довольно часто это становится необходимым, когда алгоритм предсказывает, базируясь на взвешенных значениях, основанных на расстояниях между точками данных. Особенно актуально для классификации текста и кластеризации. В scikit-learn доступны три регуляризатора:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;l1&lt;/li&gt;
-  &lt;li&gt;l2&lt;/li&gt;
-  &lt;li&gt;MaxAbsScaler&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="scikit-learn" /><category term="ml-data" /><category term="preprocessing" /><summary type="html">В статье кратко раскрываются некоторые вопросы подготовки данных с помощью scikit-learn.</summary></entry></feed>
+&lt;p&gt;Более подробную информацию на эту тему можно найти в учебнике «Understanding Machine Learning», изданном в Cambridge University Press в 2014-ом году.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><summary type="html">Чуть ранее, в статье временная сложность алгоритмов машинного обучения, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.</summary></entry></feed>
