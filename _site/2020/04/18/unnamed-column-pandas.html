@@ -8,7 +8,7 @@
 
   <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Столбец Unnamed в датафрейме Pandas | My deep learning</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Столбец Unnamed в датафрейме Pandas" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-18T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html","headline":"Столбец Unnamed в датафрейме Pandas","dateModified":"2020-04-18T00:00:00+02:00","datePublished":"2020-04-18T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html"},"datePublished":"2020-04-18T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html","description":"Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.","headline":"Столбец Unnamed в датафрейме Pandas","dateModified":"2020-04-18T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="python подготовка данных pandas csv read_csv">
@@ -216,8 +216,8 @@
 
 <p>Формируя дата-фрейм из какого-либо источника данных, необходимо не забывать сохранять его без индекса, вот так:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">a</span>  <span class="n">b</span>  <span class="n">c</span>
@@ -228,8 +228,8 @@
 
 <p>Если этого не сделать, при сохранении будет добавлен «безымянный» индекс по умолчанию:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">Unnamed</span><span class="p">:</span> <span class="mi">0</span>  <span class="n">a</span>  <span class="n">b</span>  <span class="n">c</span>
@@ -240,7 +240,7 @@
 
 <p>И тогда с этим придется бороться при чтении, вот так:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">a</span>  <span class="n">b</span>  <span class="n">c</span>
@@ -251,8 +251,8 @@
 
 <p>Либо путем выкидывания столбца inplace:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">this</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
-<span class="n">this</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'Unnamed: 0'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">this</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/test.csv'</span><span class="p">)</span>
+<span class="n">this</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'Unnamed: 0'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">this</span>
 </code></pre></div></div>
 

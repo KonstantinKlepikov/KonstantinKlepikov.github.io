@@ -8,7 +8,7 @@
 
   <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Подготовка и оптимизация данных для задач машинного обучения | My deep learning</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Подготовка и оптимизация данных для задач машинного обучения" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-04T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html","headline":"Подготовка и оптимизация данных для задач машинного обучения","dateModified":"2020-03-04T00:00:00+02:00","datePublished":"2020-03-04T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html"},"datePublished":"2020-03-04T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html","description":"Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.","headline":"Подготовка и оптимизация данных для задач машинного обучения","dateModified":"2020-03-04T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="optimisation data preprocessing machine learning машинное обучение оптимизация подготовка данных pandas python">
@@ -259,7 +259,7 @@
 
 <p>После загрузки и формирования дата-фрейма посмотрим на данные с помощью метода info() библиотеки pandas</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -271,7 +271,7 @@ memory usage: 16.8+ MB
 
 <p>Здесь мы сразу встречаем первую ошибку, которая довольно часто в дальнейшем стоит значительных временных затрат. Дело в том, что метод info() оценивает объем данных в дата-фрейме приблизительно — нам об этом намекает скромный значек “+” после значения задействованной памяти. Особенно этот перекос становится заметен, если данные содержат объекты с вложенными структурами. Посмотрим еще раз, но теперь глубже.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -353,13 +353,13 @@ memory usage: 147.3 MB
 <p>Попробуем «разобрать» json-подобный объект, находящийся в колонке event_data. Для этого воспользуемся <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html">pandas.json_normalize</a>, который разбирает структурированные данные из JSON в табличный формат, а также <a href="https://docs.python.org/3/library/json.html">json.load</a>, который десериализует текст или байткод, содержащий json-документ в python-объекты. Чтобы применить эти методы ко всей серии, воспользуемся <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">DataFrame.apply</a> (метод не сильно быстрый, но нам требуется выполнить эту операцию всего один раз, поэтому, в данном случае, время смело приносим в жертву).</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># json unpack
-</span><span class="n">df_train_extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span>
-    <span class="n">df_train</span><span class="p">[</span><span class="s">'event_data'</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">))</span>
+</span><span class="n">df_train_extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">json</span><span class="p">.</span><span class="n">json_normalize</span><span class="p">(</span>
+    <span class="n">df_train</span><span class="p">[</span><span class="s">'event_data'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">))</span>
 </code></pre></div></div>
 
 <p>В результате у нас получилось довольно прилично новых признаков (приведено сокращенно)</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -470,7 +470,7 @@ memory usage: 207.5+ MB
 
 <p>В итоге, что с памятью?</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -488,13 +488,13 @@ memory usage: 543.8 MB
 
 <p>Поработаем с разными типами объектов отдельно.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'number'</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">objects_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'object'</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="p">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'number'</span><span class="p">]).</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">objects_part</span> <span class="o">=</span> <span class="n">df_train_extracted</span><span class="p">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s">'object'</span><span class="p">]).</span><span class="n">copy</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p><strong>Для начала разберемся с наименьшим злом — с числами</strong>. В Pandas используются подтипы int8, int16, int32, int64, float16, float32, float64. В нашем случае в результате сравнения при извлечении, числа оказались в наиболее затратном по памяти формате.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -518,17 +518,17 @@ memory usage: 100.7 MB
 <p>Изменим эту ситуацию и вот как: получим минимальное и максимальное значение в серии, затем сравним его с машинными лимитами для типов Numpy, после чего заменим на наименьшее.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'int16'</span><span class="p">,</span> <span class="s">'int32'</span><span class="p">,</span> <span class="s">'int64'</span><span class="p">,</span> <span class="s">'float16'</span><span class="p">,</span> <span class="s">'float32'</span><span class="p">,</span> <span class="s">'float64'</span><span class="p">]</span> 
-<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">dtypes</span>
     <span class="k">if</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">numerics</span><span class="p">:</span>
-        <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="nb">min</span><span class="p">()</span>
-        <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span>
+        <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span>
+        <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">col_type</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s">'int'</span><span class="p">:</span>
             <span class="c1"># последовательно сравниваем от наименьшего инта начиная с np.int8
 </span>            <span class="c1"># наверх и переопределяем тип для серии
-</span>            <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="nb">max</span><span class="p">:</span>
-                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="nb">max</span><span class="p">:</span>
+</span>            <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nb">max</span><span class="p">:</span>
             <span class="c1"># и т.д.
 </span>        <span class="k">else</span><span class="p">:</span>
             <span class="c1"># аналогично для float
@@ -536,7 +536,7 @@ memory usage: 100.7 MB
 
 <p>Мы выполнили самопальный вариант понижающего преобразования, выиграв 74.4Mb.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -569,13 +569,13 @@ memory usage: 26.3 MB
 
 <p>Оказывается, везде в датасете использовано число с плавающей точкой, хотя на самом деле никакой потребности в этом нет - в этих данных все числа целые. Исправим эту ситуацию:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">numerics_part</span> <span class="o">=</span> <span class="n">numerics_part</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">numerics_part</span> <span class="o">=</span> <span class="n">numerics_part</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>В данном случае мы заменили все пропуски в данных на -1, что открыло для нас возможность применить преобразование типов. Прием замены пропусков на число довольно часто встречается — обычно выбирают число, которое не встречается в данных, к примеру -9999. В нашем случае в данных вообще нет отрицательных чисел, поэтому мы просто взяли наименьшее кешированное, что бы сэкономить и тут. К тому же этот трюк окажется полезен в будущем. Смотрим на результат преобразования:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -600,7 +600,7 @@ memory usage: 16.6 MB
 
 <p><strong>Переходим к объектам</strong>. Тип object в Pandas хранит строковое представление. Строки хранятся фрагментировано - значение в ячейке по сути является указателем. При этом резервируется много памяти и это для нас плохо.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -614,26 +614,26 @@ memory usage: 443.1 MB
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># subtype categoty
 </span><span class="k">def</span> <span class="nf">object_to_category</span><span class="p">(</span><span class="n">part</span><span class="p">):</span>
-    <span class="n">converted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-    <span class="n">unconverted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">converted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">unconverted_objects_part</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
     <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">part</span><span class="p">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">unic</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+            <span class="n">unic</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">unique</span><span class="p">())</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">unic</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
-                <span class="n">converted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">)</span>
+                <span class="n">converted_objects_part</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">converted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+                <span class="n">converted_objects_part</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
         <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
             <span class="c1"># unhashable objects can't be categorised
-</span>            <span class="n">unconverted_objects_part</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+</span>            <span class="n">unconverted_objects_part</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">converted_objects_part</span><span class="p">,</span> <span class="n">unconverted_objects_part</span>
 </code></pre></div></div>
 
 <p>Мы отбросим часть объектов, т.к. договорились ранее не работать с нераспакованной частью json</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">converted_objects_part</span><span class="p">,</span> <span class="n">unconverted_objects_part</span> <span class="o">=</span> <span class="n">object_to_category</span><span class="p">(</span><span class="n">objects_part</span><span class="p">)</span>
-<span class="n">converted_objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+<span class="n">converted_objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -652,7 +652,7 @@ memory usage: 7.9 MB
 
 <p>Обратите внимание, что мы сами управляем какие именно объекты представлять в виде категорий через отношение количества уникальных значений к общему количеству значений в серии. Теперь посмотрим объем нераспакованных данных и сложим с оптимизированными распакованными:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">unconverted_objects_part</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">unconverted_objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -683,7 +683,7 @@ Name: timestamp, Length: 200000, dtype: object
 
 <p>Временную метку оптимизируем с помощью функции pandas <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html">pd.to_datetime</a>. Параметр format позволяет задать тип представления временной отметки. Дефолтный вот такой: “%d/%m/%Y”. Теперь метка будет выглядеть так:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">])</span>
 <span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span>
 </code></pre></div></div>
 

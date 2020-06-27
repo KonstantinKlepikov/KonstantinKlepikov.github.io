@@ -8,7 +8,7 @@
 
   <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Как преобразовать вложенные структуры JSON в массив Pandas на Python | My deep learning</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Как преобразовать вложенные структуры JSON в массив Pandas на Python" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-30T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html","headline":"Как преобразовать вложенные структуры JSON в массив Pandas на Python","dateModified":"2020-03-30T00:00:00+02:00","datePublished":"2020-03-30T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"},"datePublished":"2020-03-30T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html","description":"Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.","headline":"Как преобразовать вложенные структуры JSON в массив Pandas на Python","dateModified":"2020-03-30T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas">
@@ -229,7 +229,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">json_object</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://api.duma.gov.ru/api/:token/deputies.json?app_token=:app_token'</span><span class="p">)</span>
+<span class="n">json_object</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://api.duma.gov.ru/api/:token/deputies.json?app_token=:app_token'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Что содержалось в ответе?</p>
@@ -260,7 +260,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="n">extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">json_object</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+<span class="n">extracted</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">json</span><span class="p">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">json_object</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
 </code></pre></div></div>
 
 <p>Как и предполагалось, данные по factions остались неразвернутыми.</p>
@@ -288,16 +288,16 @@
 
 <p>Что бы разобрать вложенный список из factions для начала избавимся от пропусков</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">json_object</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">json_object</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">factions_with_id</span><span class="p">:</span>
-    <span class="n">is_factions</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'factions'</span><span class="p">)</span>
+    <span class="n">is_factions</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'factions'</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_factions</span><span class="p">:</span>
-        <span class="n">factions_with_id</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">factions_with_id</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Теперь развернем factions относительно айдишников депутатов (meta=’id’). Чтобы сохранить семантику в полученной таблице, будем использовать аргумент record_prefix=’factions.’, который добавим к вновь образуемым столбцам массива.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">json</span><span class="p">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span>
                                              <span class="n">record_path</span><span class="o">=</span><span class="s">'factions'</span><span class="p">,</span>
                                              <span class="n">meta</span><span class="o">=</span><span class="s">'id'</span><span class="p">,</span>
                                              <span class="n">record_prefix</span><span class="o">=</span><span class="s">'factions.'</span><span class="p">,</span>
@@ -306,7 +306,7 @@
 
 <p>Нам удалось развернуть список словарей в полноценную таблицу:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">factions_with_id</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -323,9 +323,9 @@ memory usage: 196.6+ KB
 
 <p>Теперь в исходном массиве удалим колонку factions и с помощью метода merge() добавим в массив развернутые данные.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extracted</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'factions'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s">'columns'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">summary</span> <span class="o">=</span> <span class="n">extracted</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
-<span class="n">summary</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extracted</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'factions'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s">'columns'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">extracted</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">factions_with_id</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
+<span class="n">summary</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;

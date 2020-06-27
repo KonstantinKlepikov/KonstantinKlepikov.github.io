@@ -8,7 +8,7 @@
 
   <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Фреймворки Networkx и Snap для построения графов. Сравнение | My deep learning</title>
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Фреймворки Networkx и Snap для построения графов. Сравнение" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-15T00:00:00+02:00" />
 <script type="application/ld+json">
-{"url":"https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html","headline":"Фреймворки Networkx и Snap для построения графов. Сравнение","dateModified":"2020-05-15T00:00:00+02:00","datePublished":"2020-05-15T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html"},"datePublished":"2020-05-15T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html","description":"Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.","headline":"Фреймворки Networkx и Snap для построения графов. Сравнение","dateModified":"2020-05-15T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="теория графов построение графов графы фреймворк networkx snap sc224w">
@@ -237,11 +237,11 @@
 <p>Питонья обертка написана в сишном стиле. Опять-таки, будет сложно запомнить нотацию. Пример:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">snap</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">GenFull</span><span class="p">(</span><span class="n">snap</span><span class="o">.</span><span class="n">PNEANet</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">Rnd</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">TRnd</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">Rnd</span><span class="o">.</span><span class="n">Randomize</span><span class="p">()</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">snap</span><span class="p">.</span><span class="n">GenFull</span><span class="p">(</span><span class="n">snap</span><span class="p">.</span><span class="n">PNEANet</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">Rnd</span> <span class="o">=</span> <span class="n">snap</span><span class="p">.</span><span class="n">TRnd</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">Rnd</span><span class="p">.</span><span class="n">Randomize</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-    <span class="n">NId</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">GetRndNId</span><span class="p">(</span><span class="n">Rnd</span><span class="p">)</span>
+    <span class="n">NId</span> <span class="o">=</span> <span class="n">G</span><span class="p">.</span><span class="n">GetRndNId</span><span class="p">(</span><span class="n">Rnd</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">NId</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -263,17 +263,17 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">MultiDiGraph</span><span class="p">()</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">))</span>
-<span class="n">H</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_graph</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">dict</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="mi">282</span><span class="p">)),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">dict</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="mi">37</span><span class="p">))])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">MultiDiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">))</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">path_graph</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">edges</span><span class="p">)</span>
+<span class="n">G</span><span class="p">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">dict</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="mi">282</span><span class="p">)),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">dict</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="mi">37</span><span class="p">))])</span>
 <span class="n">G</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 </code></pre></div></div>
 
