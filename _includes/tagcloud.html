@@ -2,7 +2,7 @@
     <div class="prose">
         {% assign tags = site.tags | sort %}
         {% for tag in tags %}
-            <a href="/tag/{{ tag | first | slugify }}" class="no-underline text-accent" style="font-size:{{ tag | last | size | times: 2 | plus: 14 }}px" title="{{ tag[0] | replace:'-', ' ' }}">{{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }})</a>
+            <a href="/tag/{{ tag | first | slugify }}" class="no-underline text-accent" style="font-size:{{ tag | last | size | times: 2 | plus: 12 }}px" title="{{ tag[0] | replace:'-', ' ' }}">{{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }})</a>
         {% endfor %}
     </div>
 </div>

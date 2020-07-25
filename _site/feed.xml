@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-06-27T23:22:59+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-07-25T02:25:15+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Обработка пропусков в Pandas</title><link href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" rel="alternate" type="text/html" title="Обработка пропусков в Pandas" /><published>2020-07-25T00:00:00+02:00</published><updated>2020-07-25T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html"></content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html"></summary></entry><entry><title type="html">Как понять translating алгоритмы для графов?</title><link href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" rel="alternate" type="text/html" title="Как понять translating алгоритмы для графов?" /><published>2020-07-13T00:00:00+02:00</published><updated>2020-07-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html">&lt;p&gt;Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.&lt;/p&gt;
+
+&lt;p&gt;Алгоритм подробно рассматривается в курсе cs224w, про него есть домашка и он фигурирует в нескольких лекциях, есть смысл разобраться в том, как именно он устроен.&lt;/p&gt;
+
+&lt;p&gt;В начале сам алгоритм:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-01.png&quot; alt=&quot;TransE&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;В данном случае мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; - это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; - множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; - множество возможных связей.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; содержит триплеты &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, определяемые следующим образом:&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;h \in E&lt;/script&gt; - исходящая нода (head)&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; - связь (relation)&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;t \in E&lt;/script&gt; - нода, завершающая связь (tail)&lt;/p&gt;
+
+&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость основываясь на классических методах. Например город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation), определяющая отношение вершин графа. Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, что-бы оно отображалоимеющиеся в графе знаний связи. Итак, необходимо представить head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
+
+&lt;p&gt;Если мы исходим из того, что &lt;script type=&quot;math/tex&quot;&gt;(h, l, t) \in S&lt;/script&gt; и предполагаем что &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h} + \mathbf{l} \approx \mathbf{t}&lt;/script&gt;. Такие триплеты мы можем считать “правильными”. Тогда можно предположить существование и “неправильных” (corrupted) триплетов &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;, выбранных из некого &lt;script type=&quot;math/tex&quot;&gt;S'_{(h, l, t)}&lt;/script&gt;в котором &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; (но не оба одновременно) заменены на случайные, входящие в &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;К примеру Берлин мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
+
+&lt;p&gt;Итак, функция потерь, которую будет минимизирвоать TransE, выглядит так:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L} = \underset{(h,l,t) \in S}\sum (\underset{(h',l,t') \in S'_{(h,l,t)}}\sum [\gamma + d(\mathbf{h} + \mathbf{l}, \mathbf{t}) - d(\mathbf{h}' + \mathbf{l}, \mathbf{t}')]_{+} )&lt;/script&gt;
+
+&lt;p&gt;Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;) &lt;script type=&quot;math/tex&quot;&gt;d_{+}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;d_{-}&lt;/script&gt; (с регуляризацией по норме &lt;script type=&quot;math/tex&quot;&gt;L_{1}&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;L_{2}&lt;/script&gt;) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;\mathbf{t}&lt;/script&gt;. Триплеты будем выбирать семплированием, а инициализируем случайными значениями.&lt;/p&gt;
+
+&lt;p&gt;Еще раз на примере векторов:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-02.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Мы получаем сумму разниц правильных и неправильных эмбедингов следуя через все пространство вещественных значений &lt;script type=&quot;math/tex&quot;&gt;h,l,t&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;h',l,t'&lt;/script&gt; до тех пор пока не выкинем все несвязанные пары нод. Все что осталось, очевидно имеет искомый relation.&lt;/p&gt;
+
+&lt;p&gt;Возникает ряд вопросов. Во-первых, почему-бы не использовать лос попроще? Например, можно не усложнять и сводить в ноль сумму эмбеддингов всех правильных триплетов.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L}_{simple} = \underset{(h,l,t) \in S}\sum d(\mathbf{h} + \mathbf{l}, \mathbf{t})&lt;/script&gt;
+
+&lt;p&gt;Проблемы начинаются с того, что такая метрика способна найти связи, которых на самом деле в графе нет. Посмотрим на такой граф:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-03.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Вася купил стиральную машину и Петя купил стиральную машину. Стиральная машина постирала рубашки. Но стоп… Вася постирал Петю?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-04.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Такого бы не случилось, если бы мы оптимизировали метрику, с &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt; - перебирая &lt;script type=&quot;math/tex&quot;&gt;h'&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t'&lt;/script&gt; мы очень быстро сводим в ноль потери для данного графа, не создавая несуществующих связей.&lt;/p&gt;
+
+&lt;p&gt;Для чего нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;?&lt;/p&gt;
+
+&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html">Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.</summary></entry><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
 
 &lt;p&gt;Для этих задач требуется инструмент построения моделей, способный анализировать структуры и вычисленять метрики, который к тому же будет оптимизирован по потреблению памяти и дискового пространства, так как графы как правило весьма объемны.&lt;/p&gt;
 
@@ -1335,273 +1387,4 @@ Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
 
 &lt;p&gt;&lt;strong&gt;Ковариация&lt;/strong&gt; позволяет определить наличие связи между переменными, но не показывает насколько сильно они связаны. В формуле коэффициента корреляции Пирсона ковариация: &lt;script type=&quot;math/tex&quot;&gt;\frac{\underset{i=1}{\overset{n}\sum}\ (x{\tiny i} - \bar{x})(y{\tiny i} - \bar{y})}{(n-1)} = cov&lt;/script&gt;&lt;/p&gt;
 
-&lt;p&gt;В предварительном анализе данных для построения моделей можно встретить &lt;strong&gt;корреляционную матрицу&lt;/strong&gt; — двумерный массив, в котором строки и столбцы представлены переменными, а значение ячеек коэфициентами корреляции. Такая матрица позволяет установить нелинейную связь переменных, когда коэфциент корреляции становится бесполезным.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="statistics" /><category term="data-science" /><category term="machine-learning" /><summary type="html">В данной статье кратко пройду по терминологии из практической статистики и ее применеии в data science. Термины приводятся в упрощенном виде, исключительно для понимания общих принципов. Источник для данной компиляции — книга Practical Statistics for Data Scientists, Andrew Bruce, Peter Bruce</summary></entry><entry><title type="html">Подготовка данных: кодирование категориальных признаков</title><link href="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html" rel="alternate" type="text/html" title="Подготовка данных: кодирование категориальных признаков" /><published>2019-10-28T00:00:00+02:00</published><updated>2019-10-28T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/28/data-preprocessing-category-encoders.html">&lt;p&gt;В статье «&lt;a href=&quot;/2019/10/08/scikit-learn-preprocessing.html&quot;&gt;особенности препроцессинга данных в scikit-learn&lt;/a&gt;» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.&lt;/p&gt;
-
-&lt;p&gt;Часто данные содержат множественные категориальные признаки с разными представлениями категорий. В некоторых случаях категорий оказывается сравнительно много, по отношению к общему объему данных. Иногда значения в категориальных признаках имеют различные распределения, могут иметь как явный, так и неочевидный порядок. Все это не добавляет энтузиазма во время предварительной обработки.&lt;/p&gt;
-
-&lt;p&gt;К счастью, есть готовые решения, например библиотека &lt;strong&gt;&lt;a href=&quot;https://contrib.scikit-learn.org/categorical-encoding/&quot;&gt;Category Encoders&lt;/a&gt; (CE)&lt;/strong&gt;, предоставляющая широкий набор кодировщиков категориальных признаков.&lt;/p&gt;
-
-&lt;h2 id=&quot;какие-преимущества-у-ce&quot;&gt;Какие преимущества у CE&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Наверное, самое основное — это полная совместимость с scikit-learn. Доступны методы fit, fit_transform, get_params, set_params и transform. На основе CE можно строить пайплайны в scikit-learn.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Поддержка numpy и pandas. Что важно — pandas dataframe можно получить и на выходе кодировщика. Иногда это весьма полезно, особенно когда нужно выполнить выборочное кодирование. Это позволяет не городить самодельный забор из кодировщиков, а использовать CE непосредственно в последовательном пайплайне scikit-learn.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Есть возможность задать маску для кодирования, т.е. сделать выборочное кодирование&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Можно отбросить часть данных&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Спроектированный кодировщик отлично портируется на рабочие данные.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;какие-задачи-можно-решать-с-помощью-ce&quot;&gt;Какие задачи можно решать с помощью CE&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;кодирование номинальных признаков (nominal) — признаки, порядок которых не определен (часто в табличных данных к таким признакам относятся распределения по цветам или по городам)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;кодирование упорядоченных признаков (ordinal) — признаки, порядок которых можно считать определенным (например, распределение по яркости)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;В CE можно кодировать бинарные признаки, упорядоченные по алфавиту или численному возрастанию признаки, а также географические, геометрические данные, данные о времени и другие структурированные данные. Единственное ограничение — решение не предоставляет собственного способа для создания масок для выборочного кодирования.&lt;/p&gt;
-
-&lt;h2 id=&quot;что-имеется-в-наборе-ce&quot;&gt;Что имеется в наборе CE&lt;/h2&gt;
-
-&lt;h3 id=&quot;contrast-coding&quot;&gt;Contrast Coding&lt;/h3&gt;
-
-&lt;p&gt;Данный тип кодирование разбивает признак на уровни (в каждом только значения, относящиеся к одной категории). Затем для каждого уровня вычисляется некоторая статистика. Например, вот так это делается в &lt;a href=&quot;http://www.statsmodels.org/dev/contrasts.html&quot;&gt;statsmodels&lt;/a&gt;. Метод подходит для кодирования номинальных и частично упорядоченных признаков.&lt;/p&gt;
-
-&lt;p&gt;В CE реализованы следующие кодеры:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Backward Difference Coding — сравнивается среднее для уровня со средним предыдущего уровня&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Helmert Coding — сравнивается среднее для уровня со средним для всех последующих уровней. Больше подходит для номинальных переменных.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Sum Coding — сравнивается среднее для уровня со средним для всех остальных уровней&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Polynomial Coding — используются линейные, квадратичные и кубические представления целевой категории. Подходит исключительно для упорядоченных признаков, интервалы между категориями которых одинаковы. Ну и довольно прожорлив по памяти.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Не реализованы:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Deviation Coding — более общий случай суммирующего кодирования, когда сравнение идет со всеми уровнями&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Dummy Coding — сравнение со средним значением на уровне&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Simple Coding — то же самое, что и Dummy Coding, только в качестве среднего принимается среднее всех значений фиксированного уровня&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Reverse Helmet Coding&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Forward Difference Coding&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Больше подробностей &lt;a href=&quot;https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/&quot;&gt;смотри тут&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;target-based-coding&quot;&gt;Target-based Coding&lt;/h3&gt;
-
-&lt;p&gt;Для кодирования переменных используются сведения о разметке (цели) дата-сета. Тут надо знать следующие понятия: &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; общее число примеров, &lt;script type=&quot;math/tex&quot;&gt;y^+&lt;/script&gt; число примеров, отнесенных к «положительному» классу, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; число примеров на уровне, &lt;script type=&quot;math/tex&quot;&gt;n^+&lt;/script&gt; число примеров уровня, отнесенных к положительному классу, &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; регуляризирующий параметр, &lt;script type=&quot;math/tex&quot;&gt;prior&lt;/script&gt; среднее значение цели. В CE реализованы:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Target Encoder. Переменная кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = prior*(1 - s)&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;+ s*\frac{n^+}{n}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;s = \frac{1}{1 + \exp(\frac{-n - mdl}{\alpha})}&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;\scriptsize mdl&lt;/script&gt; — минимум среди всех примеров на уровне.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;James-Stein Encoder кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = (1 - B) * \frac{n^+ + prior*m}{u^+ + m}&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;+ B*\frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; дополнительный гиперпараметр, регулирующий переобучение&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;M-estimate кодируется по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \frac{n^+}{n} + B * \frac{y^+}{y}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = 1... 100&lt;/script&gt; — дополнительный гиперпараметр, регулирующий переобучение. По сути — упрощенный вариант Target Encoder. (На момент написания статьи кодировщик работает некорректно)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Weight of Evidence (WOE) считается по формуле &lt;script type=&quot;math/tex&quot;&gt;x^k = \ln(\frac{nominator}{denominator})&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;nominator = \frac{n^+ + \alpha}{y^+ + 2\alpha}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;denominator = \frac{n - n^+ + \alpha}{y - y^+ + 2\alpha}&lt;/script&gt;. Кодировщик часто используется для подсчета рисков и других скорингов, т.к. по сути производит упорядочивание в логарифмическом масштабе. Хорошо решает проблему стандартизации и группировки разреженных данных. Проблема — теряются данные на биннинге, не учитывается корреляция между зависимыми данными и сам кодировщик легко может переобучиться.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Альтернативой WOE является PRE (Probability Ratio Encoding). В этом случае для каждой метки вычисляется &lt;script type=&quot;math/tex&quot;&gt;P(1)/P(0)&lt;/script&gt;, т.е отношение вероятностей того, что объект размечен положительно и вероятность отрицательной разметки. Этим значением заменяется значение при кодировании. &lt;script type=&quot;math/tex&quot;&gt;P(0)&lt;/script&gt; естественно ни при каких условиях не принимается равным 0. В CE метод не реализован.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Leave One Out (LOO) считается среднее цели для примера выбранной категории, для случая, когда пример удален из дата-сета.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Catboost Encoder улучшенный LOO (&lt;a href=&quot;https://catboost.ai/docs/concepts/algorithm-main-stages_cat-to-numberic.html&quot;&gt;документация&lt;/a&gt;)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;У всех target-based кодировщиков имеет место проблема риска переобучения, так как используются данные о разметке дата-сета. Два варианта решения — дополнительная регуляризация и двойная кросс-валидация. Кроме того LOO и Catboost Encoder работают плохо, если реальные данные имеют другую размерность, что приводит к сдвигу по отноешнию к данным, на которых производилось обучение.&lt;/p&gt;
-
-&lt;h3 id=&quot;остальные-кодировщики&quot;&gt;Остальные кодировщики&lt;/h3&gt;
-
-&lt;p&gt;В CE реализовано несколько базовых кодировщиков:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;One Hot — аналог OnHotEncoder в scikit-learn или get_dummies в pandas&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Ordinal только для упорядоченных признаков (обратите внимание при импорте, что класс в CE называется также, как OrdinalEncoder в scikit-learn)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Binary конвертит категории признака в бинарный код. Категории конвертятся в номера по порядку, затем номера кодируются на двоичной базе, а затем единицы и нули из полученых кодированных значений выносятся в новые признаки. По сути, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; категорий переводятся в &lt;script type=&quot;math/tex&quot;&gt;log_{2}n&lt;/script&gt; бинаризированных признаков. Это весьма значительно сокращает количество признаков на выходе по сравнению с One Hot и полезно, когда число кодируемых категорий значительно.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Base N комбинирует One Hot и Binary&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Кроме того, реализован Hashing, позволяющий хешировать категории. Это аналог FeatureHasher (последний больше подходит для работы с текстом). Также походит для кодирования большого числа категорий, так как сокращает размерность на выходе по сравнению с One Hot.&lt;/p&gt;
-
-&lt;h3 id=&quot;чего-нет-в-ce&quot;&gt;Чего нет в CE&lt;/h3&gt;
-
-&lt;p&gt;Не реализован Label Encoding. Можно воспользоваться factorize из pandas или LabelEncoder из sklearn или Ordinal, что то же самое. Не реализован Frequincy Encoding, когда категории кодируются в числовом виде в зависимости от частоты для признака в диапазоне [0, 1]. Кроме того, нет методов для кодирования признаков, которые явно упорядочены циклически, например, дат и времени. Ну и, естественно, нет методов для конструирования признаков, таких как разделение выражения на части и т.д. Все это придется написать самостоятельно или искать более специфическое решение.&lt;/p&gt;
-
-&lt;h2 id=&quot;как-использовать-кодирование-категориальных-признаков&quot;&gt;Как использовать кодирование категориальных признаков&lt;/h2&gt;
-
-&lt;p&gt;Есть множество разных рекомендаций. Все их можно свести к следующему:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Определить, относится ли вообще признак к категориальному и посчитать количество категорий.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Необходимо понять природу категориального признака, отнести его к номинальному или упорядоченному типу, установить циклические зависимости для категорий и другие особенности распределения категорий&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Необходимо знать, к какому распределению данных лучше приспособлена обучаемая модель. Это позволит сразу выбрать наиболее оптимальный метод кодирования&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Методы, использующие гиперпараметры, желательно сразу включить в цикл поиска оптимального решения.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Для частично упорядоченных признаков понять, можно ли соотнести категории с численными значениями, расположенными на эквивалентных интервалах. Если да, то стоит подумать о применении Ordinal Encoding. если нет, то можно попробовать один из методов контрастного кодирования. Если же количество категорий велико и есть проблемы с вычислительной сложностью по памяти, можно попробовать один из методов кодирования, сокращающий выходную размерность, например, хеширование. При этом надо помнить, что это может привести к потере данных.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Для неупорядоченных признаков можно использовать One Hot, если число категорий невелико. Большое количество категорий  можно также бинаризировать или хешировать, если потеря части данных приемлема. Если нет, придется использовать один из методов target encoding. Необходимо помнить о переобучении и построить, при необходимости, двойную кросс-валидацию.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;На практике, на мой взгляд, можно миксовать различные методы, попутно расширяя пространство признаков. Например, можно сконструировать новые признаки, применить относительно простые кодировщики к части исходных, а на выходе закодировать весь пул по цели. Пространство для экспериментов ограничено, как всегда, только по вычислительной сложности.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Дополнительные статьи по этой тематике: &lt;a href=&quot;https://towardsdatascience.com/all-about-categorical-variable-encoding-305f3361fd02&quot;&gt;один&lt;/a&gt;, &lt;a href=&quot;https://towardsdatascience.com/benchmarking-categorical-encoders-9c322bd77ee8&quot;&gt;два&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="preprocessing" /><category term="category-encoders" /><category term="sklearn" /><category term="scikit-learn" /><category term="ml-data" /><summary type="html">В статье «особенности препроцессинга данных в scikit-learn» разбирались особенности кодирования признаков с помощью библиотеки scikit-learn. К сожалению, набор инструментов scikit-learn довольно скромный.</summary></entry><entry><title type="html">Вычислительная сложность машинного обучения. Базовые принципы</title><link href="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html" rel="alternate" type="text/html" title="Вычислительная сложность машинного обучения. Базовые принципы" /><published>2019-10-19T00:00:00+02:00</published><updated>2019-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2019/10/19/complexity-basics-terms.html">&lt;p&gt;Чуть ранее, в статье &lt;a href=&quot;/2019/09/08/time-complexity-of-machine-learning-algorithms.html&quot;&gt;временная сложность алгоритмов машинного обучения&lt;/a&gt;, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Вычислительная сложность&lt;/strong&gt; (или асимптотическая сложность или производительность) — это свойство алгоритма. Она определяется функцией, которая показывает насколько ухудшается работа алгоритма с усложнением поставленной задачи.&lt;/p&gt;
-
-&lt;p&gt;Вот пять основных правил расчета вычислительной сложности:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;если для математической функции &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt; алгоритму необходимо выполнить действия &lt;script type=&quot;math/tex&quot;&gt;f(N)&lt;/script&gt; раз, то для этого ему понадобится сделать &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt; шагов.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;если алгоритм выполняет одну операцию, состоящую из &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt; шагов, а затем вторую, состоящую из &lt;script type=&quot;math/tex&quot;&gt;O(g(N))&lt;/script&gt; шагов, то общая производительность f и g суммируется &lt;script type=&quot;math/tex&quot;&gt;O(f(N) + g(N))&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;если алгоритму необходимо сделать &lt;script type=&quot;math/tex&quot;&gt;O(f(N) + g(N))&lt;/script&gt; шагов и область значений N функции &lt;script type=&quot;math/tex&quot;&gt;f(N)&lt;/script&gt; больше чем у &lt;script type=&quot;math/tex&quot;&gt;g(N)&lt;/script&gt;, то вычислительную сложность можно упростить до &lt;script type=&quot;math/tex&quot;&gt;f(N)&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;если алгоритму внутри каждого шага &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt; одной операции приходится выполнять еще &lt;script type=&quot;math/tex&quot;&gt;O(g(N))&lt;/script&gt; шагов другой операции, то общая производительность составляет &lt;script type=&quot;math/tex&quot;&gt;O(f(N)*g(N))&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;постоянными множителями (константами) можно пренебречь: &lt;script type=&quot;math/tex&quot;&gt;O(C*f(N))&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;O(f(C*N))&lt;/script&gt; можно записать как &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Нотация &lt;strong&gt;«O» большое&lt;/strong&gt; всего лишь указывает на то, что мы рассматриваем ситуацию, когда алгоритму для завершения необходимо потребить  максимальное возможное количество (худший случай). В предыдущей статье рассматривался частный случай, входящий в обобщенное понятие вычислительной сложности — временная сложность алгоритмов МО. Грубо говоря, объем задачи алгоритма всегда связан с вычислительными ресурсами — временем (или количеством шагов) вычислений и пространством (или объемом памяти), необходимыми для завершения задачи. Поэтому в различной специальной литературе по машинному обучению, где рассматриваются частные случаи алгоритмов, можно встретить отсылки как к вычислительной сложности в целом так и к сложности по времени или по памятми.&lt;/p&gt;
-
-&lt;p&gt;На практике чаще всего встречаются следующие сложности:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(1)&lt;/script&gt; вне зависимости от сложности задачи время выполнения алгоритма постоянно&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(\log(N))&lt;/script&gt; на каждом шаге алгоритма происходит деление количества рассматриваемых элементов на фиксированный коэффициент&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(N)&lt;/script&gt; рост числа входов вызывает линейный рост производительности&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(N*\log(N))&lt;/script&gt; алгоритм с логарифмической сложностью, на каждом шаге которого производится дополнительная операция с каждым элементом&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(N^2)&lt;/script&gt; перебор всех данных, а затем повторный их перебор. Степень может быть другой, что, очевидно, влияет на сложность вычислений.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(2^N)&lt;/script&gt; экспоненциальная сложность и &lt;script type=&quot;math/tex&quot;&gt;O(!N)&lt;/script&gt; факториальная сложность&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Задачи со сложностью до &lt;script type=&quot;math/tex&quot;&gt;O(N*\log(N))&lt;/script&gt; включительно решаемы. При грамотном управлении количеством входных данных решаемы и задачи со степенной сложностью. Экспоненциальные и факториальные сложности, в виду в целом большого входного объема данных, в МО неприменимы.&lt;/p&gt;
-
-&lt;p&gt;Ключевым вопросом в оценке сложности алгоритмов МО является их класс, определяющий требования ко времени и ресурсам памяти, применительно к некой абстрактной машине (часто рассматривается детерминированная машина, в частности, машина Тьюринга). Для детерминированных машин определены следующие классы:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;DTIME(f(N))&lt;/script&gt; задачи, которые машина решает за время &lt;script type=&quot;math/tex&quot;&gt;f(N)&lt;/script&gt;. Временная сложность таким образом будет составлять &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt; задачи, с которыми машина справляется за полиномиальное время&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;EXPTIME(EXP)&lt;/script&gt; задачи, с которыми машина справляется за экспоненциальное время&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Для недетерминированных машин:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;NTIME(f(N))&lt;/script&gt; задачи, которые машина решает за время &lt;script type=&quot;math/tex&quot;&gt;f(N)&lt;/script&gt;. Временная сложность, таким образом будет, составлять &lt;script type=&quot;math/tex&quot;&gt;O(f(N))&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;NP&lt;/script&gt; задачи, с которыми машина справляется за полиномиальное время&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;NEXPTIME(EXP)&lt;/script&gt; задачи, с которыми машина справляется за экспоненциальное время&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Аналогичным образом задачи делятся в зависимости от потребляемого объема памяти.&lt;/p&gt;
-
-&lt;p&gt;Не вдаваясь в подроности, в общем случае &lt;script type=&quot;math/tex&quot;&gt;P \subseteq NP&lt;/script&gt;, экспоненциальные задачи, по сути, не считаемые, а задачей построения алгоритмов МО, в том числе, является их сведение к менее затратному классу. Задачи, которые входят в класс NP и к которым можно свести любые другие задачи этого класса за полиномиальное время называются NP-полными. NP-сложные задачи необязательно относятся к классу NP.&lt;/p&gt;
-
-&lt;h2 id=&quot;время-обучения-для-алгоритмов-мо&quot;&gt;Время обучения для алгоритмов МО&lt;/h2&gt;
-
-&lt;p&gt;Фактическое время работы алгоритма МО зависит от конкретной машины, на которой алгоритм реализован. В общем случае алгоритм обучения с учителем имеет доступ к множеству примеров, классу гипотез, функции потерь и обучающему набору, взятому из множества примеров. Четкого понятия размера входных данных для такого алгоритма не существует, т.к. если мы предъявляем алгоритму избыточное количество обучающих примеров, он может игнорировать лишние. Поэтому увеличение размера обучающего набора не ведет к тому, что проблема обучения становится более трудной. кроме того, алгоритм обучения может передавать часть вычислений выходной гипотезе, в случае, когда такая гипотеза определена как функция, сохраняющая обучающий набор. Для этого вводятся понятия времени обучения и времени предсказания. Будем рассматривать алгоритмы, чье время предсказания не превышает время обучения.&lt;/p&gt;
-
-&lt;p&gt;Вычислительная сложность алгоритма обучения определяется в два этапа:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;дана функция &lt;script type=&quot;math/tex&quot;&gt;f : (0, 1)^2 \rightarrow \mathbb{N}&lt;/script&gt;, задача обучения &lt;script type=&quot;math/tex&quot;&gt;(Z, H, l)&lt;/script&gt; и алгоритм обучения &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;. Алгоритм &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; решает задачу обучения за время &lt;script type=&quot;math/tex&quot;&gt;O(f)&lt;/script&gt;, если существует постоянное число &lt;script type=&quot;math/tex&quot;&gt;c&lt;/script&gt; такое, что для любого распределения вероятности &lt;script type=&quot;math/tex&quot;&gt;D&lt;/script&gt; на &lt;script type=&quot;math/tex&quot;&gt;Z&lt;/script&gt; и входных параметров &lt;script type=&quot;math/tex&quot;&gt;\epsilon, \delta \in (0, 1)&lt;/script&gt; справедливо следующее утверждение: если &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; имеет доступ к примерам, независимо выбранным из распределения &lt;script type=&quot;math/tex&quot;&gt;D&lt;/script&gt;, то, во-первых, &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; завершается, выполнив не более &lt;script type=&quot;math/tex&quot;&gt;c f(\epsilon, \delta)&lt;/script&gt; операций, во-вторых, выход &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; обозначаемый как &lt;script type=&quot;math/tex&quot;&gt;h{\scriptstyle A}&lt;/script&gt; можно применять для предсказания метки нового примера и при этом будет выполнено не более &lt;script type=&quot;math/tex&quot;&gt;c f(\epsilon, \delta)&lt;/script&gt; операций и, в-третьих, выход &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; вероятно почти корректен, т.е. с вероятностью не ниже &lt;script type=&quot;math/tex&quot;&gt;1 - \delta&lt;/script&gt; (для случайной выборки, которую получает &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;) &lt;script type=&quot;math/tex&quot;&gt;{L_{\scriptscriptstyle D}}({h_{\scriptscriptstyle A}}) \leq {\min_{\scriptscriptstyle h'\in H}} {L_{\scriptscriptstyle D}}{(h'_{\scriptscriptstyle A}}) + \epsilon&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;далее, рассматриваем последовательность проблем обучения &lt;script type=&quot;math/tex&quot;&gt;{({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})^{\scriptscriptstyle{\infty}}_{\scriptscriptstyle n=1}}&lt;/script&gt;, где проблема &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; описывается областью примеров &lt;script type=&quot;math/tex&quot;&gt;{Z_{\scriptscriptstyle n}}&lt;/script&gt;, классом гипотез &lt;script type=&quot;math/tex&quot;&gt;{H_{\scriptscriptstyle n}}&lt;/script&gt; и функцией потерь &lt;script type=&quot;math/tex&quot;&gt;{l_{\scriptscriptstyle n}}&lt;/script&gt;. Если &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; спроектирован для проблем обучения такого вида и задана функция &lt;script type=&quot;math/tex&quot;&gt;g : \mathbb{N} x (0, 1)^2 \rightarrow \mathbb{N}&lt;/script&gt;, то считается, что время работы &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; на вышеупомянутой последовательности равно &lt;script type=&quot;math/tex&quot;&gt;O(g)&lt;/script&gt;, если для всех &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; решает проблему &lt;script type=&quot;math/tex&quot;&gt;({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})&lt;/script&gt; за время  &lt;script type=&quot;math/tex&quot;&gt;O({f_{\scriptscriptstyle n}})&lt;/script&gt;, где функция &lt;script type=&quot;math/tex&quot;&gt;f : (0, 1)^2 \rightarrow \mathbb{N}&lt;/script&gt; определяется выражением &lt;script type=&quot;math/tex&quot;&gt;{f_{\scriptscriptstyle n}}(\epsilon, \delta) = {g_{\scriptscriptstyle n}}(n, \epsilon, \delta)&lt;/script&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;В таком случае можно сказать, что алгоритм &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; эффективен на последовательности &lt;script type=&quot;math/tex&quot;&gt;({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})&lt;/script&gt;, если его время работы равно &lt;script type=&quot;math/tex&quot;&gt;O(p(n, 1/\epsilon, 1/\delta))&lt;/script&gt; для некоторого полинома p. Очевидно, что вопрос об эффективном решении проблемы обучения зависит от того, как именно задача обучения представлена в виде последовательности конкретных проблем.&lt;/p&gt;
-
-&lt;p&gt;Более подробную информацию на эту тему можно найти в учебнике «Understanding Machine Learning», изданном в Cambridge University Press в 2014-ом году.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="machine-learning" /><category term="algorithms" /><category term="time-complexity" /><summary type="html">Чуть ранее, в статье временная сложность алгоритмов машинного обучения, я разбирал временную сложность некоторых алгоритмов из библиотеки scykit-learn. Настало время немного подробнее остановиться на том, как в принципе считается вычислительная сложность data science.</summary></entry></feed>
+&lt;p&gt;В предварительном анализе данных для построения моделей можно встретить &lt;strong&gt;корреляционную матрицу&lt;/strong&gt; — двумерный массив, в котором строки и столбцы представлены переменными, а значение ячеек коэфициентами корреляции. Такая матрица позволяет установить нелинейную связь переменных, когда коэфциент корреляции становится бесполезным.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="statistics" /><category term="data-science" /><category term="machine-learning" /><summary type="html">В данной статье кратко пройду по терминологии из практической статистики и ее применеии в data science. Термины приводятся в упрощенном виде, исключительно для понимания общих принципов. Источник для данной компиляции — книга Practical Statistics for Data Scientists, Andrew Bruce, Peter Bruce</summary></entry></feed>
