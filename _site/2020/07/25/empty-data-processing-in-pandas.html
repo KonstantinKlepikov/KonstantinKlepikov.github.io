@@ -12,15 +12,15 @@
 <meta property="og:title" content="Обработка пропусков в Pandas" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
-<meta name="description" content="Блог про нейронные сети и машинное обучение" />
-<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
+<meta name="description" content="Есть несколько стратегий индикации пропусков в данных" />
+<meta property="og:description" content="Есть несколько стратегий индикации пропусков в данных" />
 <link rel="canonical" href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" />
 <meta property="og:url" content="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" />
 <meta property="og:site_name" content="My deep learning" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-25T00:00:00+02:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html"},"datePublished":"2020-07-25T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html","description":"Блог про нейронные сети и машинное обучение","headline":"Обработка пропусков в Pandas","dateModified":"2020-07-25T00:00:00+02:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html"},"datePublished":"2020-07-25T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html","description":"Есть несколько стратегий индикации пропусков в данных","headline":"Обработка пропусков в Pandas","dateModified":"2020-07-25T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="pandas preprocessing  phyton обработка пропусков machine learning">
@@ -216,7 +216,140 @@
   </div>
 
   <div class="prose" itemprop="articleBody">
-      
+      <h3 id="есть-несколько-стратегий-индикации-пропусков-в-данных">Есть несколько стратегий индикации пропусков в данных</h3>
+
+<h4 id="использование-некоего-значения-индикатора">Использование некоего значения-индикатора</h4>
+
+<p>К примеру, можно использовать число -9999 или редко встречающееся сочетание битов. Более часто встречающийся способ — условное обозначение через NaN. NaN — это специальное значение, определенное спецификацией IEEE для чисел с плавающей точкой и используется во многих ЯП.</p>
+
+<p>У метода есть ограничения. Во-первых использование значений индикаторов может привести к дополнительным не оптимизированным расчетам. Во-вторых NaN доступен не для всех типов данных.</p>
+
+<h4 id="использование-масок">Использование масок</h4>
+
+<p>Можно создать отдельный булевый массив, индицирующий пропущенные значения. В ряде языков выделяется отдельный бит для разметки пропусков в массиве данных локально. Оба подхода влекут за собой перерасход памяти.</p>
+
+<h4 id="как-это-реализовано-в-pandas">Как это реализовано в Pandas?</h4>
+
+<p>Pandas построена на NumPy, в котором отсутствует понятие пропуска для всех данных кроме данных с плавающей точкой. NumPy поддерживает маски, но использование такого подходжа в Pandas влечет значительные накладные расходы на хранение, вычисление и поддержку кода.</p>
+
+<p>В итоге в Pandas используется:</p>
+
+<ul>
+  <li>
+    <p>индикаторы-числа</p>
+  </li>
+  <li>
+    <p>NaN из Numpy</p>
+  </li>
+  <li>
+    <p>None из Python</p>
+  </li>
+</ul>
+
+<h3 id="объект-none">Объект None</h3>
+
+<p>None - объект python. Его нельзя использовать в NumPy и во всех производных массивах Pandas. None используется только в массивах с типом object. Когда мы создаем массив, используя None, автоматически создается массив с типом object.</p>
+
+<p>Тип object означает, что NumPy не смог установить тип объектов массива, единственное что он знает — это то, что это объекты python. Операции с такими массивами будут производится на уровне языка python, т.е. со всеми накладными расходами, присущими языку с динамической типизацией. Оптимизация NumPy работать не будет.</p>
+
+<p>Кроме того, функции агрегирования по массиву, например, massive.sum() или massive.min() выбросят ошибку, так как операции между численным значением и значением None не определены</p>
+
+<h3 id="объект-nan">Объект NaN</h3>
+
+<p>Объект NaN определяет отсутствие числового значения с плавающей точкой. Это вызывает некоторые проблемы — если NaN попадает в массив, все данные приводятся к числам с плавающей точкой. Кроме того, все операции с NaN приводят к NaN, в том числе и функции агрегирования.</p>
+
+<p>Не забудьте, что для вызова объекта NaN нужен NumPy</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">0</span> <span class="o">/</span> <span class="n">numpy</span><span class="p">.</span><span class="n">nan</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nan</span>
+</code></pre></div></div>
+
+<h3 id="nan-и-none">Nan и None</h3>
+
+<p>Pandas преобразует None в NaN, если оба будут встречены в одном массиве. Естественно, осуществляется и повышающее преобразование с приведением всех непустых числовых значений к числу с плавающей точкой, а всех остальных к NaN.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>    <span class="mf">1.0</span>
+<span class="p">...</span> <span class="mi">1</span>    <span class="n">NaN</span>
+<span class="p">...</span> <span class="mi">2</span>    <span class="mf">3.0</span>
+<span class="p">...</span> <span class="mi">3</span>    <span class="n">NaN</span>
+<span class="p">...</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'int8'</span><span class="p">)</span>
+<span class="n">x</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>    <span class="mi">1</span>
+<span class="p">...</span> <span class="mi">1</span>    <span class="mi">2</span>
+<span class="p">...</span> <span class="mi">2</span>    <span class="mi">3</span>
+<span class="p">...</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int8</span>
+
+<span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">x</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>    <span class="n">NaN</span>
+<span class="p">...</span> <span class="mi">1</span>    <span class="mf">2.0</span>
+<span class="p">...</span> <span class="mi">2</span>    <span class="mf">3.0</span>
+<span class="p">...</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>Правила повышающих преобразований типов в Pandas (строки всегда хранятся как object)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Typeclass</th>
+      <th>Conversion When Storing NAN</th>
+      <th>NAN Sentinel Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">floating</code></td>
+      <td>No change</td>
+      <td><code class="language-plaintext highlighter-rouge">np.nan</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">object</code></td>
+      <td>No change</td>
+      <td><code class="language-plaintext highlighter-rouge">None</code> or <code class="language-plaintext highlighter-rouge">np.nan</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">integer</code></td>
+      <td>Cast to <code class="language-plaintext highlighter-rouge">float64</code></td>
+      <td><code class="language-plaintext highlighter-rouge">np.nan</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td>Cast to <code class="language-plaintext highlighter-rouge">object</code></td>
+      <td><code class="language-plaintext highlighter-rouge">None</code> or <code class="language-plaintext highlighter-rouge">np.nan</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="операции-над-пустыми-значениями">Операции над пустыми значениями</h3>
+
+<p>В  Pandas доступно несколько методов:</p>
+
+<ul>
+  <li>
+    <p>isnull() — генерирует булеву маску для отсутствующих значений</p>
+  </li>
+  <li>
+    <p>notnull() — тоже для непустых</p>
+  </li>
+  <li>
+    <p>dropna() — фильтрация данных по отсутствующим значениям</p>
+  </li>
+  <li>
+    <p>fillna() — замена пропусков с возвратом копии</p>
+  </li>
+</ul>
+
+<p>Методы доступны как для объектов Series так и для dataFrame (с выбором измерения).</p>
+
+<p>Кроме того, для dropna() ожно задать дополнительные параметры. how=’any’ задан по дефолту, можно переопределить как ‘all’ — будут отбрасываться только полностью пустые строки/столбцы. thresh задает минимальное значение непустых значений, выше которого строки/столбцы не отбрасываются.</p>
+
+<p>Для fillna() доступно несколько аргументов. method=’ffill’ и method=’bfill’ определяют какими значениями будут заполняться пропуски (предыдущими или последующими в массиве).</p>
+
+<p>Подробнее <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html">fillna()</a> и <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html">dropna()</a></p>
 
   </div>
   
@@ -288,7 +421,7 @@
     <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" title="Как понять translating алгоритмы для графов?">
       <span class="h5 link-secondary text-accent">Предыдущая запись</span>
       <p class="bold h3 link-primary mb-1">Как понять translating алгоритмы для графов?</p>
-      <p>Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит...</p>
+      <p>Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит...</p>
     </a>
   </div>
   

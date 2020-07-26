@@ -12,15 +12,15 @@
 <meta property="og:title" content="Как понять translating алгоритмы для графов?" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
-<meta name="description" content="Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей." />
-<meta property="og:description" content="Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей." />
+<meta name="description" content="Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования." />
+<meta property="og:description" content="Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования." />
 <link rel="canonical" href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" />
 <meta property="og:url" content="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" />
 <meta property="og:site_name" content="My deep learning" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-13T00:00:00+02:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html"},"datePublished":"2020-07-13T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html","description":"Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.","headline":"Как понять translating алгоритмы для графов?","dateModified":"2020-07-13T00:00:00+02:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html"},"datePublished":"2020-07-13T00:00:00+02:00","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html","description":"Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования.","headline":"Как понять translating алгоритмы для графов?","dateModified":"2020-07-13T00:00:00+02:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="теория графов графы translating TransE sc224w эмбеддинг embedding">
@@ -216,15 +216,15 @@
   </div>
 
   <div class="prose" itemprop="articleBody">
-      <p>Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.</p>
+      <p>Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования.</p>
 
-<p>Алгоритм подробно рассматривается в курсе cs224w, про него есть домашка и он фигурирует в нескольких лекциях, есть смысл разобраться в том, как именно он устроен.</p>
+<p>Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Также как и в курсе, будем разбираться на примере TransE.</p>
 
 <p>В начале сам алгоритм:</p>
 
 <p><img src="../../../assets/img/130720-01.png" alt="TransE" /></p>
 
-<p>В данном случае мы имеем некий граф знаний <script type="math/tex">G = (E, S, L)</script>, в котором <script type="math/tex">E</script> - это множество нод (entities), <script type="math/tex">S</script> - множество ребер, а <script type="math/tex">L</script> - множество возможных связей.</p>
+<p>Мы имеем некий граф знаний <script type="math/tex">G = (E, S, L)</script>, в котором <script type="math/tex">E</script> - это множество нод (entities), <script type="math/tex">S</script> - множество ребер, а <script type="math/tex">L</script> - множество возможных связей.</p>
 
 <p><script type="math/tex">S</script> содержит триплеты <script type="math/tex">(h, l, t)</script>, определяемые следующим образом:</p>
 
@@ -234,17 +234,34 @@
 
 <p><script type="math/tex">t \in E</script> - нода, завершающая связь (tail)</p>
 
-<p>Можно представить себе граф, в котором существуют точки, для которых сложно определить близость основываясь на классических методах. Например город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation), определяющая отношение вершин графа. Задача алгоритма TransE обучиться такому векторному представлению для <script type="math/tex">(h, l, t)</script>, что-бы оно отображалоимеющиеся в графе знаний связи. Итак, необходимо представить head, tail и relation в пространстве <script type="math/tex">\in \mathbb{R}^k</script> (где <script type="math/tex">k</script> - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.</p>
+<p>Можно представить себе граф, в котором существуют точки, для которых сложно определить близость основываясь на классических методах. Например город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation), определяющая отношение вершин графа. Задача алгоритма TransE обучиться такому векторному представлению для <script type="math/tex">(h, l, t)</script>, что-бы оно отображало имеющиеся в графе подобия. Итак, необходимо представить head, tail и relation в пространстве <script type="math/tex">\in \mathbb{R}^k</script> (где <script type="math/tex">k</script> - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.</p>
 
 <p>Если мы исходим из того, что <script type="math/tex">(h, l, t) \in S</script> и предполагаем что <script type="math/tex">\mathbf{h} + \mathbf{l} \approx \mathbf{t}</script>. Такие триплеты мы можем считать “правильными”. Тогда можно предположить существование и “неправильных” (corrupted) триплетов <script type="math/tex">(h', l, t') \in S'</script>, выбранных из некого <script type="math/tex">S'_{(h, l, t)}</script>в котором <script type="math/tex">h</script> или <script type="math/tex">t</script> (но не оба одновременно) заменены на случайные, входящие в <script type="math/tex">S</script>.</p>
 
-<p>К примеру Берлин мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.</p>
+<p>К примеру Берлин в нашем графе мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.</p>
 
 <p>Итак, функция потерь, которую будет минимизирвоать TransE, выглядит так:</p>
 
 <script type="math/tex; mode=display">\mathcal{L} = \underset{(h,l,t) \in S}\sum (\underset{(h',l,t') \in S'_{(h,l,t)}}\sum [\gamma + d(\mathbf{h} + \mathbf{l}, \mathbf{t}) - d(\mathbf{h}' + \mathbf{l}, \mathbf{t}')]_{+} )</script>
 
-<p>Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора <script type="math/tex">\gamma</script>) <script type="math/tex">d_{+}</script> и <script type="math/tex">d_{-}</script> (с регуляризацией по норме <script type="math/tex">L_{1}</script> или <script type="math/tex">L_{2}</script>) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все <script type="math/tex">\mathbf{h}</script>, <script type="math/tex">\mathbf{l}</script> и <script type="math/tex">\mathbf{t}</script>. Триплеты будем выбирать семплированием, а инициализируем случайными значениями.</p>
+<p>Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора <script type="math/tex">\gamma</script>) <script type="math/tex">d_{+}</script> и <script type="math/tex">d_{-}</script> (с регуляризацией по норме <script type="math/tex">L_{1}</script> или <script type="math/tex">L_{2}</script>) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все <script type="math/tex">\mathbf{h}</script>, <script type="math/tex">\mathbf{l}</script> и <script type="math/tex">\mathbf{t}</script>. Триплеты будем выбирать семплированием, а инициализируем всю конструкцию случайными значениями.</p>
+
+<p>Что будет делать алгоритм?</p>
+
+<ul>
+  <li>
+    <p>вначале мы случайным образом инициализируем все вектора <script type="math/tex">\mathbf{l}</script> для каждого <script type="math/tex">l \in L</script> и все вектора <script type="math/tex">\mathbf{e}</script> для всех entities в графе</p>
+  </li>
+  <li>
+    <p>далее, нормализуем эмбеддинги, что-бы исключить тривиальную оптимизацию по кратчайшим расастояниям</p>
+  </li>
+  <li>
+    <p>затем, уже в цикле, будем определять размер минибатчей и иницилизировать сеттриплетов - для каждого правильного в минибатче будем получать неправильный</p>
+  </li>
+  <li>
+    <p>наконец будем считать лосс и обновлять эмбеддинги в направлении градиента</p>
+  </li>
+</ul>
 
 <p>Еще раз на примере векторов:</p>
 
@@ -337,7 +354,7 @@
     <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" title="Обработка пропусков в Pandas">
       <span class="h5 link-secondary text-accent">Следующая запись</span>
       <p class="bold h3 link-primary mb-1">Обработка пропусков в Pandas</p>
-      <p></p>
+      <p>### Есть несколько стратегий индикации пропусков в данных #### Использование некоего значения-индикатора К примеру, можно использовать число -9999 или редко...</p>
     </a>
   </div>
 

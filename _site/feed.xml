@@ -1,12 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-07-25T02:25:15+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Обработка пропусков в Pandas</title><link href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" rel="alternate" type="text/html" title="Обработка пропусков в Pandas" /><published>2020-07-25T00:00:00+02:00</published><updated>2020-07-25T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html"></content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html"></summary></entry><entry><title type="html">Как понять translating алгоритмы для графов?</title><link href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" rel="alternate" type="text/html" title="Как понять translating алгоритмы для графов?" /><published>2020-07-13T00:00:00+02:00</published><updated>2020-07-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html">&lt;p&gt;Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-07-26T02:23:51+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Обработка пропусков в Pandas</title><link href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" rel="alternate" type="text/html" title="Обработка пропусков в Pandas" /><published>2020-07-25T00:00:00+02:00</published><updated>2020-07-25T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html">&lt;h3 id=&quot;есть-несколько-стратегий-индикации-пропусков-в-данных&quot;&gt;Есть несколько стратегий индикации пропусков в данных&lt;/h3&gt;
 
-&lt;p&gt;Алгоритм подробно рассматривается в курсе cs224w, про него есть домашка и он фигурирует в нескольких лекциях, есть смысл разобраться в том, как именно он устроен.&lt;/p&gt;
+&lt;h4 id=&quot;использование-некоего-значения-индикатора&quot;&gt;Использование некоего значения-индикатора&lt;/h4&gt;
+
+&lt;p&gt;К примеру, можно использовать число -9999 или редко встречающееся сочетание битов. Более часто встречающийся способ — условное обозначение через NaN. NaN — это специальное значение, определенное спецификацией IEEE для чисел с плавающей точкой и используется во многих ЯП.&lt;/p&gt;
+
+&lt;p&gt;У метода есть ограничения. Во-первых использование значений индикаторов может привести к дополнительным не оптимизированным расчетам. Во-вторых NaN доступен не для всех типов данных.&lt;/p&gt;
+
+&lt;h4 id=&quot;использование-масок&quot;&gt;Использование масок&lt;/h4&gt;
+
+&lt;p&gt;Можно создать отдельный булевый массив, индицирующий пропущенные значения. В ряде языков выделяется отдельный бит для разметки пропусков в массиве данных локально. Оба подхода влекут за собой перерасход памяти.&lt;/p&gt;
+
+&lt;h4 id=&quot;как-это-реализовано-в-pandas&quot;&gt;Как это реализовано в Pandas?&lt;/h4&gt;
+
+&lt;p&gt;Pandas построена на NumPy, в котором отсутствует понятие пропуска для всех данных кроме данных с плавающей точкой. NumPy поддерживает маски, но использование такого подходжа в Pandas влечет значительные накладные расходы на хранение, вычисление и поддержку кода.&lt;/p&gt;
+
+&lt;p&gt;В итоге в Pandas используется:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;индикаторы-числа&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;NaN из Numpy&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;None из Python&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;объект-none&quot;&gt;Объект None&lt;/h3&gt;
+
+&lt;p&gt;None - объект python. Его нельзя использовать в NumPy и во всех производных массивах Pandas. None используется только в массивах с типом object. Когда мы создаем массив, используя None, автоматически создается массив с типом object.&lt;/p&gt;
+
+&lt;p&gt;Тип object означает, что NumPy не смог установить тип объектов массива, единственное что он знает — это то, что это объекты python. Операции с такими массивами будут производится на уровне языка python, т.е. со всеми накладными расходами, присущими языку с динамической типизацией. Оптимизация NumPy работать не будет.&lt;/p&gt;
+
+&lt;p&gt;Кроме того, функции агрегирования по массиву, например, massive.sum() или massive.min() выбросят ошибку, так как операции между численным значением и значением None не определены&lt;/p&gt;
+
+&lt;h3 id=&quot;объект-nan&quot;&gt;Объект NaN&lt;/h3&gt;
+
+&lt;p&gt;Объект NaN определяет отсутствие числового значения с плавающей точкой. Это вызывает некоторые проблемы — если NaN попадает в массив, все данные приводятся к числам с плавающей точкой. Кроме того, все операции с NaN приводят к NaN, в том числе и функции агрегирования.&lt;/p&gt;
+
+&lt;p&gt;Не забудьте, что для вызова объекта NaN нужен NumPy&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nan&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nan&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;nan-и-none&quot;&gt;Nan и None&lt;/h3&gt;
+
+&lt;p&gt;Pandas преобразует None в NaN, если оба будут встречены в одном массиве. Естественно, осуществляется и повышающее преобразование с приведением всех непустых числовых значений к числу с плавающей точкой, а всех остальных к NaN.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;    &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;NaN&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;    &lt;span class=&quot;mf&quot;&gt;3.0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;NaN&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float64&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'int8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;    &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;    &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;    &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int8&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;NaN&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;    &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;    &lt;span class=&quot;mf&quot;&gt;3.0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;float64&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Правила повышающих преобразований типов в Pandas (строки всегда хранятся как object)&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Typeclass&lt;/th&gt;
+      &lt;th&gt;Conversion When Storing NAN&lt;/th&gt;
+      &lt;th&gt;NAN Sentinel Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;floating&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No change&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;np.nan&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No change&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;np.nan&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;integer&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Cast to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;float64&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;np.nan&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boolean&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Cast to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;np.nan&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;операции-над-пустыми-значениями&quot;&gt;Операции над пустыми значениями&lt;/h3&gt;
+
+&lt;p&gt;В  Pandas доступно несколько методов:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;isnull() — генерирует булеву маску для отсутствующих значений&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;notnull() — тоже для непустых&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dropna() — фильтрация данных по отсутствующим значениям&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;fillna() — замена пропусков с возвратом копии&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Методы доступны как для объектов Series так и для dataFrame (с выбором измерения).&lt;/p&gt;
+
+&lt;p&gt;Кроме того, для dropna() ожно задать дополнительные параметры. how=’any’ задан по дефолту, можно переопределить как ‘all’ — будут отбрасываться только полностью пустые строки/столбцы. thresh задает минимальное значение непустых значений, выше которого строки/столбцы не отбрасываются.&lt;/p&gt;
+
+&lt;p&gt;Для fillna() доступно несколько аргументов. method=’ffill’ и method=’bfill’ определяют какими значениями будут заполняться пропуски (предыдущими или последующими в массиве).&lt;/p&gt;
+
+&lt;p&gt;Подробнее &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html&quot;&gt;fillna()&lt;/a&gt; и &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html&quot;&gt;dropna()&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html">Есть несколько стратегий индикации пропусков в данных</summary></entry><entry><title type="html">Как понять translating алгоритмы для графов?</title><link href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" rel="alternate" type="text/html" title="Как понять translating алгоритмы для графов?" /><published>2020-07-13T00:00:00+02:00</published><updated>2020-07-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html">&lt;p&gt;Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования.&lt;/p&gt;
+
+&lt;p&gt;Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Также как и в курсе, будем разбираться на примере TransE.&lt;/p&gt;
 
 &lt;p&gt;В начале сам алгоритм:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-01.png&quot; alt=&quot;TransE&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;В данном случае мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; - это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; - множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; - множество возможных связей.&lt;/p&gt;
+&lt;p&gt;Мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; - это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; - множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; - множество возможных связей.&lt;/p&gt;
 
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; содержит триплеты &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, определяемые следующим образом:&lt;/p&gt;
 
@@ -16,17 +149,34 @@
 
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;t \in E&lt;/script&gt; - нода, завершающая связь (tail)&lt;/p&gt;
 
-&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость основываясь на классических методах. Например город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation), определяющая отношение вершин графа. Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, что-бы оно отображалоимеющиеся в графе знаний связи. Итак, необходимо представить head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
+&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость основываясь на классических методах. Например город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation), определяющая отношение вершин графа. Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, что-бы оно отображало имеющиеся в графе подобия. Итак, необходимо представить head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
 
 &lt;p&gt;Если мы исходим из того, что &lt;script type=&quot;math/tex&quot;&gt;(h, l, t) \in S&lt;/script&gt; и предполагаем что &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h} + \mathbf{l} \approx \mathbf{t}&lt;/script&gt;. Такие триплеты мы можем считать “правильными”. Тогда можно предположить существование и “неправильных” (corrupted) триплетов &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;, выбранных из некого &lt;script type=&quot;math/tex&quot;&gt;S'_{(h, l, t)}&lt;/script&gt;в котором &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; (но не оба одновременно) заменены на случайные, входящие в &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;К примеру Берлин мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
+&lt;p&gt;К примеру Берлин в нашем графе мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
 
 &lt;p&gt;Итак, функция потерь, которую будет минимизирвоать TransE, выглядит так:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L} = \underset{(h,l,t) \in S}\sum (\underset{(h',l,t') \in S'_{(h,l,t)}}\sum [\gamma + d(\mathbf{h} + \mathbf{l}, \mathbf{t}) - d(\mathbf{h}' + \mathbf{l}, \mathbf{t}')]_{+} )&lt;/script&gt;
 
-&lt;p&gt;Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;) &lt;script type=&quot;math/tex&quot;&gt;d_{+}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;d_{-}&lt;/script&gt; (с регуляризацией по норме &lt;script type=&quot;math/tex&quot;&gt;L_{1}&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;L_{2}&lt;/script&gt;) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;\mathbf{t}&lt;/script&gt;. Триплеты будем выбирать семплированием, а инициализируем случайными значениями.&lt;/p&gt;
+&lt;p&gt;Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;) &lt;script type=&quot;math/tex&quot;&gt;d_{+}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;d_{-}&lt;/script&gt; (с регуляризацией по норме &lt;script type=&quot;math/tex&quot;&gt;L_{1}&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;L_{2}&lt;/script&gt;) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;\mathbf{t}&lt;/script&gt;. Триплеты будем выбирать семплированием, а инициализируем всю конструкцию случайными значениями.&lt;/p&gt;
+
+&lt;p&gt;Что будет делать алгоритм?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;вначале мы случайным образом инициализируем все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; для каждого &lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; и все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{e}&lt;/script&gt; для всех entities в графе&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;далее, нормализуем эмбеддинги, что-бы исключить тривиальную оптимизацию по кратчайшим расастояниям&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;затем, уже в цикле, будем определять размер минибатчей и иницилизировать сеттриплетов - для каждого правильного в минибатче будем получать неправильный&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;наконец будем считать лосс и обновлять эмбеддинги в направлении градиента&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;Еще раз на примере векторов:&lt;/p&gt;
 
@@ -50,7 +200,7 @@
 
 &lt;p&gt;Для чего нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;?&lt;/p&gt;
 
-&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html">Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сведит к минимуму критерий ранжирования для связей.</summary></entry><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
+&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html">Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) задает представление точек и связей графа в некоем пространстве векторов и сводит к минимуму критерий ранжирования.</summary></entry><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
 
 &lt;p&gt;Для этих задач требуется инструмент построения моделей, способный анализировать структуры и вычисленять метрики, который к тому же будет оптимизирован по потреблению памяти и дискового пространства, так как графы как правило весьма объемны.&lt;/p&gt;
 
