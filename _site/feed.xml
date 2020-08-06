@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-07-28T02:43:52+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Обработка пропусков в Pandas</title><link href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" rel="alternate" type="text/html" title="Обработка пропусков в Pandas" /><published>2020-07-25T00:00:00+02:00</published><updated>2020-07-25T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html">&lt;h3 id=&quot;есть-несколько-стратегий-индикации-пропусков-в-данных&quot;&gt;Есть несколько стратегий индикации пропусков в данных&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-08-07T00:50:29+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Обработка пропусков в Pandas</title><link href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" rel="alternate" type="text/html" title="Обработка пропусков в Pandas" /><published>2020-07-25T00:00:00+02:00</published><updated>2020-07-25T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html">&lt;h3 id=&quot;есть-несколько-стратегий-индикации-пропусков-в-данных&quot;&gt;Есть несколько стратегий индикации пропусков в данных&lt;/h3&gt;
 
 &lt;h4 id=&quot;использование-некоего-значения-индикатора&quot;&gt;Использование некоего значения-индикатора&lt;/h4&gt;
 
@@ -133,29 +133,29 @@
 
 &lt;p&gt;Подробнее &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html&quot;&gt;fillna()&lt;/a&gt; и &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html&quot;&gt;dropna()&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html">Есть несколько стратегий индикации пропусков в данных</summary></entry><entry><title type="html">Как понять translating алгоритмы для графов?</title><link href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" rel="alternate" type="text/html" title="Как понять translating алгоритмы для графов?" /><published>2020-07-13T00:00:00+02:00</published><updated>2020-07-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html">&lt;p&gt;Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.&lt;/p&gt;
 
-&lt;p&gt;В начале сам алгоритм:&lt;/p&gt;
+&lt;p&gt;Вначале сам алгоритм:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-01.png&quot; alt=&quot;TransE&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;TransE использует так называемый “shallow” encoding. Каждая нода &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt; кодируется произведением &lt;script type=&quot;math/tex&quot;&gt;\mathbf{Z}*\mathbf{v}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\mathbf{Z} \in \mathbb{R}^{d * \vert v\vert}&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;\mathbf{v} \in \mathbb{I}^{\vert v\vert }&lt;/script&gt; (0 всюду кроме колонки , индицирующей &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt;). Таким образом мы получаем вектора одинаковой размерности для всех нод, по одному для каждой ноды.&lt;/p&gt;
 
-&lt;p&gt;В задачах, решаемых TransE, мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; - это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; - множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; - множество возможных связей.&lt;/p&gt;
+&lt;p&gt;В задачах, решаемых TransE, мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; — это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; — множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; — множество возможных связей.&lt;/p&gt;
 
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; содержит триплеты &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, определяемые следующим образом:&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;h \in E&lt;/script&gt; - исходящая нода (head)&lt;/p&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;h \in E&lt;/script&gt; — исходящая нода (head)&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; - связь (relation)&lt;/p&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; — связь (relation)&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;t \in E&lt;/script&gt; - нода, завершающая связь (tail)&lt;/p&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;t \in E&lt;/script&gt; — нода, завершающая связь (tail)&lt;/p&gt;
 
-&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость. Например в графе территорий и населенных пунктов город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation). Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, что-бы оно отображало эту связь для всех аналогично связанных нод. Итак, необходимо представить эмббеддинги head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
+&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость. Например, в графе территорий и населенных пунктов город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation). Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, чтобы оно отображало эту связь для всех аналогично связанных нод. Итак, необходимо представить эмббеддинги head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
 
 &lt;p&gt;Если мы исходим из того, что &lt;script type=&quot;math/tex&quot;&gt;(h, l, t) \in S&lt;/script&gt; и предполагаем что &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h} + \mathbf{l} \approx \mathbf{t}&lt;/script&gt;. Такие триплеты мы можем считать “правильными”. Тогда можно предположить существование и “неправильных” (corrupted) триплетов &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;, выбранных из некого &lt;script type=&quot;math/tex&quot;&gt;S'_{(h, l, t)}&lt;/script&gt;в котором &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; (но не оба одновременно) заменены на случайные, входящие в &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;К примеру Берлин в нашем графе мог бы оказаться столицей России, но к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
+&lt;p&gt;К примеру, Берлин в нашем графе мог бы оказаться столицей России, но, к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
 
-&lt;p&gt;Итак, функция потерь, которую будет минимизирвоать TransE, выглядит так:&lt;/p&gt;
+&lt;p&gt;Итак, функция потерь, которую будет минимизировать TransE, выглядит так:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L} = \underset{(h,l,t) \in S}\sum (\underset{(h',l,t') \in S'_{(h,l,t)}}\sum [\gamma + d(\mathbf{h} + \mathbf{l}, \mathbf{t}) - d(\mathbf{h}' + \mathbf{l}, \mathbf{t}')]_{+} )&lt;/script&gt;
 
@@ -168,13 +168,13 @@
     &lt;p&gt;вначале мы случайным образом инициализируем все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; для каждого &lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; и все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{e}&lt;/script&gt; для всех entities в графе&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;нормализуем эмбеддинги, что-бы исключить тривиальную оптимизацию по кратчайшим расстояниям&lt;/p&gt;
+    &lt;p&gt;нормализуем эмбеддинги, чтобы исключить тривиальную оптимизацию по кратчайшим расстояниям&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;затем, уже в цикле, будем определять размер минибатчей и иницилизировать сеты триплетов - для каждого правильного триплета в минибатче будем получать неправильный&lt;/p&gt;
+    &lt;p&gt;затем, уже в цикле, будем определять размер минибатчей и иницилизировать сеты триплетов — для каждого правильного триплета в минибатче будем получать неправильный&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;наконец будем считать лос и обновлять эмбеддинги по нарпавлению градиента&lt;/p&gt;
+    &lt;p&gt;наконец будем считать лос и обновлять эмбеддинги по направлению градиента&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -182,27 +182,15 @@
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-05.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Еще раз на примере векторов:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-02.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Мы получаем сумму разниц правильных и неправильных эмбеддингов следуя через все пространство вещественных значений &lt;script type=&quot;math/tex&quot;&gt;h,l,t&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;h',l,t'&lt;/script&gt; до тех пор пока не выкинем все несвязанные пары нод. Все что осталось, очевидно имеет искомый relation.&lt;/p&gt;
-
-&lt;p&gt;Возникает ряд вопросов. Во-первых, почему-бы не использовать лос попроще? Например, можно не усложнять и сводить в ноль сумму эмбеддингов всех правильных триплетов.&lt;/p&gt;
+&lt;p&gt;Возникает ряд вопросов. Почему бы не использовать лос попроще? Например, можно не усложнять и сводить в ноль сумму эмбеддингов всех правильных триплетов.&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L}_{simple} = \underset{(h,l,t) \in S}\sum d(\mathbf{h} + \mathbf{l}, \mathbf{t})&lt;/script&gt;
 
-&lt;p&gt;Проблемы начинаются с того, что такая метрика способна найти связи, которых на самом деле в графе нет. Посмотрим на такой граф:&lt;/p&gt;
+&lt;p&gt;В этом случае может возникнуть ситуация, когда совершенно разные ноды получат одинаковые эмбеддинги. Что еще хуже — мы можем получить пустые эмбеддинги.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-03.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Вася купил стиральную машину и Петя купил стиральную машину. Стиральная машина постирала рубашки. Но стоп… Вася постирал Петю?&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-04.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Такого бы не случилось, если бы мы оптимизировали метрику, с &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt; - перебирая &lt;script type=&quot;math/tex&quot;&gt;h'&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t'&lt;/script&gt; мы очень быстро сводим в ноль потери для данного графа, не создавая несуществующих связей.&lt;/p&gt;
-
-&lt;p&gt;Для чего нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;?&lt;/p&gt;
+&lt;p&gt;Поэтому мы оптимизируем метрику, с &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;. Другая проблема, которая может возникнуть — алгоритм может никогда не сойтись. Для этого нам нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;, который задает определенный порог, достижение которого будет считаться приемлемым в данном контексте.&lt;/p&gt;
 
 &lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html">Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.</summary></entry><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
 
