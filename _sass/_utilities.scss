@@ -60,7 +60,10 @@ h3 {
 
 
 /* Theme color utilities */
-.header-background { background-color: $color-background; }
+.header-background { 
+  background: rgb(131,58,180); 
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,237,1) 50%, rgba(69,193,252,1) 100%); 
+}
 .header-border { border-color: $color-foreground; }
 .header-title { color: $color-title; }
 .header-text { color: $color-foreground; }

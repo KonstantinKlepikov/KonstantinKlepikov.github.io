@@ -5,6 +5,7 @@ date: 2020-07-25
 tags: pandas preprocessing  phyton machine-learning ml-data
 tag-for-sollecting: pandas
 keywords: pandas preprocessing  phyton обработка пропусков machine learning
+image: /assets/img/250720banner.png
 ---
 
 ### Есть несколько стратегий индикации пропусков в данных

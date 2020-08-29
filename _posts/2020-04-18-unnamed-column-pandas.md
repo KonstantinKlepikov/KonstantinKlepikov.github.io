@@ -5,6 +5,7 @@ date: 2020-04-18
 tags: pandas preprocessing phyton
 tag-for-sollecting: preprocessing
 keywords: python подготовка данных pandas csv read_csv
+image: /assets/img/250720banner.png
 ---
 
 Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.

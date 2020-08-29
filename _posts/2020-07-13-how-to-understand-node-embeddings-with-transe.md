@@ -5,6 +5,7 @@ date: 2020-07-13
 tags: graphs sc224w TransE translating algorithms
 tag-for-sollecting: TransE
 keywords: теория графов графы translating TransE sc224w эмбеддинг embedding
+image: /assets/img/130720banner.png
 ---
 
 Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.

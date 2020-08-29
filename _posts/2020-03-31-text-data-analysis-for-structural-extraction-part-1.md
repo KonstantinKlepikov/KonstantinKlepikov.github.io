@@ -5,6 +5,7 @@ date: 2020-04-15
 tags: graph-theory nlp cs224w
 tag-for-sollecting: graph-theory
 keywords: теория графов nlp text data natural language preprocessing направленный граф cs224w
+image: /assets/img/310320banner.png
 ---
 
 В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.
