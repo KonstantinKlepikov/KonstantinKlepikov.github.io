@@ -74,3 +74,5 @@ keywords: машинное обучение machine learning временная 
 В таком случае можно сказать, что алгоритм $$A$$ эффективен на последовательности $$({Z_{\scriptscriptstyle n}}, {H_{\scriptscriptstyle n}}, {l_{\scriptscriptstyle n}})$$, если его время работы равно $$O(p(n, 1/\epsilon, 1/\delta))$$ для некоторого полинома p. Очевидно, что вопрос об эффективном решении проблемы обучения зависит от того, как именно задача обучения представлена в виде последовательности конкретных проблем.
 
 Более подробную информацию на эту тему можно найти в учебнике «Understanding Machine Learning», изданном в Cambridge University Press в 2014-ом году.
+
+Подробнее [о нотации в асимптотическом анализе]({{site.baseurl}}{% link _posts/2020-10-01-oboznachenija-v-analize-algoritmov.md %}) и про [временную сложность в машинном обуче6нии]({{site.baseurl}}{% link _posts/2019-09-08-time-complexity-of-machine-learning-algorithms.md %})

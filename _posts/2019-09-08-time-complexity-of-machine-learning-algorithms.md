@@ -60,3 +60,5 @@ keywords: машинное обучение machine learning временная 
 **[MeanShift](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html)**. При использовании flat или ball tree кернелов, сложность по времени $$O(t*n*\log(n))$$, где $$t$$ — количество точек кластеризации. В многомерном пространстве сложность стремится к $$O(t*n^2)$$.
 
 Статья будет дополняться...
+
+Подробнее [о нотации в асимптотическом анализе]({{site.baseurl}}{% link _posts/2020-10-01-oboznachenija-v-analize-algoritmov.md %}) и про [базовые принципы временной сложности]({{site.baseurl}}{% link _posts/2019-10-19-complexity-basics-terms.md %})
