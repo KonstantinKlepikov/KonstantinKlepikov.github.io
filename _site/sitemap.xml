@@ -101,6 +101,10 @@
 <lastmod>2020-09-30T00:00:00+02:00</lastmod>
 </url>
 <url>
+<loc>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html</loc>
+<lastmod>2020-10-09T00:00:00+02:00</lastmod>
+</url>
+<url>
 <loc>https://konstantinklepikov.github.io/tag/API.html</loc>
 </url>
 <url>
@@ -114,6 +118,9 @@
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/allposts/</loc>
+</url>
+<url>
+<loc>https://konstantinklepikov.github.io/tag/bfs.html</loc>
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/blog-development.html</loc>
@@ -134,7 +141,13 @@
 <loc>https://konstantinklepikov.github.io/tag/data-science.html</loc>
 </url>
 <url>
+<loc>https://konstantinklepikov.github.io/tag/dfs.html</loc>
+</url>
+<url>
 <loc>https://konstantinklepikov.github.io/tag/graph-theory.html</loc>
+</url>
+<url>
+<loc>https://konstantinklepikov.github.io/tag/graph.html</loc>
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/graphs.html</loc>
