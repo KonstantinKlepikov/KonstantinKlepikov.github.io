@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-10-11T02:08:53+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Алгоритмы поиска в ширину и в глубину</title><link href="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html" rel="alternate" type="text/html" title="Алгоритмы поиска в ширину и в глубину" /><published>2020-10-09T00:00:00+02:00</published><updated>2020-10-09T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html">&lt;p&gt;Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-10-20T23:12:56+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Сверточные нейронные сети для графов. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html" rel="alternate" type="text/html" title="Сверточные нейронные сети для графов. Часть 1" /><published>2020-10-19T00:00:00+02:00</published><updated>2020-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html">&lt;p&gt;Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.&lt;/p&gt;
+
+&lt;p&gt;Проблемой обучения моделей на данных, представленных в виде графов, является их плохая структурированность. Информация о нодах и связях между ними описывается, как правило, в многомерном неевклидовом пространстве, что делает векторизацию таких данных затруднительной.&lt;/p&gt;
+
+&lt;p&gt;Одним из основных подходов в решении данной задачи является representation learning. Подход сводится к созданию эмбеддингов для нод или субграфов в графе, что позволяет перевести данные в область с низкой размерностью. Такие эмбеддинги уже можно использовать на входе различных моделей ML.&lt;/p&gt;
+
+&lt;p&gt;Если мы имеем граф &lt;script type=&quot;math/tex&quot;&gt;G = (V, E)&lt;/script&gt; и ассоциированные с ним матрицу смежности &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; и матрицу &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, содержащую атрибуты нод, так что &lt;script type=&quot;math/tex&quot;&gt;X \in \mathbb{R}^{m \times \vert V \vert}&lt;/script&gt;, то задачей является получение векторов &lt;script type=&quot;math/tex&quot;&gt;z \in \mathbb{R}^d&lt;/script&gt; для каждой ноды, таких, что &lt;script type=&quot;math/tex&quot;&gt;d \ll \vert V \vert&lt;/script&gt;. (Данный подход справедлив и для ребер).&lt;/p&gt;
+
+&lt;p&gt;Эту задачу решает такая модель:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;функция похожести &lt;script type=&quot;math/tex&quot;&gt;S_g : V \times V \rightarrow \mathbb{R}^+&lt;/script&gt;, определенная над графом &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt;. Функция измеряет схожесть между нодами.&lt;/li&gt;
+  &lt;li&gt;энкодер, генерирующий эмбеддинги&lt;/li&gt;
+  &lt;li&gt;декодер, реконструирующий взаимную схожесть нод&lt;/li&gt;
+  &lt;li&gt;функция потерь&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Самый простой метод — shallow encoding, для которого мы можем определить энкодер как функцию: &lt;script type=&quot;math/tex&quot;&gt;ENC(v_i) = Z v_i&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;Z \in \mathbb{R}^{m \times \vert V \vert}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;К подобным методам относятся различные матричные факторизации (graph factorisation, GraRep, HOPE и т.д.) и RandomWalk модели (DeepWalk, node2wec).&lt;/p&gt;
+
+&lt;p&gt;Проблемой shallow encoding является то, что в этом методе параметры нод не распространяются в энкодере. Каждый вектор обучается отдельно от других, что ведет к значительному росту сложности. Кроме того, подход не учитывает атрибуты нод, которые в большинстве случаев содержат важную информацию о графе. К тому же подход генерирует эмбеддинги только для данных, которые есть среди обучаемых. Модель проблематично обобщить на данные, которые модель никогда не видела.&lt;/p&gt;
+
+&lt;p&gt;Чтобы справиться с недостатками shallow encoding, были изобретены генерализованные энкодер-декодер структуры: DNGR (deep neural graph representation) и SDNE (structural deep network embeddings), относящихся к автоэнкодерам, основанных на исследовании соседних нод в графе.&lt;/p&gt;
+
+&lt;p&gt;Прямым решением для таких моделей является то, что каждая нода &lt;script type=&quot;math/tex&quot;&gt;v_i&lt;/script&gt; ассоциируется с высокаразмерным «вектором близости» &lt;script type=&quot;math/tex&quot;&gt;S_i \in \mathbb{R}^{\vert V \vert}&lt;/script&gt;, содержащем информацию о близости ноды ко всем другим нодам в графе. Затем данный вектор сжимается до нужной размерности. Проблема такого подхода в том, что он невероятно дорогой. К тому же метод статичный и плохо работает с изменяющимися графами.&lt;/p&gt;
+
+&lt;p&gt;Другой подход — neighbourhood agregation атрибутов нод для генерации эмбеддингов. Этот метод позволяет агрегировать «месседжи» от соседей ноды, которые, в свою очередь, базируются на «месседжах», агрегированных по соседям соседей и т.д. Иногда такие модели называют сверточными энкодерами из-за схожести их архитектуры со свертками.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-01.png&quot; alt=&quot;neighbourhood agregation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Алгоритм такой сети выглядит так (взято из статьи Representation Learning on Graphs: Methods and Applicationsб Hamilton, William L.; Ying, Rex; Leskovec, Jure);&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-02.png&quot; alt=&quot;neighbourhood agregation algorythm&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Алгоритм строит эмбеддинги для нод рекурсивно. Вначале модель инициализируется входными данными, эквивалентными атрибутам нод. Затем на каждой итерации алгоритма под управлением некой дифференцирующей агрегирующей функции агрегируются эмбеддинги соседей. Затем каждая нода получает новый эмбеддинг, скомбинированный из ее собственного эмбеддинга и агрегированного вектора. Затем все это отправляется в полносвязный слой и затем процесс повторяется &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;раз.&lt;/p&gt;
+
+&lt;p&gt;К моделям, которые работают по такому принципу относятся многочисленное семейство GCN (graph convolutional networks), column networks и GraphSAGE.&lt;/p&gt;
+
+&lt;p&gt;В алгоритме обучаются агрегирующие функции и сет матриц весов &lt;script type=&quot;math/tex&quot;&gt;\{W^K, \forall \mathbb{R} \in [ 1, K ]\}&lt;/script&gt;, которые и определяют как именно агрегируется информация из области локальной близости ноды. Эти параметры распространяются соседним нодам.&lt;/p&gt;
+
+&lt;p&gt;Разные подтипы модели определяются разными агрегирующей функцией (стр.4 алгоритма) и комбинирующей вектора функцией (стр.5). В GCN и columns encoding используется взвешенная сумма в качестве комбинирующей функции и поэлементное среднее для агрегирующей. В GraphSAGE используется конкатенация в качестве комбинирующей функции, а в качестве агрегирующей может использоваться другая нейронная сеть, к примеру, LSTM.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="GCN" /><summary type="html">Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Алгоритмы поиска в ширину и в глубину</title><link href="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html" rel="alternate" type="text/html" title="Алгоритмы поиска в ширину и в глубину" /><published>2020-10-09T00:00:00+02:00</published><updated>2020-10-09T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html">&lt;p&gt;Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.&lt;/p&gt;
 
 &lt;h2 id=&quot;поиск-в-ширину-breadth-first-search-bfs&quot;&gt;Поиск в ширину (breadth-first search, BFS)&lt;/h2&gt;
 
@@ -68,7 +109,7 @@
 &lt;ul&gt;
   &lt;li&gt;вершина размечается как разведанная тогда и только тогда, когда существует путь из s в v в графе &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt;&lt;/li&gt;
   &lt;li&gt;время работы алгоритма &lt;script type=&quot;math/tex&quot;&gt;O(m + n)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = \vert E \vert&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;n = \vert V \vert&lt;/script&gt; (для представления графа в виде списков смежности. Для матрицы смежности сложность составит &lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="algorithms" /><category term="bfs" /><category term="dfs" /><category term="graph" /><summary type="html">Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Обозначения в анализе алгоритмов</title><link href="https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov.html" rel="alternate" type="text/html" title="Обозначения в анализе алгоритмов" /><published>2020-09-30T00:00:00+02:00</published><updated>2020-09-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov.html">&lt;p&gt;В асимптотическом анализе алгоритмов принято использовать базовые обозначения, позволяющие формализовать сложность алгоритма. Все термины сводятся к устранению постоянных коэффициентов, так как они слишком зависимы от аппаратной и программной реализации, а так же к игнорированию членов низших порядков, так как с ростом объема данных такие вычисления перестают играть значимую роль.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="algorithms" /><category term="bfs" /><category term="dfs" /><category term="graphs" /><summary type="html">Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Обозначения в анализе алгоритмов</title><link href="https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov.html" rel="alternate" type="text/html" title="Обозначения в анализе алгоритмов" /><published>2020-09-30T00:00:00+02:00</published><updated>2020-09-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/09/30/oboznachenija-v-analize-algoritmov.html">&lt;p&gt;В асимптотическом анализе алгоритмов принято использовать базовые обозначения, позволяющие формализовать сложность алгоритма. Все термины сводятся к устранению постоянных коэффициентов, так как они слишком зависимы от аппаратной и программной реализации, а так же к игнорированию членов низших порядков, так как с ростом объема данных такие вычисления перестают играть значимую роль.&lt;/p&gt;
 
 &lt;h2 id=&quot;o-большое&quot;&gt;O-большое&lt;/h2&gt;
 
@@ -1021,522 +1062,4 @@ memory usage: 362.0+ KB
       &lt;td&gt;2013-01-27&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.</summary></entry><entry><title type="html">Подготовка и оптимизация данных для задач машинного обучения</title><link href="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" rel="alternate" type="text/html" title="Подготовка и оптимизация данных для задач машинного обучения" /><published>2020-03-04T00:00:00+02:00</published><updated>2020-03-04T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html">&lt;p&gt;Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.&lt;/p&gt;
-
-&lt;h2 id=&quot;проблема-неоптимизированных-данных&quot;&gt;Проблема неоптимизированных данных&lt;/h2&gt;
-
-&lt;p&gt;С какими задачами можно столкнуться и зачем вообще питонисту работать с данными?&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;компания собрала дату, «потому что это важно»&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;люди, которые проектировали «склад» данных уволились, сошли с ума или умерли&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;пришло время «извлечь из этого смыслы» и «применить кейсы»&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Это означает, что потребуется разобрать авгиевы конюшни данных и построить какие-то модели машинного обучения. И тут-то все как раз и вспоминают про Вас. При этом есть несколько нюансов:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;абсолютно никто не в курсе что значат все эти забавные числа и строки из базы данных&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;никого особо не интересует сколько это будет стоить в расчетах (кстати, как всегда, сделать надо было вчера)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;совершенно очевидно, что на эту задачу амазоновские инстансы за 100500 миллиардов долларов Вам не выделят&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Часто самым первым шагом после извлечения массива, является построение некой сырой модели данных. Тут можно применять множество подходов, таких как, к примеру, разведочный анализ. Важно, что на этом этапе приходится обращаться к большому объему информации и производить определенные манипуляции вручную, что обходится дорого по времени. &lt;strong&gt;Что делать?&lt;/strong&gt; Попробуем разобраться в приемах оптимизации на примере данных с kaggle-соревнования &lt;a href=&quot;https://www.kaggle.com/c/data-science-bowl-2019&quot;&gt;data-science-bowl-2019&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/040320-01.png&quot; alt=&quot;data-science-bowl-2019&quot; title=&quot;data-science-bowl-2019&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Цель соревнования рассматривать не будем, нас интересует только формат данных. Особенностью этой конкретной задачи было то, что она была ограничена весьма скромными вычислительными ресурсам. А это как раз наш случай. В задаче использовался датасет, содержащий почти 12 млн строк. Для наглядности я буду использовать только 200 тыс.строк и не стану приводить в данной статье исходники или каким-то образом исследовать данные, т.к. правилами конкурса запрещено использование датасет в целях, не связанных с соревнованием. Если Вам интересно разобраться непосредственно с задачей data-science-bowl-2019, Вы всегда можете сделать это самостоятельно на &lt;a href=&quot;https://www.kaggle.com/c/data-science-bowl-2019&quot;&gt;kaggle.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;После загрузки и формирования дата-фрейма посмотрим на данные с помощью метода info() библиотеки pandas&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 11 entries, installation_id to world
-dtypes: int64(3), object(8)
-memory usage: 16.8+ MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Здесь мы сразу встречаем первую ошибку, которая довольно часто в дальнейшем стоит значительных временных затрат. Дело в том, что метод info() оценивает объем данных в дата-фрейме приблизительно — нам об этом намекает скромный значек “+” после значения задействованной памяти. Особенно этот перекос становится заметен, если данные содержат объекты с вложенными структурами. Посмотрим еще раз, но теперь глубже.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 11 entries, installation_id to world
-dtypes: int64(3), object(8)
-memory usage: 147.3 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Почти в десять раз больше! Очевидно, что 200 тыс. строк, которые составляют менее 2% всего объема предоставленных данных, весят слишком много и их обработка потребует ресурсных затрат. Построение же модели на всех данных может оказаться и вовсе невыполнимой задачей по потребляемой памяти.&lt;/p&gt;
-
-&lt;p&gt;Заглянем внутрь (в качестве примера здесь и далее показаны несколько строк и заголовки колонок)&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;installation_id&lt;/th&gt;
-      &lt;th&gt;event_id&lt;/th&gt;
-      &lt;th&gt;game_session&lt;/th&gt;
-      &lt;th&gt;timestamp&lt;/th&gt;
-      &lt;th&gt;event_data&lt;/th&gt;
-      &lt;th&gt;event_count&lt;/th&gt;
-      &lt;th&gt;event_code&lt;/th&gt;
-      &lt;th&gt;game_time&lt;/th&gt;
-      &lt;th&gt;title&lt;/th&gt;
-      &lt;th&gt;type&lt;/th&gt;
-      &lt;th&gt;world&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0001e90f&lt;/td&gt;
-      &lt;td&gt;27253bdc&lt;/td&gt;
-      &lt;td&gt;45bb1e1b6b50c07b&lt;/td&gt;
-      &lt;td&gt;2019-09-06T17:53:46.937Z&lt;/td&gt;
-      &lt;td&gt;{“event_code”: 2000, “event_count”: 1}&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2000&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;Welcome to Lost Lagoon!&lt;/td&gt;
-      &lt;td&gt;Clip&lt;/td&gt;
-      &lt;td&gt;NONE&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0001e90f&lt;/td&gt;
-      &lt;td&gt;77261ab5&lt;/td&gt;
-      &lt;td&gt;0848ef14a8dc6892&lt;/td&gt;
-      &lt;td&gt;2019-09-06T17:54:56.302Z&lt;/td&gt;
-      &lt;td&gt;{“version”:”1.0”,”event_count”:1,”game_time”:0,”event_code”:2000}&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2000&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;Sandcastle Builder (Activity)&lt;/td&gt;
-      &lt;td&gt;Activity&lt;/td&gt;
-      &lt;td&gt;MAGMAPEAK&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Часть данных являются числовыми, часть объектами. Как минимум одна серия имеет неограниченно вложенную структуру. Нам явно нужно привести данные к некоему единому виду.&lt;/p&gt;
-
-&lt;h2 id=&quot;почему-нам-вообще-может-понадобиться-приводить-данные-к-какому-то-виду&quot;&gt;Почему нам вообще может понадобиться приводить данные к какому-то виду&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;большинство алгоритмов ML требует предварительной подготовки данных, например, приведение к числовому виду&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;часто данные нужно дополнительно привести к определенному виду для того чтобы срослась математика, например, нормализовать или привести к логарифмическому масштабу&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;машинное обучение точно плохо понимает неразобранные составные объекты&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;для большинства алгоритмов сложность по пространству/времени в основном сосредоточена на построении модели. Это хорошо для продакшена, но сильно увеличивает расходы на поиск решения&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Попробуем «разобрать» json-подобный объект, находящийся в колонке event_data. Для этого воспользуемся &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html&quot;&gt;pandas.json_normalize&lt;/a&gt;, который разбирает структурированные данные из JSON в табличный формат, а также &lt;a href=&quot;https://docs.python.org/3/library/json.html&quot;&gt;json.load&lt;/a&gt;, который десериализует текст или байткод, содержащий json-документ в python-объекты. Чтобы применить эти методы ко всей серии, воспользуемся &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html&quot;&gt;DataFrame.apply&lt;/a&gt; (метод не сильно быстрый, но нам требуется выполнить эту операцию всего один раз, поэтому, в данном случае, время смело приносим в жертву).&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# json unpack
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_train_extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'event_data'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В результате у нас получилось довольно прилично новых признаков (приведено сокращенно)&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train_extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verbose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 136 columns):
-event_code                  int64
-event_count                 int64
-version                     object
-game_time                   float64
-description                 object
-...
-gate.column                 float64
-gate.side                   object
-dinosaur_weight             float64
-dinosaur_count              float64
-chests                      object
-dtypes: float64(64), int64(2), object(70)
-memory usage: 207.5+ MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Проблема заключается в том, что нам не удалось полностью разобрать json-подобные объекты, т.к. на самом деле они не отвечают стандарту json. Например, вот эти колонки остались неразобранными:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;flower&lt;/th&gt;
-      &lt;th&gt;flowers&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;[0, 0, 0, 0, 0]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;[0, 0, 0, 0, 8]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;[8, 8, 8, 7, 8]&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;shels&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[2, 3, 1]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[2, 3, 2, 1]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[2, 3, 2, 3, 2]&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;bottles&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[{‘color’: ‘blue’, ‘amount’: 2}, {‘color’: ‘blue’, ‘amount’: 1}, {‘color’: ‘purple’, ‘amount’: 2…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;castles_placed&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[{‘size’: 3, ‘position’: {‘x’: 567, ‘y’: 484, ‘stage_width’: 1015, ‘stage_height’: 762}}]&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;[{‘size’: 3, ‘position’: {‘x’: 567, ‘y’: 484, ‘stage_width’: 1015, ‘stage_height’: 762}}, {‘size…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Мы видим списки с пропусками, пустые списки, списки неравной длины, списки словарей, а так-же списки с разным числом вложенных вловарей и даже кортежи списков. Все это возникло потому, что так когда-то кому-то было удобно складировать эти данные в базу данных. Теперь это придется разобрать вручную. Данная задача выходит за рамки этой статьи. Тут я всего лишь демонстрирую то, с чем зачастую можно столкнуться при обработке данных.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Что еще можно встретить?&lt;/strong&gt; Строки, пустые множества и словари. Булевые и другие значение, в том числе записанные как строки или с ошибками, например так: ‘NONE’, ‘nul’, ‘none’, ‘0’ и т.п., false и true, ‘False’, ‘True’, ‘Yes’, ‘No’ и т.д. - список сильно неполный. Все это требует детального исследования и разбора.&lt;/p&gt;
-
-&lt;p&gt;К тому же, не все данные стоит разбирать. Иногда можно встретить готовые векторы, например координаты или списки каких-то сгруппированных значений.&lt;/p&gt;
-
-&lt;p&gt;В итоге, что с памятью?&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train_extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 136 entries, event_code to chests
-dtypes: float64(64), int64(2), object(70)
-memory usage: 543.8 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Мы еще сильнее потеряли в потреблении памяти! А данные еще копать и копать…&lt;/p&gt;
-
-&lt;h2 id=&quot;битва-за-память&quot;&gt;Битва за память&lt;/h2&gt;
-
-&lt;p&gt;На самом деле Pandas группирует и хранит “столбцы” блоками, разбитыми по типам. Иными словами float, int и objects хранятся раздельно, причем оптимизировано, без индексов. С числами все просто — столбцы в блоке объединяются в многомерный массив NumPy. При запросе значения происходит сопоставление индекса с массивом. С объектами немного сложнее. Все это означает, что &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/getting_started/basics.html#basics-dtypes&quot;&gt;разные объекты&lt;/a&gt; по-разному используют память.&lt;/p&gt;
-
-&lt;p&gt;Поработаем с разными типами объектов отдельно.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_train_extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_dtypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'number'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;objects_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_train_extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_dtypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'object'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Для начала разберемся с наименьшим злом — с числами&lt;/strong&gt;. В Pandas используются подтипы int8, int16, int32, int64, float16, float32, float64. В нашем случае в результате сравнения при извлечении, числа оказались в наиболее затратном по памяти формате.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 66 columns):
-event_code                  200000 non-null int64
-event_count                 200000 non-null int64
-game_time                   196724 non-null float64
-total_duration              34617 non-null float64
-duration                    67500 non-null float64
-...
-end_position                4 non-null float64
-gate.row                    832 non-null float64
-gate.column                 832 non-null float64
-dinosaur_weight             1547 non-null float64
-dinosaur_count              1550 non-null float64
-dtypes: float64(64), int64(2)
-memory usage: 100.7 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Изменим эту ситуацию и вот как: получим минимальное и максимальное значение в серии, затем сравним его с машинными лимитами для типов Numpy, после чего заменим на наименьшее.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'int16'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'int32'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'int64'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'float16'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'float32'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'float64'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;col_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dtypes&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col_type&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numerics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c_min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c_max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'int'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;# последовательно сравниваем от наименьшего инта начиная с np.int8
-&lt;/span&gt;            &lt;span class=&quot;c1&quot;&gt;# наверх и переопределяем тип для серии
-&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c_min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c_max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c_min&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c_max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;# и т.д.
-&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;# аналогично для float
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Мы выполнили самопальный вариант понижающего преобразования, выиграв 74.4Mb.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 66 entries, event_code to dinosaur_count
-dtypes: float16(61), float32(3), int16(2)
-memory usage: 26.3 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Но у нас все еще есть проблема:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;flower&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0.0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;5.0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2.0&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Оказывается, везде в датасете использовано число с плавающей точкой, хотя на самом деле никакой потребности в этом нет - в этих данных все числа целые. Исправим эту ситуацию:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fillna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В данном случае мы заменили все пропуски в данных на -1, что открыло для нас возможность применить преобразование типов. Прием замены пропусков на число довольно часто встречается — обычно выбирают число, которое не встречается в данных, к примеру -9999. В нашем случае в данных вообще нет отрицательных чисел, поэтому мы просто взяли наименьшее кешированное, что бы сэкономить и тут. К тому же этот трюк окажется полезен в будущем. Смотрим на результат преобразования:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;numerics_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 66 columns):
-event_code                  200000 non-null int16
-event_count                 200000 non-null int16
-game_time                   200000 non-null int32
-total_duration              200000 non-null int32
-duration                    200000 non-null int32
-...
-end_position                200000 non-null int8
-gate.row                    200000 non-null int8
-gate.column                 200000 non-null int8
-dinosaur_weight             200000 non-null int8
-dinosaur_count              200000 non-null int8
-dtypes: int16(9), int32(4), int8(53)
-memory usage: 16.6 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Итого, по числам нам удалось сэкономить 83.5% по памяти! Неплохо.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Переходим к объектам&lt;/strong&gt;. Тип object в Pandas хранит строковое представление. Строки хранятся фрагментировано - значение в ячейке по сути является указателем. При этом резервируется много памяти и это для нас плохо.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 70 entries, version to chests
-dtypes: object(70)
-memory usage: 443.1 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Pandas предоставляет подтип category, который отображает строковые данные на индекс в int, а это то, что нам нужно, т.к. данные будут храниться не в виде указателя, а в виде словаря, в котором целочисленным значениям сопоставлены уникальным значениям данных. Перегоним наши объекты в «категории»:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# subtype categoty
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;object_to_category&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;unconverted_objects_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;unic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'category'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;# unhashable objects can't be categorised
-&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;unconverted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unconverted_objects_part&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Мы отбросим часть объектов, т.к. договорились ранее не работать с нераспакованной частью json&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unconverted_objects_part&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object_to_category&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;converted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 39 columns):
-version                2345 non-null category
-description            69717 non-null category
-identifier             68610 non-null category
-...
-crystal_id             2090 non-null category
-location               1180 non-null category
-gate.side              832 non-null category
-dtypes: category(39)
-memory usage: 7.9 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Обратите внимание, что мы сами управляем какие именно объекты представлять в виде категорий через отношение количества уникальных значений к общему количеству значений в серии. Теперь посмотрим объем нераспакованных данных и сложим с оптимизированными распакованными:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;unconverted_objects_part&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory_usage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'deep'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_cols&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 200000 entries, 0 to 199999
-Columns: 31 entries, castles_placed to chests
-dtypes: object(31)
-memory usage: 193.0 MB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;193.0MB + 7.9MB — нам удалось сэкономить 242.2MB, больше половины. Если мы применим наш метод ко всему дата-сету, то мы увидим, что не все объекты укладываются в наш формат категорий. часть объектов имеет слишком большое число уникальных значений (хешы, айдишники и т.д.) и есть смысл оставить их в объектах.&lt;/p&gt;
-
-&lt;p&gt;Кстати, при определении подтипа category, пропуски в списке заменяются на дефолтное значение -1. Это очень удачно совпало с принятым нами ранее решением :)&lt;/p&gt;
-
-&lt;p&gt;Отдельно стоит отметить колонку timestamp. Это временная метка и в неоптимизированном виде она тоже занимает избыточное пространство.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0         2019-09-06T17:53:46.937Z
-1         2019-09-06T17:54:17.519Z
-2         2019-09-06T17:54:56.302Z
-...
-199997    2019-08-02T00:06:37.107Z
-199998    2019-08-02T00:06:38.480Z
-199999    2019-08-02T00:06:40.684Z
-Name: timestamp, Length: 200000, dtype: object
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Временную метку оптимизируем с помощью функции pandas &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html&quot;&gt;pd.to_datetime&lt;/a&gt;. Параметр format позволяет задать тип представления временной отметки. Дефолтный вот такой: “%d/%m/%Y”. Теперь метка будет выглядеть так:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0        2019-09-06 17:53:46.937000+00:00
-1        2019-09-06 17:54:17.519000+00:00
-2        2019-09-06 17:54:56.302000+00:00
-...
-199997   2019-08-02 00:06:37.107000+00:00
-199998   2019-08-02 00:06:38.480000+00:00
-199999   2019-08-02 00:06:40.684000+00:00
-Name: timestamp, Length: 200000, dtype: datetime64[ns, UTC]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В этом оптимизированном виде мы сэкономим дополнительные 14Mb памяти.&lt;/p&gt;
-
-&lt;p&gt;В завершении операций по оптимизации необходимо данные сериализовать. Сделать это можно, к примеру, с помощью стандартного модуля shelve. Чуть позже, в отдельной статье я расскажу про сложности и пути их решения, которые могут возникнуть при сериализации.&lt;/p&gt;
-
-&lt;h3 id=&quot;что-еще-можно-сделать&quot;&gt;Что еще можно сделать&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;распаковать вложенности&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;не все нужно распаковывать - кое-что это готовые вектора, кое-что можно пересчитать в скаляры&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;избавиться от разреженности либо оптимизировать разреженные данные&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Кроме того, можно не ограничиться представлением, а закодировать столбцы цифрами. Есть методы в самом Pandas. Я рекомендую использовать внешний модуль category_encoders:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;позволяет кодировать категории в цифры разными методами (их там около 20)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;можно кодировать полуструктурированные и неструктурированные данные&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;можно сильно сократить выход по памяти за счет target encoding&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;работает в стиле scikit-learn пайплайнов&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;возвращает как Numpy массив, так и Pandas датафрейм&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Как кодировать категории с помощью category_encoders читайте в &lt;a href=&quot;/2019/10/28/data-preprocessing-category-encoders.html&quot;&gt;этой статье&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Ну и, наконец, можно перегнать все в Numpy! :)&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Эту статью я написал, как результат митапа, на котором мой доклад был посвящен проблемам оптимизации двумерных данных.</summary></entry></feed>
+&lt;/table&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.</summary></entry></feed>

@@ -1,6 +1,6 @@
 ---
 layout: tagpage
-title: "Tag: graph"
-tag: graph
+title: "Tag: GCN"
+tag: GCN
 robots: noindex
 ---
