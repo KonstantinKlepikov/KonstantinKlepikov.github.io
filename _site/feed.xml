@@ -1,31 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-10-20T23:12:56+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Сверточные нейронные сети для графов. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html" rel="alternate" type="text/html" title="Сверточные нейронные сети для графов. Часть 1" /><published>2020-10-19T00:00:00+02:00</published><updated>2020-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html">&lt;p&gt;Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2020-11-05T22:26:34+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Сверточные нейронные сети для графов. Часть 2 (практика)</title><link href="https://konstantinklepikov.github.io/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica.html" rel="alternate" type="text/html" title="Сверточные нейронные сети для графов. Часть 2 (практика)" /><published>2020-11-05T00:00:00+02:00</published><updated>2020-11-05T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica.html">&lt;p&gt;Семинар, посвященный практике по графовым нейронным сетям, можно посмотреть на youtube:&lt;/p&gt;
 
-&lt;p&gt;Проблемой обучения моделей на данных, представленных в виде графов, является их плохая структурированность. Информация о нодах и связях между ними описывается, как правило, в многомерном неевклидовом пространстве, что делает векторизацию таких данных затруднительной.&lt;/p&gt;
+&lt;div class=&quot;video-container&quot;&gt;
+&lt;iframe src=&quot;https://www.youtube.com/embed/Hf7RYjxLemY&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Одним из основных подходов в решении данной задачи является representation learning. Подход сводится к созданию эмбеддингов для нод или субграфов в графе, что позволяет перевести данные в область с низкой размерностью. Такие эмбеддинги уже можно использовать на входе различных моделей ML.&lt;/p&gt;
+&lt;p&gt;Вначале еще раз разбираем &lt;a href=&quot;/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html&quot;&gt;теоретическую часть вопроса&lt;/a&gt;. Затем смотрим простой пример на numpy. Затем проходим то же самое еще раз, но уже с pytorch. В заключение разбираем пример с pytorch geometric. Репозиторий с кодом размещен &lt;a href=&quot;https://github.com/KonstantinKlepikov/GCN_lect&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="GCN" /><category term="embedding" /><summary type="html">Семинар, посвященный практике по графовым нейронным сетям, можно посмотреть на youtube:</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/051120banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/051120banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Сверточные нейронные сети для графов. Часть 1</title><link href="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html" rel="alternate" type="text/html" title="Сверточные нейронные сети для графов. Часть 1" /><published>2020-10-19T00:00:00+02:00</published><updated>2020-10-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/19/svertochnie-neyronnie-seti-dlja-grafov-chast-1.html">&lt;p&gt;Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.&lt;/p&gt;
+
+&lt;p&gt;Главная сложность — разыскать такое представление графа, которое отобразит графовую структуру в модель машинного обучения. Решается это такими методами:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;графовые статистики&lt;/li&gt;
+  &lt;li&gt;ядерные методы&lt;/li&gt;
+  &lt;li&gt;манипуляции с признаками для оценки локальной близости&lt;/li&gt;
+  &lt;li&gt;обучение представлению графа&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Представление информации в нодах или субграфах в виде векторов — проблема. Оказывается, как правило, данные содержатся в многомерном неевклидовом пространстве. Соответственно &lt;strong&gt;задача — перегнать многомерный вектор признаков в низкоразмерный, размерностью &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt;, желательно из &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}&lt;/script&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Одним из основных подходов в решении данной задачи является representation learning. Подход сводится к созданию эмбеддингов для нод или субграфов в графе, что позволяет перевести данные в область с низкой размерностью. Такие эмбеддинги уже можно использовать в различных моделей ML.&lt;/p&gt;
 
 &lt;p&gt;Если мы имеем граф &lt;script type=&quot;math/tex&quot;&gt;G = (V, E)&lt;/script&gt; и ассоциированные с ним матрицу смежности &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; и матрицу &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, содержащую атрибуты нод, так что &lt;script type=&quot;math/tex&quot;&gt;X \in \mathbb{R}^{m \times \vert V \vert}&lt;/script&gt;, то задачей является получение векторов &lt;script type=&quot;math/tex&quot;&gt;z \in \mathbb{R}^d&lt;/script&gt; для каждой ноды, таких, что &lt;script type=&quot;math/tex&quot;&gt;d \ll \vert V \vert&lt;/script&gt;. (Данный подход справедлив и для ребер).&lt;/p&gt;
 
 &lt;p&gt;Эту задачу решает такая модель:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;функция похожести &lt;script type=&quot;math/tex&quot;&gt;S_g : V \times V \rightarrow \mathbb{R}^+&lt;/script&gt;, определенная над графом &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt;. Функция измеряет схожесть между нодами.&lt;/li&gt;
-  &lt;li&gt;энкодер, генерирующий эмбеддинги&lt;/li&gt;
-  &lt;li&gt;декодер, реконструирующий взаимную схожесть нод&lt;/li&gt;
-  &lt;li&gt;функция потерь&lt;/li&gt;
+  &lt;li&gt;функция попарной похожести (pairwise similarity function) &lt;script type=&quot;math/tex&quot;&gt;S_g : V \times V \rightarrow \mathbb{R}^+&lt;/script&gt;, определенная над графом &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt;. Функция измеряет схожесть между нодами.&lt;/li&gt;
+  &lt;li&gt;энкодер, генерирующий эмбеддинги &lt;script type=&quot;math/tex&quot;&gt;ENC: V \rightarrow  \mathbb{R}^d&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;декодер, реконструирующий статистики графа из эмбеддингов &lt;script type=&quot;math/tex&quot;&gt;DEC : \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^+&lt;/script&gt; *&lt;/li&gt;
+  &lt;li&gt;функция потерь (специфична для каждой задачи) - оценивает несоответствие между декодированным (оцененным) значением близости &lt;script type=&quot;math/tex&quot;&gt;DEC(\mathbf{z}_i, \mathbf{z}_j)&lt;/script&gt; и истинным &lt;script type=&quot;math/tex&quot;&gt;S_g(v_i, v_j)&lt;/script&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Самый простой метод — shallow encoding, для которого мы можем определить энкодер как функцию: &lt;script type=&quot;math/tex&quot;&gt;ENC(v_i) = Z v_i&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;Z \in \mathbb{R}^{m \times \vert V \vert}&lt;/script&gt;.&lt;/p&gt;
+&lt;p&gt;* для двух нод в графе &lt;script type=&quot;math/tex&quot;&gt;DEC(ENC(v_i), ENC(v_j)) = DEC(\mathbf{z}_i, \mathbf{z}_j) \approx S_g(v_i, v_j)&lt;/script&gt; декодер восстанавливает «попарную близость» нод в графе из эмбеддингов&lt;/p&gt;
 
-&lt;p&gt;К подобным методам относятся различные матричные факторизации (graph factorisation, GraRep, HOPE и т.д.) и RandomWalk модели (DeepWalk, node2wec).&lt;/p&gt;
+&lt;p&gt;Самый простой метод — &lt;strong&gt;shallow encoding&lt;/strong&gt;, для которого мы можем определить энкодер как функцию: &lt;script type=&quot;math/tex&quot;&gt;ENC(v_i) = Z v_i&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;Z \in \mathbb{R}^{m \times \vert V \vert}&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;Проблемой shallow encoding является то, что в этом методе параметры нод не распространяются в энкодере. Каждый вектор обучается отдельно от других, что ведет к значительному росту сложности. Кроме того, подход не учитывает атрибуты нод, которые в большинстве случаев содержат важную информацию о графе. К тому же подход генерирует эмбеддинги только для данных, которые есть среди обучаемых. Модель проблематично обобщить на данные, которые модель никогда не видела.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-03.png&quot; alt=&quot;shallow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;К подобным способам создания эмбеддингов относятся различные матричные факторизации (graph factorisation, GraRep, HOPE и т.д.) и RandomWalk модели (DeepWalk, node2wec).&lt;/p&gt;
+
+&lt;p&gt;Проблемой shallow encoding является то, что в этом методе параметры нод не распространяются и не используются совместно в энкодере. Каждый вектор обучается отдельно от других. Число параметров растет как функция от количества нод &lt;script type=&quot;math/tex&quot;&gt;O(V)&lt;/script&gt;. Кроме того, подход не учитывает атрибуты нод, которые в большинстве случаев содержат важную информацию о графе. К тому же подход генерирует эмбеддинги только для данных, которые есть среди обучаемых. Модель проблематично обобщить на данные, которые модель никогда не видела.&lt;/p&gt;
 
 &lt;p&gt;Чтобы справиться с недостатками shallow encoding, были изобретены генерализованные энкодер-декодер структуры: DNGR (deep neural graph representation) и SDNE (structural deep network embeddings), относящихся к автоэнкодерам, основанных на исследовании соседних нод в графе.&lt;/p&gt;
 
 &lt;p&gt;Прямым решением для таких моделей является то, что каждая нода &lt;script type=&quot;math/tex&quot;&gt;v_i&lt;/script&gt; ассоциируется с высокаразмерным «вектором близости» &lt;script type=&quot;math/tex&quot;&gt;S_i \in \mathbb{R}^{\vert V \vert}&lt;/script&gt;, содержащем информацию о близости ноды ко всем другим нодам в графе. Затем данный вектор сжимается до нужной размерности. Проблема такого подхода в том, что он невероятно дорогой. К тому же метод статичный и плохо работает с изменяющимися графами.&lt;/p&gt;
 
-&lt;p&gt;Другой подход — neighbourhood agregation атрибутов нод для генерации эмбеддингов. Этот метод позволяет агрегировать «месседжи» от соседей ноды, которые, в свою очередь, базируются на «месседжах», агрегированных по соседям соседей и т.д. Иногда такие модели называют сверточными энкодерами из-за схожести их архитектуры со свертками.&lt;/p&gt;
+&lt;p&gt;Другой подход — &lt;strong&gt;neighbourhood agregation&lt;/strong&gt; атрибутов нод для генерации эмбеддингов. Этот метод позволяет агрегировать «месседжи» от соседей ноды, которые, в свою очередь, базируются на «месседжах», агрегированных по соседям соседей и т.д. Иногда такие модели называют сверточными энкодерами из-за схожести их архитектуры со свертками.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-01.png&quot; alt=&quot;neighbourhood agregation&quot; /&gt;&lt;/p&gt;
 
@@ -33,13 +52,58 @@
 
 &lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-02.png&quot; alt=&quot;neighbourhood agregation algorythm&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Алгоритм строит эмбеддинги для нод рекурсивно. Вначале модель инициализируется входными данными, эквивалентными атрибутам нод. Затем на каждой итерации алгоритма под управлением некой дифференцирующей агрегирующей функции агрегируются эмбеддинги соседей. Затем каждая нода получает новый эмбеддинг, скомбинированный из ее собственного эмбеддинга и агрегированного вектора. Затем все это отправляется в полносвязный слой и затем процесс повторяется &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;раз.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Алгоритм строит эмбеддинги для нод рекурсивно&lt;/li&gt;
+  &lt;li&gt;Вначале энкодер инициализируется атрибутами нод&lt;/li&gt;
+  &lt;li&gt;Затем на каждой итерации агрегируются эмбеддинги соседей&lt;/li&gt;
+  &lt;li&gt;Далее каждая нода получает новый эмбеддинг, скомбинированный из ее собственного эмбеддинга и агрегированного вектора.&lt;/li&gt;
+  &lt;li&gt;Затем все это отправляется в полносвязный слой и процесс повторяется K раз.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;К моделям, которые работают по такому принципу относятся многочисленное семейство GCN (graph convolutional networks), column networks и GraphSAGE.&lt;/p&gt;
+&lt;p&gt;Эмбеддинг каждой ноды обогащается данными своих соседей, при этом размерность векторов остается постоянной во время всей процедуры. В результате мы получаем векторное представление графа.&lt;/p&gt;
 
-&lt;p&gt;В алгоритме обучаются агрегирующие функции и сет матриц весов &lt;script type=&quot;math/tex&quot;&gt;\{W^K, \forall \mathbb{R} \in [ 1, K ]\}&lt;/script&gt;, которые и определяют как именно агрегируется информация из области локальной близости ноды. Эти параметры распространяются соседним нодам.&lt;/p&gt;
+&lt;p&gt;Этот подход эксплуатируют:&lt;/p&gt;
 
-&lt;p&gt;Разные подтипы модели определяются разными агрегирующей функцией (стр.4 алгоритма) и комбинирующей вектора функцией (стр.5). В GCN и columns encoding используется взвешенная сумма в качестве комбинирующей функции и поэлементное среднее для агрегирующей. В GraphSAGE используется конкатенация в качестве комбинирующей функции, а в качестве агрегирующей может использоваться другая нейронная сеть, к примеру, LSTM.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="GCN" /><summary type="html">Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Алгоритмы поиска в ширину и в глубину</title><link href="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html" rel="alternate" type="text/html" title="Алгоритмы поиска в ширину и в глубину" /><published>2020-10-09T00:00:00+02:00</published><updated>2020-10-09T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html">&lt;p&gt;Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;GNN (graph neural network)&lt;/li&gt;
+  &lt;li&gt;GCN (graph convolutional networks)&lt;/li&gt;
+  &lt;li&gt;column networks&lt;/li&gt;
+  &lt;li&gt;GraphSAGE&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Разные подтипы модели определяются разными агрегирующей функцией и комбинирующей вектора функцией.&lt;/p&gt;
+
+&lt;h4 id=&quot;gcn&quot;&gt;GCN&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;агрегирующая функция - поэлементное среднее&lt;/li&gt;
+  &lt;li&gt;комбинируем взвешенной суммой&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;column-network&quot;&gt;column network&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;то же самое, что и в GCN, только на выходе цикла стоит функция интерполяции, позволяющая сохранять локальную информацию в процессе итерации)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;graphsage&quot;&gt;GraphSAGE&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;агрегирует среднее, макспуллинг или LSTM&lt;/li&gt;
+  &lt;li&gt;комбинируем конкатенацией&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;gnn&quot;&gt;GNN&lt;/h4&gt;
+
+&lt;p&gt;GNN — обобщающая вышеизложенные принципы модель. По сути, GNN описывает множество возможных реализаций, одна из которых — GCN, где в качестве основного механизма используется свертка.&lt;/p&gt;
+
+&lt;p&gt;В базовой реализации, алгоритм инициализируется случайным эмбеддингом для каждой ноды и на каждой итерации эмбеддинги накапливают информацию о своих соседях вот таким образом:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/191020-04.png&quot; alt=&quot;GNN embeddings&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;где &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; — это произвольная дифференцируемая функция вида &lt;script type=&quot;math/tex&quot;&gt;р: \mathbb{R}^d \times \mathbb{R}^m \times \mathbb{R}^m \rightarrow \mathbb{R}^d&lt;/script&gt;. На выходе после &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt; итераций мы должны получить вектор вида &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}_{v_i} = g({\mathbf{h}_i}^K)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; - произвольная дифференцируемая функция вида &lt;script type=&quot;math/tex&quot;&gt;g: \mathbb{R}^d \rightarrow \mathbb{R}^d&lt;/script&gt;, иными словами, это некая нейросеть, возможно MLP.&lt;/p&gt;
+
+&lt;p&gt;Практическую часть к данной статье смотрите &lt;a href=&quot;/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica.html&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="GCN" /><category term="embedding" /><summary type="html">Графовые нейронные сети — молодое и перспективное направление развития нейронных сетей, нашедшее применение в анализе различных структур данных, например, социальных профилей, групп документов, в молекулярной биологии, трехмерных изображений и т.д. и т.п. В данной статье разбираются подходы к решению проблемы работы с графовыми данными.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Алгоритмы поиска в ширину и в глубину</title><link href="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html" rel="alternate" type="text/html" title="Алгоритмы поиска в ширину и в глубину" /><published>2020-10-09T00:00:00+02:00</published><updated>2020-10-09T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html">&lt;p&gt;Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.&lt;/p&gt;
 
 &lt;h2 id=&quot;поиск-в-ширину-breadth-first-search-bfs&quot;&gt;Поиск в ширину (breadth-first search, BFS)&lt;/h2&gt;
 
@@ -901,165 +965,4 @@
 &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Статья подготовлена на основе книги «Изучаем Python» Lutz, Mark&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="phyton" /><summary type="html">Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал себе шпаргалку. Для упрощения ситуации речь пойдет про python 3.x.</summary></entry><entry><title type="html">Как преобразовать вложенные структуры JSON в массив Pandas на Python</title><link href="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" rel="alternate" type="text/html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python" /><published>2020-03-30T00:00:00+02:00</published><updated>2020-03-30T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html">&lt;p&gt;Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье &lt;a href=&quot;/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html&quot;&gt;подготовка и оптимизация данных для задач машинного обучения&lt;/a&gt;. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.&lt;/p&gt;
-
-&lt;h2 id=&quot;вложенные-структуры-json-с-которыми-придется-повозиться&quot;&gt;Вложенные структуры JSON с которыми придется повозиться&lt;/h2&gt;
-
-&lt;p&gt;Попробуем поработать с данными на примере публичного API Государственной Думы Российской Федерации. Сервис предоставляет сведения о членах обеих палат и законотворческой деятельности.&lt;/p&gt;
-
-&lt;p&gt;Вот пример ответа по запросу о списке депутатов и сенаторов (в данном случае :token и :app_token заменяются на ключи в реальном запросе):&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://api.duma.gov.ru/api/:token/deputies.json?app_token=:app_token'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Что содержалось в ответе?&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
-{'id': '99100491',
-  'name': 'Абдулатипов Рамазан Гаджимурадович',
-  'position': 'Депутат ГД',
-  'isCurrent': False,
-  'factions': [{'id': '72100020',
-    'name': 'Депутатская группа &quot;Российские регионы&quot;',
-    'startDate': '1996-01-16',
-    'endDate': '1997-11-12'},
-   {'id': '72100024',
-    'name': 'Фракция Всероссийской политической партии &quot;ЕДИНАЯ РОССИЯ&quot;',
-    'startDate': '2011-12-04',
-    'endDate': '2013-01-27'}]}
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В этом примере мы наблюдаем вложенный список по ключу factions, в который помещены два словаря, агрегирующих данные о вхождении депутата во фракции. Такое вложение развернуть сразу не получится. Ситуация осложняется еще и тем, что по части депутатов ключ factions отсутствует.&lt;/p&gt;
-
-&lt;h2 id=&quot;как-преобразовать-json-в-pandas&quot;&gt;Как преобразовать json в Pandas?&lt;/h2&gt;
-
-&lt;p&gt;Мы можем разобрать json-объект с помощью &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html&quot;&gt;pandas.json_normalize&lt;/a&gt; — метода, который разбирает структурированные данные из JSON в табличный формат, а также &lt;a href=&quot;https://docs.python.org/3/library/json.html&quot;&gt;json.load&lt;/a&gt;, который десериализует текст или байткод, содержащий json-документ в python-объекты. Применим к нашему json-объекта.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Как и предполагалось, данные по factions остались неразвернутыми.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;id&lt;/th&gt;
-      &lt;th&gt;name&lt;/th&gt;
-      &lt;th&gt;position&lt;/th&gt;
-      &lt;th&gt;isCurrent&lt;/th&gt;
-      &lt;th&gt;factions&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;99100491&lt;/td&gt;
-      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
-      &lt;td&gt;Депутат ГД&lt;/td&gt;
-      &lt;td&gt;False&lt;/td&gt;
-      &lt;td&gt;[{‘id’: ‘72100020’, ‘name’: ‘Депутатская группа “Российские регионы”’, ‘startDate’: ‘1996-01-16’, ‘endDate’: ‘1997-11-12’}, {‘id’: ‘72100024’, ‘name’: ‘Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”’, ‘startDate’: ‘2011-12-04’, ‘endDate’: ‘2013-01-27’}]&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Что бы разобрать вложенный список из factions для начала избавимся от пропусков&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;is_factions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_factions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Теперь развернем factions относительно айдишников депутатов (meta=’id’). Чтобы сохранить семантику в полученной таблице, будем использовать аргумент record_prefix=’factions.’, который добавим к вновь образуемым столбцам массива.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                             &lt;span class=&quot;n&quot;&gt;record_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                             &lt;span class=&quot;n&quot;&gt;meta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                             &lt;span class=&quot;n&quot;&gt;record_prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                             &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ignore&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Нам удалось развернуть список словарей в полноценную таблицу:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-RangeIndex: 5031 entries, 0 to 5030
-Data columns (total 5 columns):
-factions.id           5031 non-null object
-factions.name         5031 non-null object
-factions.startDate    5031 non-null object
-factions.endDate      5031 non-null object
-id                    5031 non-null object
-dtypes: object(5)
-memory usage: 196.6+ KB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Теперь в исходном массиве удалим колонку factions и с помощью метода merge() добавим в массив развернутые данные.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'factions'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'columns'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factions_with_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'outer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class 'pandas.core.frame.DataFrame'&amp;gt;
-Int64Index: 5703 entries, 0 to 5702
-Data columns (total 8 columns):
-id                    5703 non-null object
-name                  5703 non-null object
-position              5703 non-null object
-isCurrent             5703 non-null bool
-factions.id           5031 non-null object
-factions.name         5031 non-null object
-factions.startDate    5031 non-null object
-factions.endDate      5031 non-null object
-dtypes: bool(1), object(7)
-memory usage: 362.0+ KB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Теперь все хорошо — данные извлечены и представлены в удобном, с точки зрения семантики, табличном виде:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;id&lt;/th&gt;
-      &lt;th&gt;name&lt;/th&gt;
-      &lt;th&gt;position&lt;/th&gt;
-      &lt;th&gt;isCurrent&lt;/th&gt;
-      &lt;th&gt;factions.id&lt;/th&gt;
-      &lt;th&gt;factions.name&lt;/th&gt;
-      &lt;th&gt;factions.startDate&lt;/th&gt;
-      &lt;th&gt;factions.endDate&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;99100491&lt;/td&gt;
-      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
-      &lt;td&gt;Депутат ГД&lt;/td&gt;
-      &lt;td&gt;False&lt;/td&gt;
-      &lt;td&gt;72100020&lt;/td&gt;
-      &lt;td&gt;Депутатская группа “Российские регионы”&lt;/td&gt;
-      &lt;td&gt;1996-01-16&lt;/td&gt;
-      &lt;td&gt;1997-11-12&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;99100491&lt;/td&gt;
-      &lt;td&gt;Абдулатипов Рамазан Гаджимурадович&lt;/td&gt;
-      &lt;td&gt;Депутат ГД&lt;/td&gt;
-      &lt;td&gt;False&lt;/td&gt;
-      &lt;td&gt;72100024&lt;/td&gt;
-      &lt;td&gt;Фракция Всероссийской политической партии “ЕДИНАЯ РОССИЯ”&lt;/td&gt;
-      &lt;td&gt;2011-12-04&lt;/td&gt;
-      &lt;td&gt;2013-01-27&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>Klepikov Konstantin</name></author><category term="ml-data" /><category term="phyton" /><category term="preprocessing" /><category term="machine-learning" /><category term="pandas" /><category term="json" /><summary type="html">Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.</summary></entry></feed>
+&lt;p&gt;Статья подготовлена на основе книги «Изучаем Python» Lutz, Mark&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="phyton" /><summary type="html">Статью я написал потому, что постоянно забываю как обращаться к аргументам функций в разных сложных случаях. Надоело гуглить — сделал себе шпаргалку. Для упрощения ситуации речь пойдет про python 3.x.</summary></entry></feed>
