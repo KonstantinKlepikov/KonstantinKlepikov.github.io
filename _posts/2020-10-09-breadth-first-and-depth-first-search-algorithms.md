@@ -8,6 +8,8 @@ keywords: algorithms поиск глубину ширину bfs dfs графы
 image: /assets/img/101020banner.png
 ---
 
+![{{page.title}}](../../..{{page.image}})
+
 Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.
 
 ## Поиск в ширину (breadth-first search, BFS)

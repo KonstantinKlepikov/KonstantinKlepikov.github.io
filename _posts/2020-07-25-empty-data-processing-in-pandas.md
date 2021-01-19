@@ -8,6 +8,8 @@ keywords: pandas preprocessing  phyton обработка пропусков mac
 image: /assets/img/250720banner.png
 ---
 
+![{{page.title}}](../../..{{page.image}})
+
 ### Есть несколько стратегий индикации пропусков в данных
 
 #### Использование некоего значения-индикатора

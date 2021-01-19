@@ -8,6 +8,8 @@ keywords: теория графов nlp text data natural language preprocessing
 image: /assets/img/310320banner.png
 ---
 
+![{{page.title}}](../../..{{page.image}})
+
 В данной заметке изложен прототип идеи поиска связанности текстовых фрагментов на основе структуры повествования.
 
 ## Данные для исследования

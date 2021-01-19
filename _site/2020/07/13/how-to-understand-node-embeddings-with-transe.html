@@ -12,8 +12,8 @@
 <meta property="og:title" content="Как понять translating алгоритмы для графов?" />
 <meta name="author" content="Klepikov Konstantin" />
 <meta property="og:locale" content="ru_RU" />
-<meta name="description" content="Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей." />
-<meta property="og:description" content="Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей." />
+<meta name="description" content="Блог про нейронные сети и машинное обучение" />
+<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
 <link rel="canonical" href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" />
 <meta property="og:url" content="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" />
 <meta property="og:site_name" content="My deep learning" />
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-07-13T00:00:00+02:00" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html","headline":"Как понять translating алгоритмы для графов?","dateModified":"2020-07-13T00:00:00+02:00","datePublished":"2020-07-13T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/130720banner.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html"},"author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html","headline":"Как понять translating алгоритмы для графов?","dateModified":"2020-07-13T00:00:00+02:00","datePublished":"2020-07-13T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/130720banner.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html"},"author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Блог про нейронные сети и машинное обучение","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="теория графов графы translating TransE sc224w эмбеддинг embedding">
@@ -215,6 +215,10 @@
       
         
       
+        
+      
+        
+      
     </ul>
   </div>
 </header>
@@ -246,7 +250,9 @@
   </div>
 
   <div class="prose" itemprop="articleBody">
-      <p>Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.</p>
+      <p><img src="../../../assets/img/130720banner.png" alt="Как понять translating алгоритмы для графов?" /></p>
+
+<p>Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.</p>
 
 <p>Вначале сам алгоритм:</p>
 
@@ -376,7 +382,7 @@
     <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2020/07/25/empty-data-processing-in-pandas.html" title="Обработка пропусков в Pandas">
       <span class="h5 link-secondary text-accent">Следующая запись</span>
       <p class="bold h3 link-primary mb-1">Обработка пропусков в Pandas</p>
-      <p>### Есть несколько стратегий индикации пропусков в данных #### Использование некоего значения-индикатора К примеру, можно использовать число -9999 или редко...</p>
+      <p>![{{page.title}}](../../..{{page.image}}) ### Есть несколько стратегий индикации пропусков в данных #### Использование некоего значения-индикатора К примеру, можно использовать число -9999 или...</p>
     </a>
   </div>
 

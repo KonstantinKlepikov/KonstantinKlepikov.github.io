@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Фишки pandas: часть 1 | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Фишки pandas: часть 1" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Блог про нейронные сети и машинное обучение" />
+<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:image" content="https://konstantinklepikov.github.io/assets/img/pandas01.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-19T00:00:00+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html","headline":"Фишки pandas: часть 1","dateModified":"2021-01-19T00:00:00+02:00","datePublished":"2021-01-19T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/pandas01.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html"},"author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Блог про нейронные сети и машинное обучение","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="pandas, python">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+    <script data-ad-client="ca-pub-2809667403284871" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Фишки pandas: часть 1</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2021-01-19T00:00:00+02:00" itemprop="datePublished">Jan 19, 2021</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/pandas," title="pandas," class="link-tags">pandas,&nbsp;</a>
+    
+      
+      <a href="/tag/python" title="python" class="link-tags">python&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p><img src="../../../assets/img/pandas01.jpg" alt="Фишки pandas: часть 1" /></p>
+
+<p>Стартую серию заметок про различные проблемы и фишки, с которыми мне пришлось столкнуться в python библиотеке pandas. В этом “выпуске”:</p>
+
+<ul>
+  <li>
+    <p>метод pandas apply() не поддерживает аргумент axis. TypeError: &lt;lambda&gt;() got an unexpected keyword argument ‘axis’</p>
+  </li>
+  <li>
+    <p>ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().</p>
+  </li>
+  <li>
+    <p>как заменить все значения одного типа на какое-то одно значение в pandas</p>
+  </li>
+  <li>
+    <p>TypeError: No matching signature found при реализации метода fillna()</p>
+  </li>
+  <li>
+    <p>как отобразить в окне браузера все строки датафрейма в jupyter notebook</p>
+  </li>
+</ul>
+
+<h2 id="метод-pandas-apply-не-поддерживает-аргумент-axis-typeerror-lambda-got-an-unexpected-keyword-argument-axis">Метод pandas apply() не поддерживает аргумент axis. TypeError: &lt;lambda&gt;() got an unexpected keyword argument ‘axis’</h2>
+
+<p>Проблема банальна: вы применяете метод серии, а не фрейма:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">'col1'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s">'col2'</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]})</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+TypeError: &lt;lambda&gt;() got an unexpected keyword argument 'axis'
+</code></pre></div></div>
+
+<p>У версии метода для серии нет аргумента axis. Решение - или применять к фрейму или убрать аргумент axis</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'col1'</span><span class="p">]].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="valueerror-the-truth-value-of-a-series-is-ambiguous-use-aempty-abool-aitem-aany-or-aall">ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().</h2>
+
+<p>Ошибку можно получить при попытке использовать логические методы в pandas</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+</code></pre></div></div>
+
+<p>Проблема в том, что массивы numpy и pandas не имеют логических значений и связанно это с тем, что не всегда возможно установить когда объект True, а когда он False. В некоторых случаях мы можем считать, что массив True, только если он не нулевой длины, в некоторых мы можем ожидать, что он True, только если все объекты массива не False. Иными словами, так-как пользователи ожидают различное поведение, библиотека просто выбрасывает ValueError, чтобы предоставить пользователю самостоятельно определить какую именно логику необходимо применить при сравнении.</p>
+
+<p>Как решить эту проблему зависит от контекста. Можно воспользоваться более явным сравнением, к примеру, логическими операторами &amp;, | и т.д.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h2 id="как-заменить-все-значения-одного-типа-на-какое-то-одно-значение-в-pandas">Как заменить все значения одного типа на какое-то одно значение в pandas</h2>
+
+<p>Задача часто появляется, когда, к примеру, нужно обнулить множество значений в таблице. Используем метод <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.mask.html">mask</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">].</span><span class="n">mask</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'col1'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">666</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="typeerror-no-matching-signature-found-при-реализации-метода-fillna">TypeError: No matching signature found при реализации метода fillna()</h2>
+
+<p>Эта редкая проблема встречается при использовании метода fillna() с аргументом типа method=’ffill’. Если вычисления не слишком затратные, можно реализовать решение с переводом в тип ‘object’:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]].</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">).</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">"ffill"</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Естественно, переопределите свой тип данных для выхода.</p>
+
+<h2 id="как-отобразить-в-окне-браузера-все-строки-и-колонки-датафрейма-в-jupyter-notebook">Как отобразить в окне браузера все строки и колонки датафрейма в jupyter notebook</h2>
+
+<p>Иногда нужно посмотреть на результат преобразований и убедиться, что нет пропусков или получена ожидаемая структура данных. Jupyter notebook сокращает вывод. Решение можно получить через option_context()</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pd</span><span class="p">.</span><span class="n">option_context</span><span class="p">(</span><span class="s">'display.max_rows'</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="s">'display.max_columns'</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span> 
+    <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Кстати, обратите внимание как используется менеджер контекста для того, чтобы не изменять глобальные настройки отображения.</p>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html&title=Фишки pandas: часть 1" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Фишки pandas: часть 1&url=https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html&title=Фишки pandas: часть 1" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Фишки pandas: часть 1&body=Check out this site https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/pandas" class="link-tags">pandas</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2020/07/25/empty-data-processing-in-pandas.html" title="Обработка пропусков в Pandas">Обработка пропусков в Pandas</a> (25 Jul 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2020/04/18/unnamed-column-pandas.html" title="Столбец Unnamed в датафрейме Pandas">Столбец Unnamed в датафрейме Pandas</a> (18 Apr 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" title="Как преобразовать вложенные структуры JSON в массив Pandas на Python">Как преобразовать вложенные структуры JSON в массив Pandas на Python</a> (30 Mar 2020)<br>
+            
+        </li>
+        
+        <li><a href="/2020/03/04/data-preprocessing-and-compression-in-machine-learning.html" title="Подготовка и оптимизация данных для задач машинного обучения">Подготовка и оптимизация данных для задач машинного обучения</a> (04 Mar 2020)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2021/01/10/zapuskaem-machine-learning-mvp.html" title="Запускаем machine learning MVP: инструкция о том, как быстро презентовать идеи">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Запускаем machine learning MVP: инструкция о том, как быстро презентовать идеи</p>
+      <p>Итак, есть идея и есть даже какая-то реализация в виде просчитанной модели, которая умеет, к примеру, классифицировать, распознавать или создавать...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>
