@@ -80,7 +80,7 @@ df['col1'] = df['col1'].mask(df['col1'] >= 0, 666)
 Эта редкая проблема встречается при использовании метода fillna() с аргументом типа method='ffill'. Если вычисления не слишком затратные, можно реализовать решение с переводом в тип 'object':
 
 ```python
-df[['this', 'that']] = df[['this', 'that']].astype('object').fillna(method="ffill").astype('object').astype(np.float16)
+df[['this', 'that']] = df[['this', 'that']].astype('object').fillna(method="ffill").astype(np.float16)
 ```
 
 Естественно, переопределите свой тип данных для выхода.

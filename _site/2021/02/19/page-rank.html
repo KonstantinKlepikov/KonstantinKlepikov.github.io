@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Алгоритм Page Rank | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Алгоритм Page Rank" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Блог про нейронные сети и машинное обучение" />
+<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:image" content="https://konstantinklepikov.github.io/assets/img/190221banner.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-19T00:00:00+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"https://konstantinklepikov.github.io/2021/02/19/page-rank.html","headline":"Алгоритм Page Rank","dateModified":"2021-02-19T00:00:00+02:00","datePublished":"2021-02-19T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/190221banner.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2021/02/19/page-rank.html"},"author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Блог про нейронные сети и машинное обучение","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="page rank, algorithms. алгоритмы, алгоритм, пейдж ранк, google, поиск, graph, WWW, web, web searching, веб поиск, cs224w">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+    <script data-ad-client="ca-pub-2809667403284871" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Алгоритм Page Rank</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2021-02-19T00:00:00+02:00" itemprop="datePublished">Feb 19, 2021</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/page-rank" title="page-rank" class="link-tags">page-rank&nbsp;</a>
+    
+      
+      <a href="/tag/algorithms" title="algorithms" class="link-tags">algorithms&nbsp;</a>
+    
+      
+      <a href="/tag/graphs" title="graphs" class="link-tags">graphs&nbsp;</a>
+    
+      
+      <a href="/tag/cs224w" title="cs224w" class="link-tags">cs224w&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p><img src="../../../assets/img/190221banner.png" alt="Алгоритм Page Rank" /></p>
+
+<p>В данной статье я разберу принцип работы алгоритма Page Rank, который был предложен Лари Пейдж и Сергеем Брином для ранжирования веб-страниц для поискового сервиса Google.</p>
+
+<p>Фундаментальная идея заключалась в том, что значимость страниц в интернете неравноценна. Некоторые страницы очевидно были важнее остальных и возникла необходимость в их ранжировании по значимости.</p>
+
+<p>На момент изобретения алгоритма, в 1998 году, WWW по большей части состоял из страниц, доступных для индексирования, т.е. большинство ссылок было навигируемыми. Сеть можно было представить как большую марковскую цепь или граф, в котором веб-страницы являлись состояниями (нодами), а гиперссылки переходами между состояниями (ребрами графа). В этой концепции любая страница имела конечное число исходящих ссылок. Если предполагать, что пользователь (серфер) переходит по ссылкам (серфит) случайным образом, а вероятности перехода по любой из исходящих ссылок равновероятны, то вероятность такого перехода со страницы <script type="math/tex">i</script> на страницу <script type="math/tex">j</script> выражается как <script type="math/tex">P_(ij) = \frac{1}{m}</script>, где <script type="math/tex">m</script> - число исходящих ссылок для данной страницы. Для страниц без ссылок вероятность принимается, как равная нулю. На этом простом принципе строился алгоритм ранжирования page rank.</p>
+
+<p>Для реализации идеи алгоритма необходимо принять несколько обобщений:</p>
+
+<ul>
+  <li>все страницы имеют разную значимость</li>
+  <li>ссылки передают сообщения (голоса) от одной страницы к другой. Страница более важна, если она собирает больше голосов</li>
+  <li>голоса более важных страниц более важны</li>
+</ul>
+
+<h2 id="реализация-page-rank">Реализация page rank</h2>
+
+<p>Как посчитать важность страниц и важность голосов, которые передают страницы через ссылки?</p>
+
+<ul>
+  <li>каждая ссылка голосует пропорционально важности ссылающейся страницы</li>
+  <li>важность страницы делится между исходящими ссылками пропорционально количеству этих ссылок. Если страница <script type="math/tex">i</script> имеет важность <script type="math/tex">R_i</script> и <script type="math/tex">d_i</script> исходящих ссылок, то каждая такая ссылка получает <script type="math/tex">\frac{R_i}{d_i}</script> важность</li>
+  <li>каждая страница имеет важность, равную сумме входящих голосов (важностей входящих в страницу ссылок)</li>
+</ul>
+
+<p>В примере: <script type="math/tex">R_j = \frac{R_i}{3} + \frac{R_k}{4}</script></p>
+
+<p><img src="../../../assets/img/190221-01.png" alt="page rank visualization" /></p>
+
+<p>Иными словами, ранг <script type="math/tex">R_j</script> страницы можно посчитать так: <script type="math/tex">R_j = \underset{j \rightarrow i}\sum \frac{R_i}{d_i}</script>, где <script type="math/tex">d_i</script> - исходящая степень (out degree) ноды <script type="math/tex">i</script></p>
+
+<p>Очевидно, что для подсчета ранга каждой страницы в сети нам необходимо знать весь граф со всеми связями. Кроме того, необходимо решить, будем ли мы учитывать петли (ссылки страниц на самих себя). Модель алгоритма выглядит так: нам необходимо построить граф сети, инициализировать ноды некими значениями, а затем в итеративном режиме обновлять значения для каждой ноды до тех пор, пока значения рангов не стабилизируются (перестанут изменяться либо их изменения не будут превышать некое заранее известное значение).</p>
+
+<p>Мы можем реализовать идею алгоритма в векторном виде. Пусть страница <script type="math/tex">j</script> имеет <script type="math/tex">d_j</script> исходящих связей. Если <script type="math/tex">j \rightarrow i</script>, тогда мы можем сформулировать стохастическую матрицу <script type="math/tex">\mathbf{M}_{ij} = \frac{1}{d_j}</script>, такую, что сумма по каждой колонке равна 1. Для страницы <script type="math/tex">i</script> мы имеем вектор важности <script type="math/tex">r_i</script>, такой что выполняется <script type="math/tex">\underset{i}\sum r_i = 1</script>. Тогда на каждой итерации <script type="math/tex">\mathbf{r}_{next time} = \mathbf{M} \times \mathbf{r}_{previous time}</script>, где <script type="math/tex">r = \underset{j \rightarrow i}\sum \frac{R_i}{d_i}</script></p>
+
+<p>Алгоритм так же можно интерпретировать с точки зрения концепции случайного блуждания по графу;</p>
+
+<ul>
+  <li>в момент <script type="math/tex">t</script> серфер находится на странице <script type="math/tex">i</script></li>
+  <li>в момент <script type="math/tex">t+1</script> он переходит на случайную страницу по исходящей ссылке</li>
+  <li>повторить заданное число раз</li>
+</ul>
+
+<p>При такой реализации можно полагать, что в момент времени <script type="math/tex">t</script> есть некая вероятность <script type="math/tex">P(t)</script> перехода серфера со страницы <script type="math/tex">i</script> на следующую страницу. Тогда <script type="math/tex">P(t+1) = \mathbf{M} \times P(t)</script> и <script type="math/tex">P(t)</script> - это не что иное, как вероятностное распределение через все страницы сети.</p>
+
+<p>В этой (и предыдущей) интерпретации нетрудно заметить, что <script type="math/tex">\mathbf{M}</script> в каждый момент времени остается неизменной, что позволяет сформулировать вычислительно разрешимый алгоритм оценки page rank.</p>
+
+<p>Для реализации подсчета page rank используется power iteration. Выглядит это так:</p>
+
+<ul>
+  <li>инициализировать все ноды графа значением <script type="math/tex">r^{(0)} = [\frac{1}{N}, \frac{1}{N}, ...\frac{1}{N}]^T</script>, где <script type="math/tex">N</script> - число нод в графе</li>
+  <li>проитерировать по <script type="math/tex">\mathbf{r}^{(t+1)} = \mathbf{M} \times \mathbf{r}^{(t)}</script>, где <script type="math/tex">\mathbf{r}_{j}^{(t+1)} = \underset{j \rightarrow i}\sum \frac{r_{i}^{(t)}}{d_i}</script></li>
+  <li>остановиться, когда <script type="math/tex">% <![CDATA[
+\vert\mathbf{r}^{(t+1)} - \mathbf{r}^{(t)}\vert_1 < \varepsilon %]]></script>, где <script type="math/tex">\varepsilon</script> некое заранее известное значение (можно использовать и другую норму)</li>
+</ul>
+
+<p>Такой подход показывает сходимость примерно на 50 итерациии.</p>
+
+<h2 id="проблемы-page-rank">Проблемы page rank</h2>
+
+<ul>
+  <li>некоторые страницы - это dead ends (нет исходящих ссылок)</li>
+  <li>часть страниц - это spider traps (исходящие ссылки двигаясь от страницы к странице приводят к образованию цикла)</li>
+</ul>
+
+<p>Первая проблема ведет к утечке важности. Вторая к незапланированному сбору важности страницами, находящимися в цикле.</p>
+
+<p>Решение для spider trap: в каждый момент времени серфер, который перемещается по сети, имеет две опции:</p>
+
+<ul>
+  <li>с вероятностью <script type="math/tex">\beta</script> перейти по случайной ссылке далее в соответствии с основным сценарием алгоритма</li>
+  <li>с вероятностью <script type="math/tex">1 - \beta</script> переместиться на случайную ноду в графе (телепорт)</li>
+</ul>
+
+<p>На практике <script type="math/tex">\beta \approx 0.8 ... 0.9</script>. Для dead ends необходимо принять <script type="math/tex">\beta = 1</script>.</p>
+
+<p>Именно такое решение было предложено в оригинальном решении (см. <a href="https://snap.stanford.edu/class/cs224w-readings/Brin98Anatomy.pdf">публикацию</a>) Лари Пейджа и Сергея Брина в 1998 году.</p>
+
+<p><script type="math/tex">r_j = \underset{j \rightarrow i}\sum \beta \frac{r_i}{d_i} + (1 - \beta)\frac{1}{N}</script> или в матричном представлении <script type="math/tex">A = \beta M + (1 - \beta)[\frac{1}{N}]_{N \times N}</script>, где <script type="math/tex">[\frac{1}{N}]_{N \times N}</script> - матрица, в которой все значения равны <script type="math/tex">\frac{1}{N}</script></p>
+
+<h2 id="как-на-самом-деле-считается-page-rank">Как на самом деле считается page rank</h2>
+
+<p><script type="math/tex">r^{new} = A \times r^{old}</script>. Матрица <script type="math/tex">A</script> содержит <script type="math/tex">N^2</script> значений. Каждое значение стоит 4 байта памяти. Это означает матрица <script type="math/tex">A</script> для миллиона страниц (а в современном интернете содержится несколько миллиардов веб-сайтов  и сотни миллиардов страниц) начинает занимать пространственно-неразрешимое место в памяти. К счастью, эта матрица разреженная. Мы можем использовать разреженную матрицу <script type="math/tex">A</script>, предварительно выкинув из нее dead ends.</p>
+
+<p>Такой подход существенно сокращает место для хранения матрицы, однако появляется новая проблема: <script type="math/tex">% <![CDATA[
+\sum r_{ji} < 1 %]]></script> т.к. мы выкинул dead ends. Решением является ренормализация.</p>
+
+<p>В итоге алгоритм page rank выглядит так (реализация взята из лекций стэндфордского курса <a href="http://web.stanford.edu/class/cs224w/">cs224w</a>):</p>
+
+<p><img src="../../../assets/img/190221-02.png" alt="page rank complete algorythm" /></p>
+
+<p>Подробную реализацию алгоритма можно посмотреть <a href="https://en.wikipedia.org/wiki/PageRank">на странице в wiki</a>, где представлены имплементации на разных языках программирования.</p>
+
+<h2 id="варианты-и-применение-page-rank">Варианты и применение page rank</h2>
+
+<p>Существует несколько дополнительных реализаций page rank. Например можно задать разную вероятность телепорта для разных нод. Так можно локализовать телепорт в области, близкой к ноде, из которой осуществляется перемещение - это в свою очередь ранажирует ноды в локальной близости. Другой подход - телепортировать “серфера” всегда в одну и ту же ноду (random walk with restart).</p>
+
+<p>В настоящий момент page rank для ранжирования интернет-страниц - это уже история. В таком контексте алгоритм не используется google начиная с 2007 года. На смену page rank и подобным схемам пришли смешанные модели ранжирования, основанные на поведенчиских признаках и удовлетворенности пользователя. Да и сам интернет сильно изменился. Теперь большинство страниц не индексируется, а большинство ссылок - это лайки, посты, коментарии, внутренняя навигация и т.д.</p>
+
+<p>Тем не менее page rank по-прежнему активно используется в исследованиях графов и сетей, а в интернете применяется в ранжировании для составления рекомендаций.</p>
+
+  </div>
+  
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2021/02/19/page-rank.html&title=Алгоритм Page Rank" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Алгоритм Page Rank&url=https://konstantinklepikov.github.io/2021/02/19/page-rank.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2021/02/19/page-rank.html&title=Алгоритм Page Rank" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Алгоритм Page Rank&body=Check out this site https://konstantinklepikov.github.io/2021/02/19/page-rank.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/page-rank" class="link-tags">page-rank</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2021/02/19/page-rank.html" title="Алгоритм Page Rank">Алгоритм Page Rank</a> (19 Feb 2021)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" title="Фишки pandas: часть 1">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Фишки pandas: часть 1</p>
+      <p>Стартую серию заметок про различные проблемы и фишки, с которыми мне пришлось столкнуться в python библиотеке pandas. В этом “выпуске”:...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

@@ -219,6 +219,8 @@
       
         
       
+        
+      
     </ul>
   </div>
 </header>
@@ -312,7 +314,7 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
 
 <p>Эта редкая проблема встречается при использовании метода fillna() с аргументом типа method=’ffill’. Если вычисления не слишком затратные, можно реализовать решение с переводом в тип ‘object’:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]].</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">).</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">"ffill"</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'that'</span><span class="p">]].</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">).</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">"ffill"</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float16</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Естественно, переопределите свой тип данных для выхода.</p>
@@ -402,6 +404,14 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
   </div>
   
   
+  <div class="col-4 sm-width-full left mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" title="Алгоритм Page Rank">
+      <span class="h5 link-secondary text-accent">Следующая запись</span>
+      <p class="bold h3 link-primary mb-1">Алгоритм Page Rank</p>
+      <p>![{{page.title}}](../../..{{page.image}}) В данной статье я разберу принцип работы алгоритма Page Rank, который был предложен Лари Пейдж и Сергеем Брином для...</p>
+    </a>
+  </div>
+
 
 </div>
 

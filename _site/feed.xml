@@ -1,4 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-01-19T21:00:45+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Фишки pandas: часть 1</title><link href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" rel="alternate" type="text/html" title="Фишки pandas: часть 1" /><published>2021-01-19T00:00:00+02:00</published><updated>2021-01-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/pandas01.jpg&quot; alt=&quot;Фишки pandas: часть 1&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-02-20T04:25:41+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Алгоритм Page Rank</title><link href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" rel="alternate" type="text/html" title="Алгоритм Page Rank" /><published>2021-02-19T00:00:00+02:00</published><updated>2021-02-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/02/19/page-rank</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/02/19/page-rank.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/190221banner.png&quot; alt=&quot;Алгоритм Page Rank&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;В данной статье я разберу принцип работы алгоритма Page Rank, который был предложен Лари Пейдж и Сергеем Брином для ранжирования веб-страниц для поискового сервиса Google.&lt;/p&gt;
+
+&lt;p&gt;Фундаментальная идея заключалась в том, что значимость страниц в интернете неравноценна. Некоторые страницы очевидно были важнее остальных и возникла необходимость в их ранжировании по значимости.&lt;/p&gt;
+
+&lt;p&gt;На момент изобретения алгоритма, в 1998 году, WWW по большей части состоял из страниц, доступных для индексирования, т.е. большинство ссылок было навигируемыми. Сеть можно было представить как большую марковскую цепь или граф, в котором веб-страницы являлись состояниями (нодами), а гиперссылки переходами между состояниями (ребрами графа). В этой концепции любая страница имела конечное число исходящих ссылок. Если предполагать, что пользователь (серфер) переходит по ссылкам (серфит) случайным образом, а вероятности перехода по любой из исходящих ссылок равновероятны, то вероятность такого перехода со страницы &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; на страницу &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt; выражается как &lt;script type=&quot;math/tex&quot;&gt;P_(ij) = \frac{1}{m}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; - число исходящих ссылок для данной страницы. Для страниц без ссылок вероятность принимается, как равная нулю. На этом простом принципе строился алгоритм ранжирования page rank.&lt;/p&gt;
+
+&lt;p&gt;Для реализации идеи алгоритма необходимо принять несколько обобщений:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;все страницы имеют разную значимость&lt;/li&gt;
+  &lt;li&gt;ссылки передают сообщения (голоса) от одной страницы к другой. Страница более важна, если она собирает больше голосов&lt;/li&gt;
+  &lt;li&gt;голоса более важных страниц более важны&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;реализация-page-rank&quot;&gt;Реализация page rank&lt;/h2&gt;
+
+&lt;p&gt;Как посчитать важность страниц и важность голосов, которые передают страницы через ссылки?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;каждая ссылка голосует пропорционально важности ссылающейся страницы&lt;/li&gt;
+  &lt;li&gt;важность страницы делится между исходящими ссылками пропорционально количеству этих ссылок. Если страница &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; имеет важность &lt;script type=&quot;math/tex&quot;&gt;R_i&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;d_i&lt;/script&gt; исходящих ссылок, то каждая такая ссылка получает &lt;script type=&quot;math/tex&quot;&gt;\frac{R_i}{d_i}&lt;/script&gt; важность&lt;/li&gt;
+  &lt;li&gt;каждая страница имеет важность, равную сумме входящих голосов (важностей входящих в страницу ссылок)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;В примере: &lt;script type=&quot;math/tex&quot;&gt;R_j = \frac{R_i}{3} + \frac{R_k}{4}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/190221-01.png&quot; alt=&quot;page rank visualization&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Иными словами, ранг &lt;script type=&quot;math/tex&quot;&gt;R_j&lt;/script&gt; страницы можно посчитать так: &lt;script type=&quot;math/tex&quot;&gt;R_j = \underset{j \rightarrow i}\sum \frac{R_i}{d_i}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;d_i&lt;/script&gt; - исходящая степень (out degree) ноды &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Очевидно, что для подсчета ранга каждой страницы в сети нам необходимо знать весь граф со всеми связями. Кроме того, необходимо решить, будем ли мы учитывать петли (ссылки страниц на самих себя). Модель алгоритма выглядит так: нам необходимо построить граф сети, инициализировать ноды некими значениями, а затем в итеративном режиме обновлять значения для каждой ноды до тех пор, пока значения рангов не стабилизируются (перестанут изменяться либо их изменения не будут превышать некое заранее известное значение).&lt;/p&gt;
+
+&lt;p&gt;Мы можем реализовать идею алгоритма в векторном виде. Пусть страница &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt; имеет &lt;script type=&quot;math/tex&quot;&gt;d_j&lt;/script&gt; исходящих связей. Если &lt;script type=&quot;math/tex&quot;&gt;j \rightarrow i&lt;/script&gt;, тогда мы можем сформулировать стохастическую матрицу &lt;script type=&quot;math/tex&quot;&gt;\mathbf{M}_{ij} = \frac{1}{d_j}&lt;/script&gt;, такую, что сумма по каждой колонке равна 1. Для страницы &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; мы имеем вектор важности &lt;script type=&quot;math/tex&quot;&gt;r_i&lt;/script&gt;, такой что выполняется &lt;script type=&quot;math/tex&quot;&gt;\underset{i}\sum r_i = 1&lt;/script&gt;. Тогда на каждой итерации &lt;script type=&quot;math/tex&quot;&gt;\mathbf{r}_{next time} = \mathbf{M} \times \mathbf{r}_{previous time}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;r = \underset{j \rightarrow i}\sum \frac{R_i}{d_i}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Алгоритм так же можно интерпретировать с точки зрения концепции случайного блуждания по графу;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;в момент &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; серфер находится на странице &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;в момент &lt;script type=&quot;math/tex&quot;&gt;t+1&lt;/script&gt; он переходит на случайную страницу по исходящей ссылке&lt;/li&gt;
+  &lt;li&gt;повторить заданное число раз&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;При такой реализации можно полагать, что в момент времени &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; есть некая вероятность &lt;script type=&quot;math/tex&quot;&gt;P(t)&lt;/script&gt; перехода серфера со страницы &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; на следующую страницу. Тогда &lt;script type=&quot;math/tex&quot;&gt;P(t+1) = \mathbf{M} \times P(t)&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;P(t)&lt;/script&gt; - это не что иное, как вероятностное распределение через все страницы сети.&lt;/p&gt;
+
+&lt;p&gt;В этой (и предыдущей) интерпретации нетрудно заметить, что &lt;script type=&quot;math/tex&quot;&gt;\mathbf{M}&lt;/script&gt; в каждый момент времени остается неизменной, что позволяет сформулировать вычислительно разрешимый алгоритм оценки page rank.&lt;/p&gt;
+
+&lt;p&gt;Для реализации подсчета page rank используется power iteration. Выглядит это так:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;инициализировать все ноды графа значением &lt;script type=&quot;math/tex&quot;&gt;r^{(0)} = [\frac{1}{N}, \frac{1}{N}, ...\frac{1}{N}]^T&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;N&lt;/script&gt; - число нод в графе&lt;/li&gt;
+  &lt;li&gt;проитерировать по &lt;script type=&quot;math/tex&quot;&gt;\mathbf{r}^{(t+1)} = \mathbf{M} \times \mathbf{r}^{(t)}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\mathbf{r}_{j}^{(t+1)} = \underset{j \rightarrow i}\sum \frac{r_{i}^{(t)}}{d_i}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;остановиться, когда &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\vert\mathbf{r}^{(t+1)} - \mathbf{r}^{(t)}\vert_1 &lt; \varepsilon %]]&gt;&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\varepsilon&lt;/script&gt; некое заранее известное значение (можно использовать и другую норму)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Такой подход показывает сходимость примерно на 50 итерациии.&lt;/p&gt;
+
+&lt;h2 id=&quot;проблемы-page-rank&quot;&gt;Проблемы page rank&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;некоторые страницы - это dead ends (нет исходящих ссылок)&lt;/li&gt;
+  &lt;li&gt;часть страниц - это spider traps (исходящие ссылки двигаясь от страницы к странице приводят к образованию цикла)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Первая проблема ведет к утечке важности. Вторая к незапланированному сбору важности страницами, находящимися в цикле.&lt;/p&gt;
+
+&lt;p&gt;Решение для spider trap: в каждый момент времени серфер, который перемещается по сети, имеет две опции:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;с вероятностью &lt;script type=&quot;math/tex&quot;&gt;\beta&lt;/script&gt; перейти по случайной ссылке далее в соответствии с основным сценарием алгоритма&lt;/li&gt;
+  &lt;li&gt;с вероятностью &lt;script type=&quot;math/tex&quot;&gt;1 - \beta&lt;/script&gt; переместиться на случайную ноду в графе (телепорт)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;На практике &lt;script type=&quot;math/tex&quot;&gt;\beta \approx 0.8 ... 0.9&lt;/script&gt;. Для dead ends необходимо принять &lt;script type=&quot;math/tex&quot;&gt;\beta = 1&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Именно такое решение было предложено в оригинальном решении (см. &lt;a href=&quot;https://snap.stanford.edu/class/cs224w-readings/Brin98Anatomy.pdf&quot;&gt;публикацию&lt;/a&gt;) Лари Пейджа и Сергея Брина в 1998 году.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;r_j = \underset{j \rightarrow i}\sum \beta \frac{r_i}{d_i} + (1 - \beta)\frac{1}{N}&lt;/script&gt; или в матричном представлении &lt;script type=&quot;math/tex&quot;&gt;A = \beta M + (1 - \beta)[\frac{1}{N}]_{N \times N}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;[\frac{1}{N}]_{N \times N}&lt;/script&gt; - матрица, в которой все значения равны &lt;script type=&quot;math/tex&quot;&gt;\frac{1}{N}&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;как-на-самом-деле-считается-page-rank&quot;&gt;Как на самом деле считается page rank&lt;/h2&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;r^{new} = A \times r^{old}&lt;/script&gt;. Матрица &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; содержит &lt;script type=&quot;math/tex&quot;&gt;N^2&lt;/script&gt; значений. Каждое значение стоит 4 байта памяти. Это означает матрица &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; для миллиона страниц (а в современном интернете содержится несколько миллиардов веб-сайтов  и сотни миллиардов страниц) начинает занимать пространственно-неразрешимое место в памяти. К счастью, эта матрица разреженная. Мы можем использовать разреженную матрицу &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;, предварительно выкинув из нее dead ends.&lt;/p&gt;
+
+&lt;p&gt;Такой подход существенно сокращает место для хранения матрицы, однако появляется новая проблема: &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\sum r_{ji} &lt; 1 %]]&gt;&lt;/script&gt; т.к. мы выкинул dead ends. Решением является ренормализация.&lt;/p&gt;
+
+&lt;p&gt;В итоге алгоритм page rank выглядит так (реализация взята из лекций стэндфордского курса &lt;a href=&quot;http://web.stanford.edu/class/cs224w/&quot;&gt;cs224w&lt;/a&gt;):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/190221-02.png&quot; alt=&quot;page rank complete algorythm&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Подробную реализацию алгоритма можно посмотреть &lt;a href=&quot;https://en.wikipedia.org/wiki/PageRank&quot;&gt;на странице в wiki&lt;/a&gt;, где представлены имплементации на разных языках программирования.&lt;/p&gt;
+
+&lt;h2 id=&quot;варианты-и-применение-page-rank&quot;&gt;Варианты и применение page rank&lt;/h2&gt;
+
+&lt;p&gt;Существует несколько дополнительных реализаций page rank. Например можно задать разную вероятность телепорта для разных нод. Так можно локализовать телепорт в области, близкой к ноде, из которой осуществляется перемещение - это в свою очередь ранажирует ноды в локальной близости. Другой подход - телепортировать “серфера” всегда в одну и ту же ноду (random walk with restart).&lt;/p&gt;
+
+&lt;p&gt;В настоящий момент page rank для ранжирования интернет-страниц - это уже история. В таком контексте алгоритм не используется google начиная с 2007 года. На смену page rank и подобным схемам пришли смешанные модели ранжирования, основанные на поведенчиских признаках и удовлетворенности пользователя. Да и сам интернет сильно изменился. Теперь большинство страниц не индексируется, а большинство ссылок - это лайки, посты, коментарии, внутренняя навигация и т.д.&lt;/p&gt;
+
+&lt;p&gt;Тем не менее page rank по-прежнему активно используется в исследованиях графов и сетей, а в интернете применяется в ранжировании для составления рекомендаций.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="page-rank" /><category term="algorithms" /><category term="graphs" /><category term="cs224w" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Фишки pandas: часть 1</title><link href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" rel="alternate" type="text/html" title="Фишки pandas: часть 1" /><published>2021-01-19T00:00:00+02:00</published><updated>2021-01-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/pandas01.jpg&quot; alt=&quot;Фишки pandas: часть 1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Стартую серию заметок про различные проблемы и фишки, с которыми мне пришлось столкнуться в python библиотеке pandas. В этом “выпуске”:&lt;/p&gt;
 
@@ -69,7 +169,7 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
 
 &lt;p&gt;Эта редкая проблема встречается при использовании метода fillna() с аргументом типа method=’ffill’. Если вычисления не слишком затратные, можно реализовать решение с переводом в тип ‘object’:&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'this'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'that'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'this'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'that'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'object'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fillna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ffill&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'object'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'this'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'that'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'this'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'that'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'object'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fillna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ffill&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Естественно, переопределите свой тип данных для выхода.&lt;/p&gt;
@@ -790,58 +890,4 @@ port = &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PORT&lt;/span&gt;&lt;span 
 
 &lt;h2 id=&quot;вывод&quot;&gt;Вывод&lt;/h2&gt;
 
-&lt;p&gt;Скорее всего, вы познакомитесь со Snap, если проходите курс cs224w, так как домашние работы требуется выполнить именно в этом фреймворке. Пройдя курс, с большой долей вероятности вы забудете про Snap и перейдете на Networkx.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="networkx" /><category term="snap" /><category term="phyton" /><category term="graphs" /><category term="sc224w" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Столбец Unnamed в датафрейме Pandas</title><link href="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html" rel="alternate" type="text/html" title="Столбец Unnamed в датафрейме Pandas" /><published>2020-04-18T00:00:00+02:00</published><updated>2020-04-18T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/04/18/unnamed-column-pandas.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/250720banner.png&quot; alt=&quot;Столбец Unnamed в датафрейме Pandas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Довольно частая проблема, с которой может встретиться начинающий аналитик или питонист при работе с Pandas - это появление столбца Unnamed при чтении какой-то структуры в датафрейм. В этой короткой заметке пишу о том, почему это происходит и как победить проблему.&lt;/p&gt;
-
-&lt;p&gt;Все дело в индексе по умолчанию при чтении или записи .csv файла!&lt;/p&gt;
-
-&lt;p&gt;Формируя дата-фрейм из какого-либо источника данных, необходимо не забывать сохранять его без индекса, вот так:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Если этого не сделать, при сохранении будет добавлен «безымянный» индекс по умолчанию:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;Unnamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;           &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;И тогда с этим придется бороться при чтении, вот так:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Либо путем выкидывания столбца inplace:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c:/test.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Unnamed: 0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;this&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;А это неудобно…&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Скорее всего, вы познакомитесь со Snap, если проходите курс cs224w, так как домашние работы требуется выполнить именно в этом фреймворке. Пройдя курс, с большой долей вероятности вы забудете про Snap и перейдете на Networkx.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="networkx" /><category term="snap" /><category term="phyton" /><category term="graphs" /><category term="sc224w" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
