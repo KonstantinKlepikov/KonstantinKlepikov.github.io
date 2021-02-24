@@ -16,7 +16,9 @@ layout: default
   <div class="prose" itemprop="articleBody">
       {{ content }}
   </div>
-  
+    {% if jekyll.environment == 'production' %}
+      {% include rtb-yandex.html %}
+    {% endif %}
     {% include share-bar.html %}
     {% include comments.html %}
   
