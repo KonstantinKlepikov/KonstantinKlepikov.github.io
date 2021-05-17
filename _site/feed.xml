@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-02-24T22:37:42+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Алгоритм Page Rank</title><link href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" rel="alternate" type="text/html" title="Алгоритм Page Rank" /><published>2021-02-19T00:00:00+02:00</published><updated>2021-02-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/02/19/page-rank</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/02/19/page-rank.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/190221banner.png&quot; alt=&quot;Алгоритм Page Rank&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-05-17T02:03:11+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Данные изображения в компьютерном зрении. Ч.1</title><link href="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html" rel="alternate" type="text/html" title="Данные изображения в компьютерном зрении. Ч.1" /><published>2021-05-17T00:00:00+02:00</published><updated>2021-05-17T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/17052021-01.jpg&quot; alt=&quot;Данные изображения в компьютерном зрении. Ч.1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Любое изображение можно определить в пространственной или частотной области. В данной статье рассматривается определение данных в пространственной области.&lt;/p&gt;
+
+&lt;h2 id=&quot;изображение-в-пространственной-области&quot;&gt;Изображение в пространственной области&lt;/h2&gt;
+
+&lt;p&gt;Цифровое изображение определяется через дискретизацию непрерывных аналоговых данных в пространственной области. Такая область состоит из прямоугольного массива пикселей &lt;script type=&quot;math/tex&quot;&gt;(x, y, u)&lt;/script&gt;, каждый из которых является комбинацией местоположения &lt;script type=&quot;math/tex&quot;&gt;(x, y) \in \mathbb{Z}^2&lt;/script&gt; (здесь &lt;script type=&quot;math/tex&quot;&gt;\mathbb{Z}&lt;/script&gt; - множество целых чисел, а точки образуют регулярную сетку) и значения &lt;script type=&quot;math/tex&quot;&gt;u&lt;/script&gt;, представляющего отсчета в точке &lt;script type=&quot;math/tex&quot;&gt;(x, y)&lt;/script&gt;. Формальное определние изображения &lt;script type=&quot;math/tex&quot;&gt;I&lt;/script&gt; на прямоугольном множестве &lt;script type=&quot;math/tex&quot;&gt;\Omega&lt;/script&gt; (носитель или carrier &lt;script type=&quot;math/tex&quot;&gt;I&lt;/script&gt;):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Omega = \{(x, y) : \leq x \leq N_{cols} \wedge 1 \leq y \leq N_{rows}\} \subset \mathbb{Z}^2&lt;/script&gt;
+
+&lt;p&gt;при условии, что &lt;script type=&quot;math/tex&quot;&gt;N_{cols} \geq 1, N_{rows} \geq 1&lt;/script&gt;, а система координат левосторонняя.&lt;/p&gt;
+
+&lt;h3 id=&quot;пиксели&quot;&gt;Пиксели&lt;/h3&gt;
+
+&lt;p&gt;Два способа геометрической интерпретации пикселя - в виде ячейки сетки или в виде меток в узлах сеток, являющихся центрами ячеек сетки.&lt;/p&gt;
+
+&lt;p&gt;Модель ячейки сетки предполагает, что пиксель - это закрашенный одним цветом квадрат. Модель узла сетки предполагает, что пиксель - узел сетки, помеченный значением изображения.&lt;/p&gt;
+
+&lt;p&gt;Пиксели сами по себе не определяют никаких отношений смежности. В модели ячеек сетки пиксели смежны тогда и только тогда, когда соответствующие им квадраты имеют смежную сторону. Другой вариант определения смежности - считать смежными различные квадраты, имеющие хотя бы одну общую сторону или вершину.&lt;/p&gt;
+
+&lt;h3 id=&quot;окна&quot;&gt;Окна&lt;/h3&gt;
+
+&lt;p&gt;Окном изображения &lt;script type=&quot;math/tex&quot;&gt;W_p^{m, n}(I)&lt;/script&gt; называется часть изображения &lt;script type=&quot;math/tex&quot;&gt;m \times n&lt;/script&gt;, спозиционированная относительно начального пикселя &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt;. По уиолчанию считается, что &lt;script type=&quot;math/tex&quot;&gt;m, n&lt;/script&gt; нечетные, а &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; центр окна.&lt;/p&gt;
+
+&lt;h3 id=&quot;основные-статистики-изображения&quot;&gt;Основные статистики изображения&lt;/h3&gt;
+
+&lt;p&gt;В компьютерном зрении в качестве области скалярного изображения часто рассматривают отрезок вещественных чисел &lt;script type=&quot;math/tex&quot;&gt;[0, 1] \in \mathbb{R}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Для &lt;strong&gt;скалярных изображений&lt;/strong&gt; выбираются целые числа &lt;script type=&quot;math/tex&quot;&gt;u \in {0, 1, ..., 2^{\alpha} - 1}&lt;/script&gt;. Такие значения интерпретируются как уровни яркости, 0 соответствует черному, а &lt;script type=&quot;math/tex&quot;&gt;2^{\alpha} - 1&lt;/script&gt; белому, остальные уровни линейно интерполируются между белым и черным. Стандартом &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; может быть 8, 16 и т.д., в текущий момент 16.&lt;/p&gt;
+
+&lt;p&gt;В &lt;strong&gt;бинарном изображении&lt;/strong&gt; пиксели приобретают только два значения - белый и черный.&lt;/p&gt;
+
+&lt;p&gt;В &lt;strong&gt;векторных изображениях&lt;/strong&gt; число каналов больше одного, значениями изображений являются векторы &lt;script type=&quot;math/tex&quot;&gt;(u_1, u_2, ..., u_{N})&lt;/script&gt;. К примеру, в RGB три канала - красный, зеленый и синий, каждый канал при этом представляет из себя просто скалярное изображение.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Среднее&lt;/strong&gt; или средний уровень яркости.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mu_I = \frac{1}{N_{cols} \times N_{rows}} \sum_{x=1}^{N_{cols}} \sum_{y=1}^{N_{rows}} I(x, y)&lt;/script&gt;
+
+&lt;p&gt;здесь &lt;script type=&quot;math/tex&quot;&gt;\| \Omega \| = N_{cols}, \times N_{rows}&lt;/script&gt; - мощность носителя &lt;script type=&quot;math/tex&quot;&gt;\Omega&lt;/script&gt;, содержащего все пиксели.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Дисперсия&lt;/strong&gt; и &lt;strong&gt;стандартное отклонение&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sigma^2_I = [\frac{1}{\| \Omega \|} \sum_{(x, y) \in \Omega} I(x, y)^2] - \mu^2_I&lt;/script&gt;
+
+&lt;p&gt;Квадратный корень из дисперсии - это стандартное отклонение. Такое представление дисперсии позволяет считать среднее и дисперсию одновременно при первом проходе через изображение.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Гистограмма&lt;/strong&gt; - это таблица частот. Гистограмма реализует представление скалярного изображения или одного из каналов векторного изображения.&lt;/p&gt;
+
+&lt;p&gt;Абсолютные частоты (сколько раз значение &lt;script type=&quot;math/tex&quot;&gt;u&lt;/script&gt; встречается в &lt;script type=&quot;math/tex&quot;&gt;\Omega&lt;/script&gt;)&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H_i(u) = |{(x, y) \in \Omega : I(x, y) = u}|&lt;/script&gt;
+
+&lt;p&gt;Относительные частоты - значения, распределенные между 0 и 1:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;h_I(u) = \frac{H_I(u)}{\| \Omega \|}&lt;/script&gt;
+
+&lt;p&gt;Абсолютная гистограмма представляется значениями &lt;script type=&quot;math/tex&quot;&gt;H_I(0), H_I(1), ..., H_I(G_{max})&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Для кумулятивных гистограмм вычисляются абсолютная и относительная кумулятивные частоты:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_I(u) = \sum_{v=0}^u H_I(v)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;c_I(u) = \sum_{v=0}^u h_I(v)&lt;/script&gt;
+
+&lt;p&gt;Дисперсия, мат.ожидание и другие статистики вычисляются так-же для окон. В процессе анализа можно классифицировать окна по категориям, к примеру как содержащие однородные области, с низкой или высокой контрастностью, содержащие границу областей и т.д.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Контрастность&lt;/strong&gt; определяется как средняя абсолютная величина разности между значением пикселя и средним значением соседних пикселей.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;C(I) = \frac{1}{\| \Omega \|} \sum_{(x, y) \in \Omega} | I(x, y) - \mu_{A(x, y)} |&lt;/script&gt;
+
+&lt;h3 id=&quot;пространственные-и-временные-меры&quot;&gt;Пространственные и временные меры&lt;/h3&gt;
+
+&lt;p&gt;Для получения полезной информации визуализируются профили яркости, определяемые одномерными сечениями скалярных массивов данных. По сути, это окно, одна из сторон которого имеет значение 1. Для профилей яркости можно считать все вышеуказанные статистики.&lt;/p&gt;
+
+&lt;p&gt;Гистограммы и профили яркости - это пространственные статистики значений. Чтобы получить временные статистики, рассматривается последовательность изображений, полученных на одном и том же носителе &lt;script type=&quot;math/tex&quot;&gt;\Omega&lt;/script&gt;. Для лучшего понимания распределения значений пространственных метрик вводятся скалярные меры данных, которые сопоставляют одному кадру &lt;script type=&quot;math/tex&quot;&gt;I&lt;/script&gt; одно число. Сравниваются различные меры данных для заданного дискретного временного интервала, в результате чего получаются временные статистики.&lt;/p&gt;
+
+&lt;p&gt;Временные статистики определяют функции, которые, при нормировке, позволяют оценить &lt;strong&gt;расстояние&lt;/strong&gt;, в частности &lt;script type=&quot;math/tex&quot;&gt;L_1&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;L_2&lt;/script&gt; нормы. Кроме того, оценивается структурное подобие мер данных - функции структурно подобны, когда расстояние между ними близко к нулю, а локальные максимумы и минимумы функций находятся приблизительно в одних и тех же точках.&lt;/p&gt;
+
+&lt;h3 id=&quot;ступенчато-градиентная-модель-step-edge-model&quot;&gt;Ступенчато-градиентная модель (step-edge model)&lt;/h3&gt;
+
+&lt;p&gt;Границы на изображениях предоставляют важные данные о содержании изображения. Границы определяются изменением локальных производных. Такие границы могут представлять из себя как идеальные “ступеньки”, так и зашумленные или линейные переходы, резкие или плавные изломы.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../assets/img/17052021-02.png&quot; alt=&quot;step-edge model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Для оценки локальных производных значение изображения интерпретируют как аппликатуру некоторой поверхности в точке расположения пикселя. При такой интерпретации изображение определяет долины, плато, плавные или крутые склоны, т.е. имеет рельеф. Значения частных производных по &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; и по &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; позволяют вычислить градиент высоты аппликатуры. Границы находятся в точках, где модуль градиента достигает локального максимума:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;||\mathbf{grad} I ||_2 = \sqrt{(\frac{dI}{dx})^2 + (\frac{dI}{dy})^2}&lt;/script&gt;
+
+&lt;p&gt;Кроме того, вторые производные определяются в лаплассиан &lt;script type=&quot;math/tex&quot;&gt;I&lt;/script&gt;, который является скаляром. Границы находятся там, где лаплассиан переходит через 0.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="computer-vision" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/17052021-01.jpg" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/17052021-01.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Алгоритм Page Rank</title><link href="https://konstantinklepikov.github.io/2021/02/19/page-rank.html" rel="alternate" type="text/html" title="Алгоритм Page Rank" /><published>2021-02-19T00:00:00+02:00</published><updated>2021-02-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/02/19/page-rank</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/02/19/page-rank.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/190221banner.png&quot; alt=&quot;Алгоритм Page Rank&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;В данной статье я разберу принцип работы алгоритма Page Rank, который был предложен Лари Пейдж и Сергеем Брином для ранжирования веб-страниц для поискового сервиса Google.&lt;/p&gt;
 
@@ -820,74 +908,4 @@ port = &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PORT&lt;/span&gt;&lt;span 
 
 &lt;p&gt;Поэтому мы оптимизируем метрику, с &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;. Другая проблема, которая может возникнуть — алгоритм может никогда не сойтись. Для этого нам нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;, который задает определенный порог, достижение которого будет считаться приемлемым в данном контексте.&lt;/p&gt;
 
-&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Фреймворки Networkx и Snap для построения графов. Сравнение</title><link href="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html" rel="alternate" type="text/html" title="Фреймворки Networkx и Snap для построения графов. Сравнение" /><published>2020-05-15T00:00:00+02:00</published><updated>2020-05-15T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/05/15/networkx-snap-comparison.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/150520banner.png&quot; alt=&quot;Фреймворки Networkx и Snap для построения графов. Сравнение&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Какие задачи, где и когда решают фреймворки для построения графов? Есть целый класс проблем, связанных с изучением графов. Это моделирование социальных связей, сетей и маршрутов, анализ алгоритмов и структур, к примеру, молекул или скрытых слоев глубоких нейронных сетей.&lt;/p&gt;
-
-&lt;p&gt;Для этих задач требуется инструмент построения моделей, способный анализировать структуры и вычисленять метрики, который к тому же будет оптимизирован по потреблению памяти и дискового пространства, так как графы как правило весьма объемны.&lt;/p&gt;
-
-&lt;p&gt;Именно такими инструментами являются библиотеки Snap и Networkx.&lt;/p&gt;
-
-&lt;h2 id=&quot;snap&quot;&gt;Snap&lt;/h2&gt;
-
-&lt;p&gt;Фреймворк &lt;a href=&quot;http://snap.stanford.edu/&quot;&gt;Stanford Network Analysis Platform (SNAP)&lt;/a&gt;, как следует из названия, разработан в рамках Stanford University проекта по изучению графовых структур. В Стенфорде преподается специальный курс &lt;a href=&quot;http://web.stanford.edu/class/cs224w/&quot;&gt;cs224w&lt;/a&gt;, в котором студенты проходят алгоритмы и методы построения, обработки и оптимизации графов.&lt;/p&gt;
-
-&lt;p&gt;Фреймворк Snap написан на C++ и имеет обертку на python. Вообще, сам проект не очень активно поддерживается и пишется в основном силами студентов (один из вариантов защиты на курсе).&lt;/p&gt;
-
-&lt;p&gt;Документация проекта существует в довольно сумбурном виде: есть автосгенерированная сишная и &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/index.html&quot;&gt;вот такая для python&lt;/a&gt;. Вот тут находится &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/tutorial/tutorial.html#computing-structural-properties&quot;&gt;краткое описание&lt;/a&gt; как работать со Snap.&lt;/p&gt;
-
-&lt;p&gt;Фреймворк поддерживает четыре типа графов - направленный, ненаправленный, и аналогичные «сети» (так называемые мультиграфы). Описание классов этих четырех сущностей и производных можно найти &lt;a href=&quot;http://snap.stanford.edu/snappy/doc/reference/graphs.html&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Важный аспект — так как фреймворк написан на c++, а питоном только обернут, большинство питоновских методов во фреймворке недоступно. Все объекты, используемые для построения моделей требуют собственных типов, определенных в Snap. При первом знакомстве это очень сильно сбивает с толку. Кроме того, не все методы Snap, имеющиеся в наборе, обернуты в python. В некоторых аспектах (например, при итерации или манипуляциях с random) придется изобретать что-то неочевидное.&lt;/p&gt;
-
-&lt;p&gt;Питонья обертка написана в сишном стиле. Опять-таки, будет сложно запомнить нотацию. Пример:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;snap&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GenFull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PNEANet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Randomize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;NId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetRndNId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В Snap есть интерфейс к &lt;a href=&quot;https://graphviz.gitlab.io/&quot;&gt;Graphviz&lt;/a&gt;, с помощью которого можно отрисовывать модели. Обратите внимание, что для того, чтобы graphviz сросся с вашим python, потребуется установить pydot и python-graphviz.&lt;/p&gt;
-
-&lt;p&gt;Основное преимущество Snap — это скорость расчетов графовых структур. Во фреймворке не сильно богатый набор готовых решений для моделирования, поэтому, если потребуется что-то доработать, придется знать c++.&lt;/p&gt;
-
-&lt;p&gt;Еще один нюанс — Snap не всегда дружит с путями к системному питону. Если у вас не получилось запустить фреймворк, то вам необходимо найти в папке размещения Snap два файла _snap.pyd и snap.py, после чего скопировать их в корень проекта, в котором вы ведете разработку с применением Snap. Все должно заработать.&lt;/p&gt;
-
-&lt;h2 id=&quot;networkx&quot;&gt;Networkx&lt;/h2&gt;
-
-&lt;p&gt;Фреймворк &lt;a href=&quot;https://networkx.github.io/&quot;&gt;Networkx&lt;/a&gt; — более дружелюбный сородич Snap, написанный на чистом python. Проект поддерживается обширным комьюнити, регулярно &lt;a href=&quot;https://github.com/networkx/networkx&quot;&gt;обновляется&lt;/a&gt; и имеет отличную &lt;a href=&quot;https://networkx.github.io/documentation/stable/tutorial.html&quot;&gt;документацию&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;По вычислениям Networkx не такой бодрый, как Snap, но благодаря значительной оптимизации, довольно шустро справляется с графами среднего размера. Основное его преимущество — он написан в python стиле, к объектам фреймворка применимы все методы и функции питона. Это позволяет итерировать, писать собственные решения, наследуя поведение, а так же наслаждаться всеми преимуществами языка.&lt;/p&gt;
-
-&lt;p&gt;В Networkx также доступны все четыре типа графов из Snap - ненаправленный, направленный, и два аналога для мультиграфа. Нодами, в отличие от Snap, могут быть любые хешируемые объекты. Специальных типов создавать не нужно. Фреймворк позволяет добавлять ноды и ребра «на лету» используя несколько интерфейсов, включая списки кортежей, словари и другие графы. Можно добавлять любые атрибуты к нодам, ребрам и графам.&lt;/p&gt;
-
-&lt;p&gt;Пример использования разных методов при создании графа:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;networkx&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MultiDiGraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path_graph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_nodes_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;edges&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_edges_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;282&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;AdjacencyView({5: {0: {}, 1: {'route': 282}, 2: {'route': 37}}})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;В «build-in» входит довольно внушительное число инструментов для моделирования и изучения структуры графов. Также фреймворк позволяет отрисовывать модели в matplotlib и graphviz. Можно читать и писать различные структуры, такие как JSON, yaml, сериализованные объекты и различные другие форматы хранения графовых моделей. Есть интеграция с Numpy, Scypy и Pandas.&lt;/p&gt;
-
-&lt;h2 id=&quot;вывод&quot;&gt;Вывод&lt;/h2&gt;
-
-&lt;p&gt;Скорее всего, вы познакомитесь со Snap, если проходите курс cs224w, так как домашние работы требуется выполнить именно в этом фреймворке. Пройдя курс, с большой долей вероятности вы забудете про Snap и перейдете на Networkx.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="networkx" /><category term="snap" /><category term="phyton" /><category term="graphs" /><category term="sc224w" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/150520banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
