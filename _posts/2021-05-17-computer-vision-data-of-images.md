@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Данные изображения в компьютерном зрении. Ч.1"
+title: "Данные изображения в компьютерном зрении. Пространственное представление."
 date: 2021-05-17
 tags: computer-vision
 tag-for-sollecting: computer-vision

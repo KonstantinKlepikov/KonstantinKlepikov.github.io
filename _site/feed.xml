@@ -1,4 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-05-17T02:03:11+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Данные изображения в компьютерном зрении. Ч.1</title><link href="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html" rel="alternate" type="text/html" title="Данные изображения в компьютерном зрении. Ч.1" /><published>2021-05-17T00:00:00+02:00</published><updated>2021-05-17T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/17052021-01.jpg&quot; alt=&quot;Данные изображения в компьютерном зрении. Ч.1&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2021-06-11T00:53:17+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Несколько трюков с переменными в python</title><link href="https://konstantinklepikov.github.io/2021/06/11/some-python-variable-tricks.html" rel="alternate" type="text/html" title="Несколько трюков с переменными в python" /><published>2021-06-11T00:00:00+02:00</published><updated>2021-06-11T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/06/11/some-python-variable-tricks</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/06/11/some-python-variable-tricks.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/110621banner.png&quot; alt=&quot;Несколько трюков с переменными в python&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Иногда, особенно при прототипировании или сборке каких-то нестандартных шаблонов, могут возникнуть нестандартные задачи, такие как конвертирование строк в имена переменных, конвертирование переменных в значения ключей и т.д. В этой статье я разберу эти задачи и их решения.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-конвертировать-переменные-python-в-ключи-словаря&quot;&gt;Как конвертировать переменные python в ключи словаря&lt;/h2&gt;
+
+&lt;p&gt;Задача выглядит так: значения ключей словаря из названий переменных, а значения - из их объектов.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;bird&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fish&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'f'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dict_of_animals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# some code
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dict_of_animals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'bird'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'fish'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'f'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Проблема эта была поднята на &lt;a href=&quot;https://stackoverflow.com/questions/3972872/python-variables-as-keys-to-dict&quot;&gt;stack overflow&lt;/a&gt;. Мне понравилось такое решение:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dict_of_animals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;locals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iteritems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'dict_of_animals'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Дело в том, что далеко не всегда у вас есть список переменных или желание его составлять, а в данном контексте мы просто смотрим в &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locals()&lt;/code&gt; и забираем все, что нам нужно.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-конвертировать-строки-в-названия-переменных&quot;&gt;Как конвертировать строки в названия переменных&lt;/h2&gt;
+
+&lt;h3 id=&quot;вариант-1---globals&quot;&gt;Вариант №1 - globals()&lt;/h3&gt;
+
+&lt;p&gt;Функция &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;globals()&lt;/code&gt; в python возвращает словарь текущей глобальной таблицы символов. В глобальной таблице символов хранится вся информация, относящаяся к глобальной области видимости.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;user_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;apple&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;globals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;вариант-2-locals-аналогично&quot;&gt;Вариант №2 locals() аналогично&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;user_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;apple&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;locals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3-exec&quot;&gt;№3 exec()&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'my_brilliant_name'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%s = %d&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Ilona'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_brilliant_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Ilona'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;как-конвертировать-ключи-словаря-в-переменные-python&quot;&gt;Как конвертировать ключи словаря в переменные python&lt;/h2&gt;
+
+&lt;p&gt;Скорее всего, вам придется решить и обратную задачу - импортировать словарь в другое пространство имен и перегнать ключи словаря в названия переменных, а значения - в объекты, на которые ссылаются переменные. Проблема разбирается &lt;a href=&quot;https://stackoverflow.com/questions/18090672/convert-dictionary-entries-into-variables-python&quot;&gt;здесь&lt;/a&gt;. Решение просто как веник:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dict_of_animals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'bird'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'fish'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'f'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;locals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dict_of_animals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bird&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Прелесть в том, что вы можете импортировать сразу несколько разных словарей содержащих одинаковые ключи и не заботиться особо о поименовании переменных - значение будет иметь только порядок апдейта.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-импортировать-модуль-название-которого-определяется-при-импорте&quot;&gt;Как импортировать модуль, название которого определяется при импорте&lt;/h2&gt;
+
+&lt;p&gt;Нетривиальная задача, которая может быть решена по-разному. Мы воспользуемся готовым решением - &lt;a href=&quot;https://docs.python.org/3/library/importlib.html&quot;&gt;importlib&lt;/a&gt;. Сильно синтетический пример:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;importlib&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# some code
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;importlib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;import_module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'module.'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.that'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;module.default&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Кстати, если Вас интересует скорость конкатенации строк и вообще какие бывают способы, то вот тут можно &lt;a href=&quot;https://stackoverflow.com/a/38362140/15966204&quot;&gt;прочитать об этом&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;как-определить-тип-os-в-python&quot;&gt;Как определить тип os в python&lt;/h2&gt;
+
+&lt;p&gt;И напоследок, если вы гоняете все это между машинами с разнымси осями или используете зависимые от операционной системы сборки, то все очень просто, к примеру вот так можно запускать &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;selenium&lt;/code&gt; под windows не прописывая пути к гекодрайверу, а кину его в удобную нам папку.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'nt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Firefox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;executable_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'C:\nowhere\gekodriver\geckodriver.exe'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Firefox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;предостережение&quot;&gt;Предостережение&lt;/h2&gt;
+
+&lt;p&gt;На самом деле все не так уж и прозаично. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locals()&lt;/code&gt; и &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;globals()&lt;/code&gt; не всегда приносят то, что нам нужно, а игры с &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;exec()&lt;/code&gt; могут быть небезопасны. К тому же изложенный выше вариант импорта добавляет переменные в контекст неявно и ваш линтер будет страдать. Делать так на самом деле не надо, но иногда… Собственно, that all folks! :)&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="python" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/110621banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/110621banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Данные изображения в компьютерном зрении. Пространственное представление.</title><link href="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html" rel="alternate" type="text/html" title="Данные изображения в компьютерном зрении. Пространственное представление." /><published>2021-05-17T00:00:00+02:00</published><updated>2021-05-17T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/05/17/computer-vision-data-of-images.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/17052021-01.jpg&quot; alt=&quot;Данные изображения в компьютерном зрении. Пространственное представление.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Любое изображение можно определить в пространственной или частотной области. В данной статье рассматривается определение данных в пространственной области.&lt;/p&gt;
 
@@ -845,67 +947,4 @@ port = &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PORT&lt;/span&gt;&lt;span 
 
 &lt;p&gt;Для fillna() доступно несколько аргументов. method=’ffill’ и method=’bfill’ определяют какими значениями будут заполняться пропуски (предыдущими или последующими в массиве).&lt;/p&gt;
 
-&lt;p&gt;Подробнее &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html&quot;&gt;fillna()&lt;/a&gt; и &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html&quot;&gt;dropna()&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Как понять translating алгоритмы для графов?</title><link href="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html" rel="alternate" type="text/html" title="Как понять translating алгоритмы для графов?" /><published>2020-07-13T00:00:00+02:00</published><updated>2020-07-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/07/13/how-to-understand-node-embeddings-with-transe.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720banner.png&quot; alt=&quot;Как понять translating алгоритмы для графов?&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Translating алгоритмы (а точнее TransE), рассматриваются в курсе cs224w, про них есть домашка и они фигурируют в нескольких последних лекциях, есть смысл разобраться в том, как именно они устроены. Алгоритм TransE (Translating Embeddings for Modeling Multi-relational Data) осуществляет поиск эмбеддингов для нод графа с учетом их возможных связей.&lt;/p&gt;
-
-&lt;p&gt;Вначале сам алгоритм:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-01.png&quot; alt=&quot;TransE&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;TransE использует так называемый “shallow” encoding. Каждая нода &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt; кодируется произведением &lt;script type=&quot;math/tex&quot;&gt;\mathbf{Z}*\mathbf{v}&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\mathbf{Z} \in \mathbb{R}^{d * \vert v\vert}&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;\mathbf{v} \in \mathbb{I}^{\vert v\vert }&lt;/script&gt; (0 всюду кроме колонки , индицирующей &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt;). Таким образом мы получаем вектора одинаковой размерности для всех нод, по одному для каждой ноды.&lt;/p&gt;
-
-&lt;p&gt;В задачах, решаемых TransE, мы имеем некий граф знаний &lt;script type=&quot;math/tex&quot;&gt;G = (E, S, L)&lt;/script&gt;, в котором &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; — это множество нод (entities), &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; — множество ребер, а &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; — множество возможных связей.&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; содержит триплеты &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, определяемые следующим образом:&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;h \in E&lt;/script&gt; — исходящая нода (head)&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; — связь (relation)&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;t \in E&lt;/script&gt; — нода, завершающая связь (tail)&lt;/p&gt;
-
-&lt;p&gt;Можно представить себе граф, в котором существуют точки, для которых сложно определить близость. Например, в графе территорий и населенных пунктов город Москва (head) является столицей России (tail). Между данными нодами графа есть некая связь (relation). Задача алгоритма TransE обучиться такому векторному представлению для &lt;script type=&quot;math/tex&quot;&gt;(h, l, t)&lt;/script&gt;, чтобы оно отображало эту связь для всех аналогично связанных нод. Итак, необходимо представить эмббеддинги head, tail и relation в пространстве &lt;script type=&quot;math/tex&quot;&gt;\in \mathbb{R}^k&lt;/script&gt; (где &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - это кол-во измерений), после чего обучить алгоритм таким образом, чтобы сумма head и relation была как можно ближе к tail.&lt;/p&gt;
-
-&lt;p&gt;Если мы исходим из того, что &lt;script type=&quot;math/tex&quot;&gt;(h, l, t) \in S&lt;/script&gt; и предполагаем что &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h} + \mathbf{l} \approx \mathbf{t}&lt;/script&gt;. Такие триплеты мы можем считать “правильными”. Тогда можно предположить существование и “неправильных” (corrupted) триплетов &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;, выбранных из некого &lt;script type=&quot;math/tex&quot;&gt;S'_{(h, l, t)}&lt;/script&gt;в котором &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; (но не оба одновременно) заменены на случайные, входящие в &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;К примеру, Берлин в нашем графе мог бы оказаться столицей России, но, к счастью, такой связи мы не наблюдаем.&lt;/p&gt;
-
-&lt;p&gt;Итак, функция потерь, которую будет минимизировать TransE, выглядит так:&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L} = \underset{(h,l,t) \in S}\sum (\underset{(h',l,t') \in S'_{(h,l,t)}}\sum [\gamma + d(\mathbf{h} + \mathbf{l}, \mathbf{t}) - d(\mathbf{h}' + \mathbf{l}, \mathbf{t}')]_{+} )&lt;/script&gt;
-
-&lt;p&gt;Нам необходимо сделать так, чтобы разница правильных и неправильных эмбеддингов (с учетом зазора &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;) &lt;script type=&quot;math/tex&quot;&gt;d_{+}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;d_{-}&lt;/script&gt; (с регуляризацией по норме &lt;script type=&quot;math/tex&quot;&gt;L_{1}&lt;/script&gt; или &lt;script type=&quot;math/tex&quot;&gt;L_{2}&lt;/script&gt;) стремилась к нулю сверху. Для этого мы будем использовать стохастический градиентный спуск с минибатчами через все &lt;script type=&quot;math/tex&quot;&gt;\mathbf{h}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;\mathbf{t}&lt;/script&gt;. Триплеты будем выбирать семплированием, а инициализируем всю конструкцию случайными значениями.&lt;/p&gt;
-
-&lt;p&gt;Что будет делать алгоритм?&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;вначале мы случайным образом инициализируем все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{l}&lt;/script&gt; для каждого &lt;script type=&quot;math/tex&quot;&gt;l \in L&lt;/script&gt; и все вектора &lt;script type=&quot;math/tex&quot;&gt;\mathbf{e}&lt;/script&gt; для всех entities в графе&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;нормализуем эмбеддинги, чтобы исключить тривиальную оптимизацию по кратчайшим расстояниям&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;затем, уже в цикле, будем определять размер минибатчей и иницилизировать сеты триплетов — для каждого правильного триплета в минибатче будем получать неправильный&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;наконец будем считать лос и обновлять эмбеддинги по направлению градиента&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Выглядит это примерно так: мы постепенно подтягиваем эмбеддинги нод в векторном пространстве так, чтобы они отражали связь.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-05.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Возникает ряд вопросов. Почему бы не использовать лос попроще? Например, можно не усложнять и сводить в ноль сумму эмбеддингов всех правильных триплетов.&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{L}_{simple} = \underset{(h,l,t) \in S}\sum d(\mathbf{h} + \mathbf{l}, \mathbf{t})&lt;/script&gt;
-
-&lt;p&gt;В этом случае может возникнуть ситуация, когда совершенно разные ноды получат одинаковые эмбеддинги. Что еще хуже — мы можем получить пустые эмбеддинги.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/130720-03.png&quot; alt=&quot;TransE vectorised&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Поэтому мы оптимизируем метрику, с &lt;script type=&quot;math/tex&quot;&gt;(h', l, t') \in S'&lt;/script&gt;. Другая проблема, которая может возникнуть — алгоритм может никогда не сойтись. Для этого нам нужен параметр &lt;script type=&quot;math/tex&quot;&gt;\gamma&lt;/script&gt;, который задает определенный порог, достижение которого будет считаться приемлемым в данном контексте.&lt;/p&gt;
-
-&lt;p&gt;Подробнее про TransE можно прочитать в статье &lt;a href=&quot;https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf&quot;&gt;Translating Embeddings for Modeling Multi-relational Data&lt;/a&gt;. Этот и другие методы для эмбеддингов на графах можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1705.02801.pdf&quot;&gt;тут&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/pdf/1709.07604.pdf&quot;&gt;тут&lt;/a&gt; и &lt;a href=&quot;https://arxiv.org/pdf/1703.08098.pdf&quot;&gt;тут&lt;/a&gt;. О том, как translating-модели применяются в совместной фильтрации в рекомендательных системах, можно посмотреть &lt;a href=&quot;https://arxiv.org/pdf/1909.03193.pdf&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graphs" /><category term="sc224w" /><category term="TransE" /><category term="translating" /><category term="algorithms" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/130720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Подробнее &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html&quot;&gt;fillna()&lt;/a&gt; и &lt;a href=&quot;https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html&quot;&gt;dropna()&lt;/a&gt;&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="pandas" /><category term="preprocessing" /><category term="phyton" /><category term="machine-learning" /><category term="ml-data" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/250720banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
