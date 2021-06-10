@@ -31,7 +31,7 @@ print(dict_of_animals)
 Проблема эта была поднята на [stack overflow](https://stackoverflow.com/questions/3972872/python-variables-as-keys-to-dict). Мне понравилось такое решение:
 
 ```python
-dict_of_animals.update({k : v for k, v in locals().copy().iteritems() if k[:2] != '__' and k != 'dict_of_animals'})
+dict_of_animals.update({k : v for k, v in locals().copy().items() if k[:2] != '__' and k != 'dict_of_animals'})
 ```
 
 Дело в том, что далеко не всегда у вас есть список переменных или желание его составлять, а в данном контексте мы просто смотрим в `locals()` и забираем все, что нам нужно.
