@@ -5,7 +5,7 @@ date: 2021-06-11
 tags: python
 tag-for-sollecting: python
 keywords: python
-image: /assets/img/110621banner.png
+image: /assets/img/110621-01.png
 ---
 
 ![{{page.title}}](../../..{{page.image}})
