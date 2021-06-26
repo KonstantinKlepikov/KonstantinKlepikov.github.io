@@ -123,15 +123,14 @@ class MyNewFakeUser(FakeUser):
             return 'omnomnon!'
 ```
 
-
 Осталось только поставить все это в тесты и жизнь налаживается! :)
 
 ```python
-def make_something_and_return_email(user_dict):
+def make_something_and_return_email(**some_user_data):
     ...
 
 result = make_something_and_return_email(
-    fake_user1._asdict()
+    **fake_user1._asdict()
     )
 
 assert result == fake_user1.email

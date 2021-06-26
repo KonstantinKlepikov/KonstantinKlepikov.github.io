@@ -353,11 +353,11 @@
 
 <p>Осталось только поставить все это в тесты и жизнь налаживается! :)</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_something_and_return_email</span><span class="p">(</span><span class="n">user_dict</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_something_and_return_email</span><span class="p">(</span><span class="o">**</span><span class="n">some_user_data</span><span class="p">):</span>
     <span class="p">...</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">make_something_and_return_email</span><span class="p">(</span>
-    <span class="n">fake_user1</span><span class="p">.</span><span class="n">_asdict</span><span class="p">()</span>
+    <span class="o">**</span><span class="n">fake_user1</span><span class="p">.</span><span class="n">_asdict</span><span class="p">()</span>
     <span class="p">)</span>
 
 <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">fake_user1</span><span class="p">.</span><span class="n">email</span>
