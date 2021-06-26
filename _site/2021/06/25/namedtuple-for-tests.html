@@ -266,7 +266,7 @@
 
 <p>Хорошо бы как-то обобщить эту историю. <a href="https://docs.python.org/3/library/collections.html#collections.namedtuple">Namedtuple</a> подходит!</p>
 
-<p>Что эта штука делает? Именованный слвоарь создает сабклас от tuple, который так же поддерживает итерацию и индексацию, является неизменяемым… а еще позволяет получить значения по ключу.</p>
+<p>Что эта штука делает? Именованный словарь создает сабклас от tuple, который так же поддерживает итерацию и индексацию, является неизменяемым… а еще позволяет получить значения по ключу.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 
@@ -326,6 +326,24 @@
     <span class="k">def</span> <span class="nf">remove_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">==</span> <span class="s">'omnomnom0@example.com'</span><span class="p">:</span>
             <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="n">my_new_fake_user</span> <span class="o">=</span> <span class="n">MyNewFakeUser</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">my_new_fake_user</span><span class="p">.</span><span class="n">remove_email</span><span class="p">()</span>
+
+
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"stdn"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="n">remove_email</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="n">can</span><span class="s">'t set attribute
+</span></code></pre></div></div>
+
+<p>Упс, мы не можем так сделать - у нас вроде как неизменяемый объект. Ок, это даже к лучшему - страхует нас от поспешных действий, приводящих к ошибкам уже в самих тестах.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyNewFakeUser</span><span class="p">(</span><span class="n">FakeUser</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">remove_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">==</span> <span class="s">'omnomnom0@example.com'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">'omnomnon!'</span>
 </code></pre></div></div>
 
 <p>Осталось только поставить все это в тесты и жизнь налаживается! :)</p>

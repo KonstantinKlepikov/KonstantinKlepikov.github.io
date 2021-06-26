@@ -35,7 +35,7 @@ some_data666 = ...
 
 Хорошо бы как-то обобщить эту историю. [Namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple) подходит!
 
-Что эта штука делает? Именованный слвоарь создает сабклас от tuple, который так же поддерживает итерацию и индексацию, является неизменяемым... а еще позволяет получить значения по ключу.
+Что эта штука делает? Именованный словарь создает сабклас от tuple, который так же поддерживает итерацию и индексацию, является неизменяемым... а еще позволяет получить значения по ключу.
 
 ```python
 from collections import namedtuple
@@ -102,6 +102,25 @@ class MyNewFakeUser(FakeUser):
     def remove_email(self):
         if self.email == 'omnomnom0@example.com':
             self.email = None
+
+my_new_fake_user = MyNewFakeUser(0)
+my_new_fake_user.remove_email()
+
+
+Traceback (most recent call last):
+  File "stdn", line 5, in remove_email
+    self.email = None
+AttributeError: can't set attribute
+```
+
+Упс, мы не можем так сделать - у нас вроде как неизменяемый объект. Ок, это даже к лучшему - страхует нас от поспешных действий, приводящих к ошибкам уже в самих тестах.
+
+```python
+class MyNewFakeUser(FakeUser):
+
+    def remove_email(self):
+        if self.email == 'omnomnom0@example.com':
+            return 'omnomnon!'
 ```
 
 
