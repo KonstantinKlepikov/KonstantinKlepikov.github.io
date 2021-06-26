@@ -2,8 +2,8 @@
 layout: post
 title: "Namedtuple для тестов в python"
 date: 2021-06-25
-tags: python
-tag-for-sollecting: python test-drived
+tags: python, test-drived
+tag-for-sollecting: python
 keywords: python, test drived development, namedtuple, разработка на оснвое тестирования
 image: /assets/img/25062021-01.jpg
 ---
