@@ -39,7 +39,7 @@ keywords: optimisation data preprocessing machine learning машинное об
 df_train.info(max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 11 entries, installation_id to world
@@ -53,7 +53,7 @@ memory usage: 16.8+ MB
 df_train.info(memory_usage='deep', max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 11 entries, installation_id to world
@@ -96,7 +96,7 @@ df_train_extracted = pd.io.json.json_normalize(
 df_train_extracted.info(verbose=True)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Data columns (total 136 columns):
@@ -153,7 +153,7 @@ flower | flowers
 df_train_extracted.info(memory_usage='deep', max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 136 entries, event_code to chests
@@ -180,7 +180,7 @@ objects_part = df_train_extracted.select_dtypes(include=['object']).copy()
 numerics_part.info(memory_usage='deep')
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Data columns (total 66 columns):
@@ -225,7 +225,7 @@ for col in df.columns:
 numerics_part.info(memory_usage='deep', max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 66 entries, event_code to dinosaur_count
@@ -254,7 +254,7 @@ numerics_part = numerics_part.astype(int)
 numerics_part.info(memory_usage='deep')
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Data columns (total 66 columns):
@@ -281,7 +281,7 @@ memory usage: 16.6 MB
 objects_part.info(memory_usage='deep', max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 70 entries, version to chests
@@ -317,7 +317,7 @@ converted_objects_part, unconverted_objects_part = object_to_category(objects_pa
 converted_objects_part.info(memory_usage='deep')
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Data columns (total 39 columns):
@@ -338,7 +338,7 @@ memory usage: 7.9 MB
 unconverted_objects_part.info(memory_usage='deep', max_cols=0)
 ```
 
-```
+```shell
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 31 entries, castles_placed to chests
@@ -356,7 +356,7 @@ memory usage: 193.0 MB
 df_train['timestamp']
 ```
 
-```
+```shell
 0         2019-09-06T17:53:46.937Z
 1         2019-09-06T17:54:17.519Z
 2         2019-09-06T17:54:56.302Z
@@ -374,7 +374,7 @@ df_train['timestamp'] = pd.to_datetime(df_train['timestamp'])
 df_train['timestamp']
 ```
 
-```
+```shell
 0        2019-09-06 17:53:46.937000+00:00
 1        2019-09-06 17:54:17.519000+00:00
 2        2019-09-06 17:54:56.302000+00:00

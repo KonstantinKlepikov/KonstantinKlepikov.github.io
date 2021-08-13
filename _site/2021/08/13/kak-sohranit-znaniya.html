@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Как сохранить знания с помощью foam и github | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Как сохранить знания с помощью foam и github" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Блог про нейронные сети и машинное обучение" />
+<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:image" content="https://konstantinklepikov.github.io/assets/img/13082021-01.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-13T00:00:00+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html","headline":"Как сохранить знания с помощью foam и github","dateModified":"2021-08-13T00:00:00+02:00","datePublished":"2021-08-13T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/13082021-01.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html"},"author":{"@type":"Person","name":"Klepikov Konstantin"},"description":"Блог про нейронные сети и машинное обучение","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="mvp, github, МВП, прототип, foam, база знаний, knowlege base, обучение, knowlege graph, граф знаний, jekyll">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+    <!-- <script data-ad-client="ca-pub-2809667403284871" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <li class="inline-block">
+    <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="https://konstantinklepikov.github.io/myknowlegebase/">
+        My knowlege base
+    </a>
+</li>
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Как сохранить знания с помощью foam и github</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2021-08-13T00:00:00+02:00" itemprop="datePublished">Aug 13, 2021</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/foam" title="foam" class="link-tags">foam&nbsp;</a>
+    
+      
+      <a href="/tag/github" title="github" class="link-tags">github&nbsp;</a>
+    
+      
+      <a href="/tag/zerocode" title="zerocode" class="link-tags">zerocode&nbsp;</a>
+    
+      
+      <a href="/tag/knowlege-graph" title="knowlege-graph" class="link-tags">knowlege-graph&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p><img src="../../../assets/img/13082021-01.png" alt="Как сохранить знания с помощью foam и github" /></p>
+
+<p>Сегодня крошечная заметка о том, как закрепить и сохранить знания, полученные в процессе обучения с помощью foam и github.</p>
+
+<p>Что такое github, думаю, объяснять не нужно. <a href="https://foambubble.github.io/foam/">Foam</a> - это методология персонального менеджмента знаний, которая позволяет построить собственный граф знаний. Но обо всем по порядку.</p>
+
+<p>Изначально я планировал использовать данный блог как место для закрепления знаний. Большинство материалов, которые опубликованы здесь, не имеют научной значимости. Это просто “объекты” моего обучения, завернутые в формат статей. Вот с этим возникли трудности - статьи писать долго и скучно, слишком много работы над содержанием.</p>
+
+<p>Конспектировать быстро, не вникая в качество заметок, позволяет <a href="https://foambubble.github.io/foam/">Foam</a>. Используя эту методологию, ты просто пишешь конспект того, что изучаешь, в удобных тебе местах оставляя ссылки на страницы этой же базы знаний. При этом создаются пустые страницы, а если материал уже изучен - ссылки на готовые статьи. Итогом такой работы является массив из объемных документов, заметок, списков и других тесно слинкованных страниц, по которому удобно перемещаться, постоянно расширяя свои знания за счет заполнения пустых указателей. А главное - никаких баз данных и серверной части!</p>
+
+<p>Что понадобится?</p>
+
+<ul>
+  <li>изучить довольно простенькую документацию <a href="https://foambubble.github.io/foam/">foam</a>. Вот ссылка на <a href="https://github.com/foambubble/foam">гитхаб-репозиторий</a></li>
+  <li>настроить работу в редакторе кода. Я использую <a href="https://marketplace.visualstudio.com/items?itemName=foam.foam-vscode">приложение для vs-code</a>. Помимо того, что редактор реализует почти все возможности полноценной ide, данное приложение тянет за собой множество удобных инструментов раборты с markdown</li>
+  <li>необходимо создать репозиторий на github и включить для него <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll">github pages</a></li>
+  <li>чтобы вести разработку локально, необходимо установить ruby. установить <a href="https://jekyllrb.com/docs/installation/">jekyll</a> (фреймворк для создания статических сайтов). Я работаю под linux, управление локальной разработкой довольно <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll">примитивно</a></li>
+  <li>теперь надо развернуть репозиторий локально, установить <a href="https://github.com/foambubble/foam-template">foam-template</a>, настроить тему вашего сайта (я использовал рекомендуемую как стандартную тему <a href="https://github.com/pages-themes/cayman">cayman</a>), собрать сайт и сделать комит в репозиторий на github.</li>
+</ul>
+
+<p>Кажется сложно? На самом деле нет. Все что вы делаете - это создаете репозиторий, в два клика на его базе <a href="https://guides.github.com/features/pages/">делаете статический сайт</a>, устанавливаете локально шаблон foam, немножко правите css-cтили, выполняете коммит и пуш на github и все ваши знания оказываются в сети. Еще один несомненный плюс такого подхода - вы полностью контролируете весь контент и в любой момент можете безболезненно переехать куда угодно вместе со всем “добром”.</p>
+
+<p><a href="https://konstantinklepikov.github.io/myknowlegebase/">Вот что у меня получилось</a>. Это простой отсортированный список сильно связанных заметок. Тут уже можно что-то найти, особенно когда ты помнишь, что материал пройден. Я специально сделал ресурс в таксономии данного блога, чтобы не усложнять связность двух сайтов. Технически <a href="https://konstantinklepikov.github.io/myknowlegebase/">My knowlege base</a> и <a href="https://konstantinklepikov.github.io/">My deep learning</a> хостятся в разных репозиториях github и в любой момент могут быть разделены.</p>
+
+<p>Немного советов по ведению базы знаний:</p>
+
+<ul>
+  <li>делайте заметку каждый раз, как прошли новый материал, даже если это совсем небольшой объем</li>
+  <li>ставьте больше ссылок на внутренние страницы</li>
+  <li>не стесняйтесь ставить ссылки, которые ведут на пустые страницы - это поможет вам изучить материал в будущем</li>
+</ul>
+
+<p>Если вы поняли идею и она вам понравилась, то желаю успеха.</p>
+
+  </div>
+    
+      <!-- Yandex.RTB R-A-734189-1 -->
+<div id="yandex_rtb_R-A-734189-1"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-734189-1",
+                renderTo: "yandex_rtb_R-A-734189-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+    
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html&title=Как сохранить знания с помощью foam и github" nclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Facebook" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-facebook-official share-button"> facebook</i>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?text=Как сохранить знания с помощью foam и github&url=https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html&title=Как сохранить знания с помощью foam и github" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Как сохранить знания с помощью foam и github&body=Check out this site https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/github" class="link-tags">github</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+        <li><a href="/2021/08/13/kak-sohranit-znaniya.html" title="Как сохранить знания с помощью foam и github">Как сохранить знания с помощью foam и github</a> (13 Aug 2021)<br>
+            
+        </li>
+        
+        <li><a href="/2021/01/10/zapuskaem-machine-learning-mvp.html" title="Запускаем machine learning MVP: инструкция о том, как быстро презентовать идеи">Запускаем machine learning MVP: инструкция о том, как быстро презентовать идеи</a> (10 Jan 2021)<br>
+            
+        </li>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2021/06/25/namedtuple-for-tests.html" title="Namedtuple для тестов в python">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Namedtuple для тестов в python</p>
+      <p>В python collection есть невероятно удобный инструмент namedtuple и в этой маленькой заметке речь пойдет про то, как применять его...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

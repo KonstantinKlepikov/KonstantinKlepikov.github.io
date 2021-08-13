@@ -1,6 +1,6 @@
 ---
 layout: tagpage
-title: "Tag: github,"
-tag: github,
+title: "Tag: mvp"
+tag: mvp
 robots: noindex
 ---

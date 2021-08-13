@@ -1,6 +1,6 @@
 ---
 layout: tagpage
-title: "Tag: mvp,"
-tag: mvp,
+title: "Tag: streamlit"
+tag: streamlit
 robots: noindex
 ---

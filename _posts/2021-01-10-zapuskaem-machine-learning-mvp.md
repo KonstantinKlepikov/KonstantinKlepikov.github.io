@@ -2,7 +2,7 @@
 layout: post
 title: "Запускаем machine learning MVP: инструкция о том, как быстро презентовать идеи"
 date: 2021-01-10
-tags: machine-learning, mvp, streamlit, github, python, zerocode, covid
+tags: machine-learning mvp streamlit github python zerocode covid
 tag-for-sollecting: mvp
 keywords: machine learning, mvp, streamlit, github, МВП, прототип, машинное обучение, аналитика, covid
 image: /assets/img/100121banner.png

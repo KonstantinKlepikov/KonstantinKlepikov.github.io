@@ -154,13 +154,15 @@
         
       
         
+      
+        
+      
+        
         <li class="inline-block">
           <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
             Ссылки
           </a>
         </li>
-        
-      
         
       
         
@@ -303,10 +305,10 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 11 entries, installation_id to world
-dtypes: int64(3), object(8)
+dtypes: int64<span class="o">(</span>3<span class="o">)</span>, object<span class="o">(</span>8<span class="o">)</span>
 memory usage: 16.8+ MB
 </code></pre></div></div>
 
@@ -315,10 +317,10 @@ memory usage: 16.8+ MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 11 entries, installation_id to world
-dtypes: int64(3), object(8)
+dtypes: int64<span class="o">(</span>3<span class="o">)</span>, object<span class="o">(</span>8<span class="o">)</span>
 memory usage: 147.3 MB
 </code></pre></div></div>
 
@@ -403,9 +405,9 @@ memory usage: 147.3 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 136 columns):
+Data columns <span class="o">(</span>total 136 columns<span class="o">)</span>:
 event_code                  int64
 event_count                 int64
 version                     object
@@ -417,7 +419,7 @@ gate.side                   object
 dinosaur_weight             float64
 dinosaur_count              float64
 chests                      object
-dtypes: float64(64), int64(2), object(70)
+dtypes: float64<span class="o">(</span>64<span class="o">)</span>, int64<span class="o">(</span>2<span class="o">)</span>, object<span class="o">(</span>70<span class="o">)</span>
 memory usage: 207.5+ MB
 </code></pre></div></div>
 
@@ -514,10 +516,10 @@ memory usage: 207.5+ MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train_extracted</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 136 entries, event_code to chests
-dtypes: float64(64), int64(2), object(70)
+dtypes: float64<span class="o">(</span>64<span class="o">)</span>, int64<span class="o">(</span>2<span class="o">)</span>, object<span class="o">(</span>70<span class="o">)</span>
 memory usage: 543.8 MB
 </code></pre></div></div>
 
@@ -538,9 +540,9 @@ memory usage: 543.8 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 66 columns):
+Data columns <span class="o">(</span>total 66 columns<span class="o">)</span>:
 event_code                  200000 non-null int64
 event_count                 200000 non-null int64
 game_time                   196724 non-null float64
@@ -552,7 +554,7 @@ gate.row                    832 non-null float64
 gate.column                 832 non-null float64
 dinosaur_weight             1547 non-null float64
 dinosaur_count              1550 non-null float64
-dtypes: float64(64), int64(2)
+dtypes: float64<span class="o">(</span>64<span class="o">)</span>, int64<span class="o">(</span>2<span class="o">)</span>
 memory usage: 100.7 MB
 </code></pre></div></div>
 
@@ -580,10 +582,10 @@ memory usage: 100.7 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 66 entries, event_code to dinosaur_count
-dtypes: float16(61), float32(3), int16(2)
+dtypes: float16<span class="o">(</span>61<span class="o">)</span>, float32<span class="o">(</span>3<span class="o">)</span>, int16<span class="o">(</span>2<span class="o">)</span>
 memory usage: 26.3 MB
 </code></pre></div></div>
 
@@ -619,9 +621,9 @@ memory usage: 26.3 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numerics_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 66 columns):
+Data columns <span class="o">(</span>total 66 columns<span class="o">)</span>:
 event_code                  200000 non-null int16
 event_count                 200000 non-null int16
 game_time                   200000 non-null int32
@@ -633,7 +635,7 @@ gate.row                    200000 non-null int8
 gate.column                 200000 non-null int8
 dinosaur_weight             200000 non-null int8
 dinosaur_count              200000 non-null int8
-dtypes: int16(9), int32(4), int8(53)
+dtypes: int16<span class="o">(</span>9<span class="o">)</span>, int32<span class="o">(</span>4<span class="o">)</span>, int8<span class="o">(</span>53<span class="o">)</span>
 memory usage: 16.6 MB
 </code></pre></div></div>
 
@@ -644,10 +646,10 @@ memory usage: 16.6 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 70 entries, version to chests
-dtypes: object(70)
+dtypes: object<span class="o">(</span>70<span class="o">)</span>
 memory usage: 443.1 MB
 </code></pre></div></div>
 
@@ -677,9 +679,9 @@ memory usage: 443.1 MB
 <span class="n">converted_objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
-Data columns (total 39 columns):
+Data columns <span class="o">(</span>total 39 columns<span class="o">)</span>:
 version                2345 non-null category
 description            69717 non-null category
 identifier             68610 non-null category
@@ -687,7 +689,7 @@ identifier             68610 non-null category
 crystal_id             2090 non-null category
 location               1180 non-null category
 gate.side              832 non-null category
-dtypes: category(39)
+dtypes: category<span class="o">(</span>39<span class="o">)</span>
 memory usage: 7.9 MB
 </code></pre></div></div>
 
@@ -696,10 +698,10 @@ memory usage: 7.9 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">unconverted_objects_part</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class <span class="s1">'pandas.core.frame.DataFrame'</span><span class="o">&gt;</span>
 RangeIndex: 200000 entries, 0 to 199999
 Columns: 31 entries, castles_placed to chests
-dtypes: object(31)
+dtypes: object<span class="o">(</span>31<span class="o">)</span>
 memory usage: 193.0 MB
 </code></pre></div></div>
 
@@ -712,7 +714,7 @@ memory usage: 193.0 MB
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0         2019-09-06T17:53:46.937Z
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0         2019-09-06T17:53:46.937Z
 1         2019-09-06T17:54:17.519Z
 2         2019-09-06T17:54:56.302Z
 ...
@@ -728,7 +730,7 @@ Name: timestamp, Length: 200000, dtype: object
 <span class="n">df_train</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0        2019-09-06 17:53:46.937000+00:00
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0        2019-09-06 17:53:46.937000+00:00
 1        2019-09-06 17:54:17.519000+00:00
 2        2019-09-06 17:54:56.302000+00:00
 ...
