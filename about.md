@@ -13,3 +13,5 @@ permalink: /about/
 [telegram](https://t.me/KlepikovKonstantin "telegram")
 
 [github](https://github.com/KonstantinKlepikov "github")
+
+[мое резюме](https://docs.google.com/document/d/1do2UMV37vm_Q2FQ7heY_88UgdcDIR23tTUkg5sGNzss/edit?usp=sharing "мое резюме")
