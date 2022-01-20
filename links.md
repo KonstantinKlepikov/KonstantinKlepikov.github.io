@@ -18,6 +18,8 @@ permalink: /links/
 
 [Alison Gopnik](hhttp://alisongopnik.com/ "Alison Gopnik")
 
+[Sebastian Raschka](https://sebastianraschka.com/ "Sebastian Raschka")
+
 ## Нейронные сети для графов
 
 [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/)
