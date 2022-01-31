@@ -1,6 +1,6 @@
 ---
 layout: tagpage
-title: "Tag: GCN"
-tag: GCN
+title: "Tag: transe"
+tag: transe
 robots: noindex
 ---

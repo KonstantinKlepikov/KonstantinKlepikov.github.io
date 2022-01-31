@@ -141,15 +141,6 @@
 <lastmod>2021-08-13T00:00:00+02:00</lastmod>
 </url>
 <url>
-<loc>https://konstantinklepikov.github.io/tag/API.html</loc>
-</url>
-<url>
-<loc>https://konstantinklepikov.github.io/tag/GCN.html</loc>
-</url>
-<url>
-<loc>https://konstantinklepikov.github.io/tag/TransE.html</loc>
-</url>
-<url>
 <loc>https://konstantinklepikov.github.io/about/</loc>
 </url>
 <url>
@@ -157,6 +148,9 @@
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/allposts/</loc>
+</url>
+<url>
+<loc>https://konstantinklepikov.github.io/tag/api.html</loc>
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/bfs.html</loc>
@@ -196,6 +190,9 @@
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/foam.html</loc>
+</url>
+<url>
+<loc>https://konstantinklepikov.github.io/tag/gcn.html</loc>
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/github.html</loc>
@@ -291,7 +288,7 @@
 <loc>https://konstantinklepikov.github.io/tag/time-complexity.html</loc>
 </url>
 <url>
-<loc>https://konstantinklepikov.github.io/tag/translating.html</loc>
+<loc>https://konstantinklepikov.github.io/tag/transe.html</loc>
 </url>
 <url>
 <loc>https://konstantinklepikov.github.io/tag/two-Layer.html</loc>

@@ -2,8 +2,8 @@
 layout: post
 title: "Как понять translating алгоритмы для графов?"
 date: 2020-07-13
-tags: graphs sc224w TransE translating algorithms
-tag-for-sollecting: TransE
+tags: graphs sc224w transe algorithms
+tag-for-sollecting: transe
 keywords: теория графов графы translating TransE sc224w эмбеддинг embedding
 image: /assets/img/130720banner.png
 ---

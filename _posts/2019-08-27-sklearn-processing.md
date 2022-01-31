@@ -2,7 +2,7 @@
 layout: post
 title: "API scikit-learn"
 date: 2019-08-27
-tags: scikit-learn phyton sklearn API
+tags: scikit-learn phyton sklearn api
 tag-for-sollecting: scikit-learn
 keywords: sklearn scikit-learn phyton машинное обучение machine learning data science API
 ---
