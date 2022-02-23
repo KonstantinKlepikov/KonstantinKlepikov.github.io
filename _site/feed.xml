@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2022-01-31T17:59:15+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Как сохранить знания с помощью foam и github</title><link href="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" rel="alternate" type="text/html" title="Как сохранить знания с помощью foam и github" /><published>2021-08-13T00:00:00+02:00</published><updated>2021-08-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/13082021-01.png&quot; alt=&quot;Как сохранить знания с помощью foam и github&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru_RU"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://konstantinklepikov.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://konstantinklepikov.github.io/" rel="alternate" type="text/html" hreflang="ru_RU" /><updated>2022-02-23T17:32:43+02:00</updated><id>https://konstantinklepikov.github.io/feed.xml</id><title type="html">My deep learning</title><subtitle>Блог про нейронные сети и машинное обучение</subtitle><author><name>Klepikov Konstantin</name></author><entry><title type="html">Теория сетей: базовые понятия и метрики</title><link href="https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html" rel="alternate" type="text/html" title="Теория сетей: базовые понятия и метрики" /><published>2022-02-19T00:00:00+02:00</published><updated>2022-02-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2022/02/19/theory-of-nets</id><content type="html" xml:base="https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/190222banner.png&quot; alt=&quot;Теория сетей: базовые понятия и метрики&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;В статье обобщаются базовые понятия, необходимые для исследования и моделирования интернет-сетей.&lt;/p&gt;
+
+&lt;p&gt;В данном контексте буду считать понятия “сеть” и “граф” эквивалентными. Для разделения определений используется термин “интернет-сеть” или просто “интернет” (я пишу с маленькой буквы), как обобщение понятия среды (локальной или глобальной) взаимодействия интернет-пользователей. Этот термин не включает в себя вопрос интернет-транспорта - в случае, когда речь идет о маршрутизации, это будет указано отдельно. Под понятием “социальная сеть” понимаются интернет-приложения, основанные на взаимодействиях интернет-пользователей. Понятие “нода” и “узел”, а так же “ребро” и “связь” тождественно в данной статье.&lt;/p&gt;
+
+&lt;h2 id=&quot;базовые-определения-и-метрики&quot;&gt;Базовые определения и метрики&lt;/h2&gt;
+
+&lt;p&gt;Графом &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt; называется структура, состоящая из &lt;script type=&quot;math/tex&quot;&gt;N&lt;/script&gt; узлов (нод), соединенных &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; ребрами (связями).&lt;/p&gt;
+
+&lt;p&gt;Принято разделять графы на направленные (орграфы или directed graphs) и ненаправленные (undirected graphs). При аннотации графа запись определяет направление для направленного графа (&lt;script type=&quot;math/tex&quot;&gt;l(i, j)&lt;/script&gt; - ребро &lt;script type=&quot;math/tex&quot;&gt;l&lt;/script&gt; соединяет ноду &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; по направлению к ноде &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt;). В ненаправленных графах связи считаются двунаправленными.&lt;/p&gt;
+
+&lt;p&gt;Могут рассматриваться взвешенные сети. В этом случае связь между нодами можно записать так: &lt;script type=&quot;math/tex&quot;&gt;l(i, j, w)&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Рассматриваются так же многослойные мультиплексные сети. В многослойных сетях каждый слой может строиться на разных наборах нод и/или ребер. Мультиплексные сети строятся на одном множестве нод/ребер. Мултиплексный граф можно отобразить в однослойный, определив разные типы ребер/нод. Темпоральный граф является частным случаем мультиплексного - в нем ребра или узлы являются динамическими и существуют только в определенном интервале времени. Отображение момента (или интервала) времени называется снапшотом графа. Каждый снапшот может интерпретироваться как слой мультиплекса. В общем случае в многослойных сетях могут сущестовать связи как внутри слоя, так и между слоями.&lt;/p&gt;
+
+&lt;p&gt;Частным случаем графа является двудольный граф - в нем ноды разделены на две группы так. что существуют только связи между нодами, принадлежащими разным группам.&lt;/p&gt;
+
+&lt;p&gt;В основном при анализе интернет-сетей приходится сталкиваться с направленными и ненаправленными графами, взвешенными графами, двудольными графами и мультиплексными сетями.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Полный (полносвязный) граф&lt;/strong&gt; - это граф, в котором каждая нода соединена с каждой нодой. Для такого графа, если он ненаправленный, можно определить максимальное число связей, как: &lt;script type=&quot;math/tex&quot;&gt;L_{max} = \frac{N\times(N-1)}{2}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Для направленного: &lt;script type=&quot;math/tex&quot;&gt;L_{max} = N\times(N-1)&lt;/script&gt;, для двудольного: &lt;script type=&quot;math/tex&quot;&gt;L_{max} = N_1 \times N_2&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Плотность графа&lt;/strong&gt; определяет фактически существующую долю связей по отношению к числу связей полносвязного графа. Тогда &lt;strong&gt;разреженностью&lt;/strong&gt; определяется доля отсутствующих ребер: &lt;script type=&quot;math/tex&quot;&gt;d = \frac{L}{L_{max}}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Очевидно, что в ненаправленном графе: &lt;script type=&quot;math/tex&quot;&gt;d = \frac{2L}{N\times(N-1)}&lt;/script&gt;, для направленного: &lt;script type=&quot;math/tex&quot;&gt;d = \frac{L}{N\times(N-1)}&lt;/script&gt;, для полносвязного &lt;script type=&quot;math/tex&quot;&gt;d = 1&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Граф можно считать разреженным, если по мере роста графа число связей в нем растет пропорционально или медленнее числу нод (&lt;script type=&quot;math/tex&quot;&gt;L \sim N&lt;/script&gt;). Если наблюдается более быстрый рост числа связей, то граф можно считать плотным (к примеру &lt;script type=&quot;math/tex&quot;&gt;L \sim N^3&lt;/script&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Подграф (подсеть)&lt;/strong&gt; - выборка подмножества нод графа.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Клика&lt;/strong&gt; - полносвзяный подграф&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Эгосеть&lt;/strong&gt; - подграф, состоящий из узла и его соседей. Эгосети часто рассматриваются при анализе социальных сетей. Понятие “соседей” здесь - это ноды графа, имеющие связи с рассматриваемым узлом. Из последнего происходит важная метрика: степень узла.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Степень узла&lt;/strong&gt; определяется числом его соседей. Тогда &lt;strong&gt;средняя степень графа&lt;/strong&gt;: &lt;script type=&quot;math/tex&quot;&gt;\overline{K} = \frac{\sum_{i}K_i}{N}&lt;/script&gt;, где в числителе по сути &lt;script type=&quot;math/tex&quot;&gt;2L&lt;/script&gt; для ненаправленного графа. Тогда &lt;script type=&quot;math/tex&quot;&gt;\overline{K} = \frac{2L}{N} = d \times (N - 1)&lt;/script&gt; для ненаправленного графа. Исходя из этого разреженность ненаправленного графа можно определить через среднюю степень узла как &lt;script type=&quot;math/tex&quot;&gt;d = \frac{\overline{K}}{N-1}&lt;/script&gt;. То же самое можно вывести и для направленного графа, подразумевая, что у узла есть &lt;script type=&quot;math/tex&quot;&gt;K_{in}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;K_{out}&lt;/script&gt;. Очевидно, что &lt;script type=&quot;math/tex&quot;&gt;K_{max} = N - 1&lt;/script&gt; для любого полносвязного графа.&lt;/p&gt;
+
+&lt;p&gt;При анализе социальных сетей рассматривают понятие ассортативности - схожести узлов на основе их признаков. Гомофилия сети определяет, что связи между ассортативными узлами более вероятны. Степенная корреляция - ассортативность на основе степени. В этом случае ноды с высокими степенями соединены с нодами с высокой степенью, а ноды с низкой - с низкостепепенными. Такие сети называются ассортативными (обратное указанному состояние - диссортативные сети)&lt;/p&gt;
+
+&lt;p&gt;Для взвешенных графов можно определить &lt;strong&gt;взвешенную степень (силу) узла&lt;/strong&gt; - это сумма всех весов его связей: &lt;script type=&quot;math/tex&quot;&gt;S_j = \sum_j W_{ij}&lt;/script&gt;. Для направленного графа так же определяется &lt;script type=&quot;math/tex&quot;&gt;S_{in}&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;S_{out}&lt;/script&gt;: &lt;script type=&quot;math/tex&quot;&gt;S_{i}^{in} = \sum_j W_{ji}&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;S_{i}^{out} = \sum_j W_{ij}&lt;/script&gt;. При этом мы делаем допущение, что если между нодами нет связей, то &lt;script type=&quot;math/tex&quot;&gt;W=0&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Важным понятием является &lt;strong&gt;матрица смежности графа&lt;/strong&gt; - это матрица &lt;script type=&quot;math/tex&quot;&gt;N \times N&lt;/script&gt;, где каждый элемент отображает связь между узлами &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; (строки) и &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt; (столбцы). В ненаправленных графах матрицы смежности симметричны относительно диагонали (т.е. связи двунаправленные) и мы можем считать половину матрицы избыточной. Мы можем отображать в матрице как наличие связи, так и количество связей или их вес.&lt;/p&gt;
+
+&lt;p&gt;Сама по себе матрица неэффективна для хранения графа (из-за квадратичной сложности по пространству), хотя и очень эффективна в вычислительном плане благодаря матричным операциям. Часто графы сильно разрежены - тогда матрица харнит в основном нули. Чтобы избежать неэффективности часто графы хранят в &lt;strong&gt;списках смежности&lt;/strong&gt; - это структуры, в которых сохраняются соседи для каждого узла. Еще один способ хранения - хранить список соседних нод для нод и/или пары узлов для ребер.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Путь&lt;/strong&gt; - это непрерывная последовательность ребер. Число ребер определяет &lt;strong&gt;длину пути&lt;/strong&gt;. Цикл - это путь, который можно замкнуть (это важно, так как во многих графовых алгоритмах делаются допущения об ацикличности графа). &lt;strong&gt;Простой путь&lt;/strong&gt; никогда не проходит одно и то же ребро дважды. &lt;strong&gt;Кратчайший путь&lt;/strong&gt; - путь с наименьшей из возможных длиной. Многие задачи в анализе сетей сводятся к поиску/прпедсказанию путей и поиску кратчайшего пути. &lt;strong&gt;Средняя длина пути&lt;/strong&gt; в графе - это усредненное значение длин кратчайших путей между всеми нодами: &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+l=\dfrac{2\sum_{i&lt;i}l_{ij}}{N\times(N-1)} %]]&gt;&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;l_{ij}&lt;/script&gt; длина кратчайшего пути между &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; и &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt;. Для направленной сети &lt;script type=&quot;math/tex&quot;&gt;l=\dfrac{\sum_{i\neq j}l_{ij}}{N\times(N-1)}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Диаметр сети&lt;/strong&gt; - это максимальная длина кратчайшего пути между всеми нодами графа. &lt;script type=&quot;math/tex&quot;&gt;l_{max} = \max_{ij} l_{ij}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Связность сети&lt;/strong&gt; - это мера количества связей в сети. Чем меньше связей и ниже плотность сети, тем более вероятно, что сеть несвязна. Если сеть несвязна, то можно выделить ее &lt;strong&gt;связные компоненты&lt;/strong&gt; - это связные подграфы несвязной сети. Для ненаправленной сети определяют, что в таких компонентах есть путь, соединяющий каждую ноду, но нет пути наружу. В направленной сети выделяют &lt;strong&gt;слабосвязные компоненты и сильносвязные компоненты&lt;/strong&gt;. Слабосвязными являются компоненты, которые можно было бы считать связными только при условии удаления направления связи.&lt;/p&gt;
+
+&lt;p&gt;Существует несколько подхода к вычислению расстояний в несвязной сети: измерять расстояние только в главной компоненте (самой большой связной компоненте графа) или можно вычислять расстояния для каждой из компонент, а затем делать обобщение. Средняя длина для несвязной сети вычислительно неразрешима (из-за неопределенности деления на 0). Можно использовать следующий трюк (пример для ненаправленной сети): &lt;script type=&quot;math/tex&quot;&gt;l=\left(2\dfrac{\sum_{i=j}\dfrac{1}{l_{ij}}}{N\times(N-1)}\right)^{-1}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Часто рассматривается особый подтип сети, дерево - это  такой граф, для которого удаление любой связи приводит к разделению на две компоненты. В деревьях нет циклов и существует только один путь между любой парой узлов. Для деревьев принято выделять какой-то узел как корень, таким образом деревья имеют иерархическую структуру.&lt;/p&gt;
+
+&lt;p&gt;Важным показателем сети является ее &lt;strong&gt;коэффициент кластеризации&lt;/strong&gt;, который определяет долю пар соседей узла, соединенных друг с другом. Иными словами, этот коэффициент определяет количество треугольников, образуемых узлом совместно с соседями. &lt;script type=&quot;math/tex&quot;&gt;c{i}=\dfrac{\tau \left( i\right) }{\tau _{\max }\left( i\right) } = \dfrac{2\tau \left( i\right) }{k_{i}\left( ki-1\right) }&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;\tau(i)&lt;/script&gt; - это число треугольников, включающих ноду &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;. &lt;script type=&quot;math/tex&quot;&gt;C(i)&lt;/script&gt; определен только для числа соседей &lt;script type=&quot;math/tex&quot;&gt;k&gt;1&lt;/script&gt;, так как, в противном случае, треугольник невозможен. Коэффициент кластеризации всей сети в целом &lt;script type=&quot;math/tex&quot;&gt;C=\dfrac{\sum _{i:k_{i} &gt;1}C\left( i\right) }{N_{k &gt;1}}&lt;/script&gt; - узлы со степенями &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+k&lt;2 %]]&gt;&lt;/script&gt; не рассматриваются.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="graph-theory" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/190222banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/190222banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Как сохранить знания с помощью foam и github</title><link href="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" rel="alternate" type="text/html" title="Как сохранить знания с помощью foam и github" /><published>2021-08-13T00:00:00+02:00</published><updated>2021-08-13T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/13082021-01.png&quot; alt=&quot;Как сохранить знания с помощью foam и github&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Сегодня крошечная заметка о том, как закрепить и сохранить знания, полученные в процессе обучения с помощью foam и github.&lt;/p&gt;
 
@@ -437,7 +495,7 @@
 
 &lt;p&gt;В настоящий момент page rank для ранжирования интернет-страниц - это уже история. В таком контексте алгоритм не используется google начиная с 2007 года. На смену page rank и подобным схемам пришли смешанные модели ранжирования, основанные на поведенчиских признаках и удовлетворенности пользователя. Да и сам интернет сильно изменился. Теперь большинство страниц не индексируется, а большинство ссылок - это лайки, посты, коментарии, внутренняя навигация и т.д.&lt;/p&gt;
 
-&lt;p&gt;Тем не менее page rank по-прежнему активно используется в исследованиях графов и сетей, а в интернете применяется в ранжировании для составления рекомендаций.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="page-rank" /><category term="algorithms" /><category term="graphs" /><category term="cs224w" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Фишки pandas: часть 1</title><link href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" rel="alternate" type="text/html" title="Фишки pandas: часть 1" /><published>2021-01-19T00:00:00+02:00</published><updated>2021-01-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/pandas01.jpg&quot; alt=&quot;Фишки pandas: часть 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Тем не менее page rank по-прежнему активно используется в исследованиях графов и сетей, а в интернете применяется в ранжировании для составления рекомендаций.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="page-rank" /><category term="algorithms" /><category term="graphs" /><category term="cs224w" /><category term="graph-theory" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/190221banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Фишки pandas: часть 1</title><link href="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html" rel="alternate" type="text/html" title="Фишки pandas: часть 1" /><published>2021-01-19T00:00:00+02:00</published><updated>2021-01-19T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1</id><content type="html" xml:base="https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/pandas01.jpg&quot; alt=&quot;Фишки pandas: часть 1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Стартую серию заметок про различные проблемы и фишки, с которыми мне пришлось столкнуться в python библиотеке pandas. В этом “выпуске”:&lt;/p&gt;
 
@@ -861,76 +919,4 @@ port = &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PORT&lt;/span&gt;&lt;span 
 
 &lt;p&gt;где &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; — это произвольная дифференцируемая функция вида &lt;script type=&quot;math/tex&quot;&gt;р: \mathbb{R}^d \times \mathbb{R}^m \times \mathbb{R}^m \rightarrow \mathbb{R}^d&lt;/script&gt;. На выходе после &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt; итераций мы должны получить вектор вида &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}_{v_i} = g({\mathbf{h}_i}^K)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; - произвольная дифференцируемая функция вида &lt;script type=&quot;math/tex&quot;&gt;g: \mathbb{R}^d \rightarrow \mathbb{R}^d&lt;/script&gt;, иными словами, это некая нейросеть, возможно MLP.&lt;/p&gt;
 
-&lt;p&gt;Практическую часть к данной статье смотрите &lt;a href=&quot;/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica.html&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="gcn" /><category term="embedding" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Алгоритмы поиска в ширину и в глубину</title><link href="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html" rel="alternate" type="text/html" title="Алгоритмы поиска в ширину и в глубину" /><published>2020-10-09T00:00:00+02:00</published><updated>2020-10-09T00:00:00+02:00</updated><id>https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms</id><content type="html" xml:base="https://konstantinklepikov.github.io/2020/10/09/breadth-first-and-depth-first-search-algorithms.html">&lt;p&gt;&lt;img src=&quot;../../../assets/img/101020banner.png&quot; alt=&quot;Алгоритмы поиска в ширину и в глубину&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Поиск в ширину и поиск в глубину представляют две основных парадигмы обхода графов.&lt;/p&gt;
-
-&lt;h2 id=&quot;поиск-в-ширину-breadth-first-search-bfs&quot;&gt;Поиск в ширину (breadth-first search, BFS)&lt;/h2&gt;
-
-&lt;p&gt;Алгоритм поиска в ширину заключается в том, чтобы разведать вершины графа послойно, в порядке увеличения расстояния от стартовой ноды.&lt;/p&gt;
-
-&lt;p&gt;Рассмотрим на примере и возьмем для этого простой связный ненаправленный граф, ребра которого не имеют весов или временных меток. Слой 0 содержит стартовую вершину. Слой 1 будет содержать множество вершин, которые находятся на расстояние одного ребра от стартовой. Каждый последующий слой будет удаляться от стартовой вершины ровно на одно ребро. Алгоритм разведает сначала все ближайшие к стартовой ноды, затем более удаленные и т.д. и завершит работу, когда будут разведаны все вершины и алгоритм не сможет пройти дальше. В нашем примере он остановится на слое 3.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/101020-01.png&quot; alt=&quot;BFS&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Алгоритм реализуется на основе очереди FIFO (First In, First Out – «Первым пришёл — первым ушёл»), с помощью которого отслеживаются ноды, которые алгоритм уже посещал. Очередь позволяет добавлять объекты в конец списка и удалять объекты из начала за постоянное время.&lt;/p&gt;
-
-&lt;h3 id=&quot;bfs-алгоритм&quot;&gt;BFS алгоритм&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Вход&lt;/strong&gt;: граф &lt;script type=&quot;math/tex&quot;&gt;G = (V, E)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; это множество нод, а &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; множество ребер. Стартовая вершина &lt;script type=&quot;math/tex&quot;&gt;s \in V&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Выход&lt;/strong&gt; граф &lt;script type=&quot;math/tex&quot;&gt;G_{explored} = (V, E)&lt;/script&gt;, при условии, что каждая вершина такого графа достижима из s тогда и только тогда, когда она размечена алгоритмом как «разведанная».&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;пометить s как разведанную вершину, все остальные как неразведанные&lt;/li&gt;
-  &lt;li&gt;определить очередь &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;, инициализированную вершиной s&lt;/li&gt;
-  &lt;li&gt;до тех пор, пока очередь &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt; непустая:&lt;/li&gt;
-  &lt;li&gt;  удалить вершину из начала очереди &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;, обозначив ее как v&lt;/li&gt;
-  &lt;li&gt;  для каждого ребра &lt;script type=&quot;math/tex&quot;&gt;(v, w)&lt;/script&gt; в списке смежности v:&lt;/li&gt;
-  &lt;li&gt;    если w не разведана:&lt;/li&gt;
-  &lt;li&gt;      пометить w как разведанную&lt;/li&gt;
-  &lt;li&gt;      добавить w в конец &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;BFS используется для поиска кратчайшего пути и связных компонент в графе.&lt;/p&gt;
-
-&lt;h2 id=&quot;поиск-в-глубину-depth-first-search-dfs&quot;&gt;Поиск в глубину (depth-first search, DFS)&lt;/h2&gt;
-
-&lt;p&gt;Алгоритм поиска в глубину отличается от поиска в ширину более агрессивным продвижением по графу. Он всегда сразу продвигается к самой отдаленной от стартовой ноды вершине и затем, если не может продвинуться дальше, отступает назад.&lt;/p&gt;
-
-&lt;p&gt;Как и BFS, DFS помечает ноду каждый раз, как ее обнаруживает. На каждой итерации алгоритм обходит в произвольном порядке ноды, ближайшие к текущей. На первой же найденной вершине алгоритм будет пытаться найти ближайшие ноды к уже разведанной (в этом он отличается от BFS, который исследует ноды, ближайшие к стартовой) и будет делать это на каждой последующей итерации до тех пор, пока не окажется в ноде, из которой ему некуда уйти. Тогда алгоритм отступает назад и пытается продвинуться дальше по другому пути. Алгоритм так же останавливается, когда все доступные ноды будут разведаны.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../../assets/img/101020-02.png&quot; alt=&quot;DFS&quot; /&gt;
-&lt;img src=&quot;../../../assets/img/101020-03.png&quot; alt=&quot;DFS&quot; /&gt;
-&lt;img src=&quot;../../../assets/img/101020-04.png&quot; alt=&quot;DFS&quot; /&gt;
-&lt;img src=&quot;../../../assets/img/101020-05.png&quot; alt=&quot;DFS&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;DFS реализуется на основе стека LIFO (last in, first out, «последним пришёл — первым ушёл»).&lt;/p&gt;
-
-&lt;h3 id=&quot;dfs-алгоритм&quot;&gt;DFS алгоритм&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Вход&lt;/strong&gt;: граф &lt;script type=&quot;math/tex&quot;&gt;G = (V, E)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; это множество нод, а &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt; множество ребер. Стартовая вершина &lt;script type=&quot;math/tex&quot;&gt;s \in V&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Выход&lt;/strong&gt; граф &lt;script type=&quot;math/tex&quot;&gt;G_{explored} = (V, E)&lt;/script&gt;, при условии, что каждая вершина такого графа достижима из s тогда и только тогда, когда она размечена алгоритмом как «разведанная».&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;пометить s как разведанную вершину, все остальные как неразведанные&lt;/li&gt;
-  &lt;li&gt;определить стек &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;, инициализированную вершиной s&lt;/li&gt;
-  &lt;li&gt;до тех пор, пока стек &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; непустой:&lt;/li&gt;
-  &lt;li&gt;  удалить вершину сверху стека &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;, обозначив ее как v&lt;/li&gt;
-  &lt;li&gt;  если v не разведана:&lt;/li&gt;
-  &lt;li&gt;    пометить v как разведанную&lt;/li&gt;
-  &lt;li&gt;    для каждого ребра &lt;script type=&quot;math/tex&quot;&gt;(v, w)&lt;/script&gt; в списке смежности v:&lt;/li&gt;
-  &lt;li&gt;      добавить w наверх стека &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Кроме того, алгоритм может быть реализован рекурсивно.&lt;/p&gt;
-
-&lt;p&gt;DFS используется для топологической сортировки и определения сильно связанных компонент графа.&lt;/p&gt;
-
-&lt;h2 id=&quot;свойства-алгоритмаов-dfs-и-dfs&quot;&gt;Свойства алгоритмаов DFS и DFS&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;вершина размечается как разведанная тогда и только тогда, когда существует путь из s в v в графе &lt;script type=&quot;math/tex&quot;&gt;G&lt;/script&gt;&lt;/li&gt;
-  &lt;li&gt;время работы алгоритма &lt;script type=&quot;math/tex&quot;&gt;O(m + n)&lt;/script&gt;, где &lt;script type=&quot;math/tex&quot;&gt;m = \vert E \vert&lt;/script&gt;, а &lt;script type=&quot;math/tex&quot;&gt;n = \vert V \vert&lt;/script&gt; (для представления графа в виде списков смежности. Для матрицы смежности сложность составит &lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;)&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Klepikov Konstantin</name></author><category term="algorithms" /><category term="bfs" /><category term="dfs" /><category term="graphs" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/101020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Практическую часть к данной статье смотрите &lt;a href=&quot;/2020/11/05/svertochnie-neyronnie-seti-dlja-grafov-chast-2-practica.html&quot;&gt;тут&lt;/a&gt;.&lt;/p&gt;</content><author><name>Klepikov Konstantin</name></author><category term="neural-network" /><category term="graphs" /><category term="convolutional" /><category term="cs224w" /><category term="gcn" /><category term="embedding" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" /><media:content medium="image" url="https://konstantinklepikov.github.io/assets/img/191020banner.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

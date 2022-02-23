@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Теория сетей: базовые понятия и метрики | My deep learning</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Теория сетей: базовые понятия и метрики" />
+<meta name="author" content="Klepikov Konstantin" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="description" content="Блог про нейронные сети и машинное обучение" />
+<meta property="og:description" content="Блог про нейронные сети и машинное обучение" />
+<link rel="canonical" href="https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html" />
+<meta property="og:url" content="https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html" />
+<meta property="og:site_name" content="My deep learning" />
+<meta property="og:image" content="https://konstantinklepikov.github.io/assets/img/190222banner.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-19T00:00:00+02:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","description":"Блог про нейронные сети и машинное обучение","headline":"Теория сетей: базовые понятия и метрики","dateModified":"2022-02-19T00:00:00+02:00","datePublished":"2022-02-19T00:00:00+02:00","image":"https://konstantinklepikov.github.io/assets/img/190222banner.png","author":{"@type":"Person","name":"Klepikov Konstantin"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html"},"url":"https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="keywords" content="теория графов сети">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+  
+  
+  <link rel="stylesheet" href="https://konstantinklepikov.github.io/assets/style.css">
+
+  
+      <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(53548570, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/53548570" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139620627-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139620627-1');
+  </script>
+  
+
+  <link rel="canonical" href="https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html">
+  <link rel="alternate" type="application/rss+xml" title="My deep learning" href="https://konstantinklepikov.github.io/feed.xml">
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <!-- Mathjax Support -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  
+  
+    
+
+
+
+
+
+  
+</head>
+
+
+  <body>
+
+    <header class="border-bottom-thick px-2 clearfix">
+  <div class="left sm-width-full py-1 mt-1 mt-lg-0">
+    <a class="align-middle link-primary text-accent" href="/">
+      My deep learning
+    </a>
+  </div>
+  <div class="right sm-width-full">
+    <ul class="list-reset mt-lg-1 mb-2 mb-lg-1">
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/about/">
+            Об авторе
+          </a>
+        </li>
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
+            Все посты
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+        <li class="inline-block">
+          <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/links/">
+            Ссылки
+          </a>
+        </li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <li class="inline-block">
+    <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="https://konstantinklepikov.github.io/myknowlegebase/">
+        My knowlege base
+    </a>
+</li>
+    </ul>
+  </div>
+</header>
+
+
+    <div>
+      <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Теория сетей: базовые понятия и метрики</h1>
+  <div class="col-4 sm-width-full mt-1 border-top-thin">
+    <p class="py-2 bold h4"><time datetime="2022-02-19T00:00:00+02:00" itemprop="datePublished">Feb 19, 2022</time></p>
+    <p class="mb-3 h5">Теги: 
+    
+      
+      <a href="/tag/graph-theory" title="graph-theory" class="link-tags">graph-theory&nbsp;</a>
+    
+    </p>
+  </div>
+
+  <div class="prose" itemprop="articleBody">
+      <p><img src="../../../assets/img/190222banner.png" alt="Теория сетей: базовые понятия и метрики" /></p>
+
+<p>В статье обобщаются базовые понятия, необходимые для исследования и моделирования интернет-сетей.</p>
+
+<p>В данном контексте буду считать понятия “сеть” и “граф” эквивалентными. Для разделения определений используется термин “интернет-сеть” или просто “интернет” (я пишу с маленькой буквы), как обобщение понятия среды (локальной или глобальной) взаимодействия интернет-пользователей. Этот термин не включает в себя вопрос интернет-транспорта - в случае, когда речь идет о маршрутизации, это будет указано отдельно. Под понятием “социальная сеть” понимаются интернет-приложения, основанные на взаимодействиях интернет-пользователей. Понятие “нода” и “узел”, а так же “ребро” и “связь” тождественно в данной статье.</p>
+
+<h2 id="базовые-определения-и-метрики">Базовые определения и метрики</h2>
+
+<p>Графом <script type="math/tex">G</script> называется структура, состоящая из <script type="math/tex">N</script> узлов (нод), соединенных <script type="math/tex">L</script> ребрами (связями).</p>
+
+<p>Принято разделять графы на направленные (орграфы или directed graphs) и ненаправленные (undirected graphs). При аннотации графа запись определяет направление для направленного графа (<script type="math/tex">l(i, j)</script> - ребро <script type="math/tex">l</script> соединяет ноду <script type="math/tex">i</script> по направлению к ноде <script type="math/tex">j</script>). В ненаправленных графах связи считаются двунаправленными.</p>
+
+<p>Могут рассматриваться взвешенные сети. В этом случае связь между нодами можно записать так: <script type="math/tex">l(i, j, w)</script>.</p>
+
+<p>Рассматриваются так же многослойные мультиплексные сети. В многослойных сетях каждый слой может строиться на разных наборах нод и/или ребер. Мультиплексные сети строятся на одном множестве нод/ребер. Мултиплексный граф можно отобразить в однослойный, определив разные типы ребер/нод. Темпоральный граф является частным случаем мультиплексного - в нем ребра или узлы являются динамическими и существуют только в определенном интервале времени. Отображение момента (или интервала) времени называется снапшотом графа. Каждый снапшот может интерпретироваться как слой мультиплекса. В общем случае в многослойных сетях могут сущестовать связи как внутри слоя, так и между слоями.</p>
+
+<p>Частным случаем графа является двудольный граф - в нем ноды разделены на две группы так. что существуют только связи между нодами, принадлежащими разным группам.</p>
+
+<p>В основном при анализе интернет-сетей приходится сталкиваться с направленными и ненаправленными графами, взвешенными графами, двудольными графами и мультиплексными сетями.</p>
+
+<p><strong>Полный (полносвязный) граф</strong> - это граф, в котором каждая нода соединена с каждой нодой. Для такого графа, если он ненаправленный, можно определить максимальное число связей, как: <script type="math/tex">L_{max} = \frac{N\times(N-1)}{2}</script></p>
+
+<p>Для направленного: <script type="math/tex">L_{max} = N\times(N-1)</script>, для двудольного: <script type="math/tex">L_{max} = N_1 \times N_2</script></p>
+
+<p><strong>Плотность графа</strong> определяет фактически существующую долю связей по отношению к числу связей полносвязного графа. Тогда <strong>разреженностью</strong> определяется доля отсутствующих ребер: <script type="math/tex">d = \frac{L}{L_{max}}</script></p>
+
+<p>Очевидно, что в ненаправленном графе: <script type="math/tex">d = \frac{2L}{N\times(N-1)}</script>, для направленного: <script type="math/tex">d = \frac{L}{N\times(N-1)}</script>, для полносвязного <script type="math/tex">d = 1</script>.</p>
+
+<p>Граф можно считать разреженным, если по мере роста графа число связей в нем растет пропорционально или медленнее числу нод (<script type="math/tex">L \sim N</script>). Если наблюдается более быстрый рост числа связей, то граф можно считать плотным (к примеру <script type="math/tex">L \sim N^3</script>)</p>
+
+<p><strong>Подграф (подсеть)</strong> - выборка подмножества нод графа.</p>
+
+<p><strong>Клика</strong> - полносвзяный подграф</p>
+
+<p><strong>Эгосеть</strong> - подграф, состоящий из узла и его соседей. Эгосети часто рассматриваются при анализе социальных сетей. Понятие “соседей” здесь - это ноды графа, имеющие связи с рассматриваемым узлом. Из последнего происходит важная метрика: степень узла.</p>
+
+<p><strong>Степень узла</strong> определяется числом его соседей. Тогда <strong>средняя степень графа</strong>: <script type="math/tex">\overline{K} = \frac{\sum_{i}K_i}{N}</script>, где в числителе по сути <script type="math/tex">2L</script> для ненаправленного графа. Тогда <script type="math/tex">\overline{K} = \frac{2L}{N} = d \times (N - 1)</script> для ненаправленного графа. Исходя из этого разреженность ненаправленного графа можно определить через среднюю степень узла как <script type="math/tex">d = \frac{\overline{K}}{N-1}</script>. То же самое можно вывести и для направленного графа, подразумевая, что у узла есть <script type="math/tex">K_{in}</script> и <script type="math/tex">K_{out}</script>. Очевидно, что <script type="math/tex">K_{max} = N - 1</script> для любого полносвязного графа.</p>
+
+<p>При анализе социальных сетей рассматривают понятие ассортативности - схожести узлов на основе их признаков. Гомофилия сети определяет, что связи между ассортативными узлами более вероятны. Степенная корреляция - ассортативность на основе степени. В этом случае ноды с высокими степенями соединены с нодами с высокой степенью, а ноды с низкой - с низкостепепенными. Такие сети называются ассортативными (обратное указанному состояние - диссортативные сети)</p>
+
+<p>Для взвешенных графов можно определить <strong>взвешенную степень (силу) узла</strong> - это сумма всех весов его связей: <script type="math/tex">S_j = \sum_j W_{ij}</script>. Для направленного графа так же определяется <script type="math/tex">S_{in}</script> и <script type="math/tex">S_{out}</script>: <script type="math/tex">S_{i}^{in} = \sum_j W_{ji}</script>, а <script type="math/tex">S_{i}^{out} = \sum_j W_{ij}</script>. При этом мы делаем допущение, что если между нодами нет связей, то <script type="math/tex">W=0</script></p>
+
+<p>Важным понятием является <strong>матрица смежности графа</strong> - это матрица <script type="math/tex">N \times N</script>, где каждый элемент отображает связь между узлами <script type="math/tex">i</script> (строки) и <script type="math/tex">j</script> (столбцы). В ненаправленных графах матрицы смежности симметричны относительно диагонали (т.е. связи двунаправленные) и мы можем считать половину матрицы избыточной. Мы можем отображать в матрице как наличие связи, так и количество связей или их вес.</p>
+
+<p>Сама по себе матрица неэффективна для хранения графа (из-за квадратичной сложности по пространству), хотя и очень эффективна в вычислительном плане благодаря матричным операциям. Часто графы сильно разрежены - тогда матрица харнит в основном нули. Чтобы избежать неэффективности часто графы хранят в <strong>списках смежности</strong> - это структуры, в которых сохраняются соседи для каждого узла. Еще один способ хранения - хранить список соседних нод для нод и/или пары узлов для ребер.</p>
+
+<p><strong>Путь</strong> - это непрерывная последовательность ребер. Число ребер определяет <strong>длину пути</strong>. Цикл - это путь, который можно замкнуть (это важно, так как во многих графовых алгоритмах делаются допущения об ацикличности графа). <strong>Простой путь</strong> никогда не проходит одно и то же ребро дважды. <strong>Кратчайший путь</strong> - путь с наименьшей из возможных длиной. Многие задачи в анализе сетей сводятся к поиску/прпедсказанию путей и поиску кратчайшего пути. <strong>Средняя длина пути</strong> в графе - это усредненное значение длин кратчайших путей между всеми нодами: <script type="math/tex">% <![CDATA[
+l=\dfrac{2\sum_{i<i}l_{ij}}{N\times(N-1)} %]]></script>, где <script type="math/tex">l_{ij}</script> длина кратчайшего пути между <script type="math/tex">i</script> и <script type="math/tex">j</script>. Для направленной сети <script type="math/tex">l=\dfrac{\sum_{i\neq j}l_{ij}}{N\times(N-1)}</script>.</p>
+
+<p><strong>Диаметр сети</strong> - это максимальная длина кратчайшего пути между всеми нодами графа. <script type="math/tex">l_{max} = \max_{ij} l_{ij}</script></p>
+
+<p><strong>Связность сети</strong> - это мера количества связей в сети. Чем меньше связей и ниже плотность сети, тем более вероятно, что сеть несвязна. Если сеть несвязна, то можно выделить ее <strong>связные компоненты</strong> - это связные подграфы несвязной сети. Для ненаправленной сети определяют, что в таких компонентах есть путь, соединяющий каждую ноду, но нет пути наружу. В направленной сети выделяют <strong>слабосвязные компоненты и сильносвязные компоненты</strong>. Слабосвязными являются компоненты, которые можно было бы считать связными только при условии удаления направления связи.</p>
+
+<p>Существует несколько подхода к вычислению расстояний в несвязной сети: измерять расстояние только в главной компоненте (самой большой связной компоненте графа) или можно вычислять расстояния для каждой из компонент, а затем делать обобщение. Средняя длина для несвязной сети вычислительно неразрешима (из-за неопределенности деления на 0). Можно использовать следующий трюк (пример для ненаправленной сети): <script type="math/tex">l=\left(2\dfrac{\sum_{i=j}\dfrac{1}{l_{ij}}}{N\times(N-1)}\right)^{-1}</script></p>
+
+<p>Часто рассматривается особый подтип сети, дерево - это  такой граф, для которого удаление любой связи приводит к разделению на две компоненты. В деревьях нет циклов и существует только один путь между любой парой узлов. Для деревьев принято выделять какой-то узел как корень, таким образом деревья имеют иерархическую структуру.</p>
+
+<p>Важным показателем сети является ее <strong>коэффициент кластеризации</strong>, который определяет долю пар соседей узла, соединенных друг с другом. Иными словами, этот коэффициент определяет количество треугольников, образуемых узлом совместно с соседями. <script type="math/tex">c{i}=\dfrac{\tau \left( i\right) }{\tau _{\max }\left( i\right) } = \dfrac{2\tau \left( i\right) }{k_{i}\left( ki-1\right) }</script>, где <script type="math/tex">\tau(i)</script> - это число треугольников, включающих ноду <script type="math/tex">i</script>. <script type="math/tex">C(i)</script> определен только для числа соседей <script type="math/tex">k>1</script>, так как, в противном случае, треугольник невозможен. Коэффициент кластеризации всей сети в целом <script type="math/tex">C=\dfrac{\sum _{i:k_{i} >1}C\left( i\right) }{N_{k >1}}</script> - узлы со степенями <script type="math/tex">% <![CDATA[
+k<2 %]]></script> не рассматриваются.</p>
+
+  </div>
+    <script src="https://utteranc.es/client.js"
+        repo="KonstantinKlepikov/KonstantinKlepikov.github.io"
+        issue-term="url"
+        label="blog-comments"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+    <div class="pay">
+    <iframe src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C%20%D1%81%D0%B0%D0%B9%D1%82%20konstantinklepikov.github.io&targets-hint=%D0%9D%D0%B0%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0&default-sum=100&button-text=12&payment-type-choice=on&mobile-payment-type-choice=on&hint=&successURL=https%3A%2F%2Fkonstantinklepikov.github.io%2F&quickpay=shop&account=410013688263668&" width="100%" height="250" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+</div>
+    <div id="share-bar">
+
+    <h4>Поделиться статьей</h4>
+
+    <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?text=Теория сетей: базовые понятия и метрики&url=https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Поделиться на Twitter" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-twitter share-button"> twitter</i>
+        </a>
+
+        <a href="https://vk.com/share.php?url=https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html&title=Теория сетей: базовые понятия и метрики" title="Поделиться в vkontakte" class="link-primary" target="_blank" rel="noopener">
+            <i class="fa fa-vk share-button"> vkontakte</i>
+        </a>
+
+        <a  href="mailto:?subject=Теория сетей: базовые понятия и метрики&body=Check out this site https://konstantinklepikov.github.io/2022/02/19/theory-of-nets.html"
+        title="Отправить по почте" >
+        <i class="fa fa-envelope share-button"> email</i>
+    </a>
+    </div>
+
+</div>
+  
+
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/graph-theory graphs" class="link-tags">graph-theory graphs</a></p>
+  <div class="prose mb-2">
+    <ul>
+        
+    </ul>
+  </div>
+
+</article>
+
+<div class="container mx-auto px-2 py-2 clearfix">
+  <!-- Use if you want to show previous and next for all posts. -->
+
+
+
+  <div class="col-4 sm-width-full left mr-lg-4 mt-3">
+    <a class="no-underline border-top-thin py-1 block" href="https://konstantinklepikov.github.io/2021/08/13/kak-sohranit-znaniya.html" title="Как сохранить знания с помощью foam и github">
+      <span class="h5 link-secondary text-accent">Предыдущая запись</span>
+      <p class="bold h3 link-primary mb-1">Как сохранить знания с помощью foam и github</p>
+      <p>Сегодня крошечная заметка о том, как закрепить и сохранить знания, полученные в процессе обучения с помощью foam и github. Что...</p>
+    </a>
+  </div>
+  
+  
+
+</div>
+
+    </div>
+
+    <div class="border-top-thin clearfix mt-2 mt-lg-4">
+  <div class="container mx-auto px-2">
+    <p class="col-8 sm-width-full left py-2 mb-0">Этот проект поддерживается <a class="text-accent" href="https://github.com/KonstantinKlepikov">KonstantinKlepikov</a></p>
+    <ul class="list-reset right clearfix sm-width-full py-2 mb-2 mb-lg-0">
+      <li class="inline-block mr-1">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="My deep learning">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </li>
+      <li class="inline-block">
+        <a class="github-button" href="https://github.com/KonstantinKlepikov/" data-icon="octicon-star" data-count-href="KonstantinKlepikov//stargazers" data-count-api="/repos/KonstantinKlepikov/#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star KonstantinKlepikov/ on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  </body>
+
+</html>

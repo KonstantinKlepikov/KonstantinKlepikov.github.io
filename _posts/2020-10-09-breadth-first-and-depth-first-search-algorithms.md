@@ -2,7 +2,7 @@
 layout: post
 title: "Алгоритмы поиска в ширину и в глубину"
 date: 2020-10-09
-tags: algorithms bfs dfs graphs
+tags: algorithms bfs dfs graphs graph-theory
 tag-for-sollecting: algorithms
 keywords: algorithms поиск глубину ширину bfs dfs графы
 image: /assets/img/101020banner.png

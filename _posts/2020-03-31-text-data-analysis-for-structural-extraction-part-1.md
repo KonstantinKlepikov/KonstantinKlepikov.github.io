@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Анализ текстовых документов для извлечения структурных связей с другими документами. Часть 1"
+title: "Анализ текстовых документов для извлечения структурных связей с другими документами"
 date: 2020-04-15
-tags: graph-theory nlp cs224w
-tag-for-sollecting: graph-theory
+tags: nlp
+tag-for-sollecting: nlp
 keywords: теория графов nlp text data natural language preprocessing направленный граф cs224w
 image: /assets/img/310320banner.png
 ---
