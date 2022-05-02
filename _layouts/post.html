@@ -5,7 +5,7 @@ layout: default
   <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">{{ page.title }}</h1>
   <div class="col-4 sm-width-full mt-1 border-top-thin">
     <p class="py-2 bold h4"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></p>
-    <p class="mb-3 h5">Теги: 
+    <p class="mb-3 h5">Теги:
     {% for tag in page.tags %}
       {% capture tag_name %}{{ tag }}{% endcapture %}
       <a href="/tag/{{ tag_name }}" title="{{ tag_name }}" class="link-tags">{{ tag_name }}&nbsp;</a>
@@ -18,8 +18,7 @@ layout: default
   </div>
     {% include comments.html %}
     {% include umoney.html %}
-    {% include share-bar.html %}
-  
+
 
   <p class="h4 mt-2">Все статьи с тегом <a href="/tag/{{ page.tag-for-sollecting }}" class="link-tags">{{ page.tag-for-sollecting }}</a></p>
   <div class="prose mb-2">
