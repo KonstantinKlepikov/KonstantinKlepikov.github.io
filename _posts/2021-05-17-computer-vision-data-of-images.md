@@ -3,7 +3,7 @@ layout: post
 title: "Данные изображения в компьютерном зрении. Пространственное представление."
 date: 2021-05-17
 tags: computer-vision
-tag-for-sollecting: computer-vision
+tag-for-collecting: computer-vision
 keywords: computer-vision computer vision компьютерное зрение
 image: /assets/img/17052021-01.jpg
 ---

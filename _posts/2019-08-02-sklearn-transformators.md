@@ -2,9 +2,9 @@
 layout: post
 title: "Конвейеры трансформации и кастомные трансформаторы в scikit-learn"
 date: 2019-08-02
-tags: scikit-learn phyton sklearn
-tag-for-sollecting: scikit-learn
-keywords: sklearn scikit-learn phyton машинное обучение machine learning data science 
+tags: scikit-learn phyton sklearn additional
+tag-for-collecting: scikit-learn
+keywords: sklearn scikit-learn phyton машинное обучение machine learning data science
 ---
 
 В scikit-learn есть специальный класс Pipeline, с помощью которого можно создавать конструктор определяющий последовательность из шагов, трансформирующих данные в нужном порядке.

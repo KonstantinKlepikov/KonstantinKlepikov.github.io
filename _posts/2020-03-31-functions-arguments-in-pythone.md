@@ -2,8 +2,8 @@
 layout: post
 title: "Аргументы функций в Python 3.x. Шпаргалка"
 date: 2020-03-31
-tags: python preprocessing
-tag-for-sollecting: preprocessing
+tags: python preprocessing additional
+tag-for-collecting: preprocessing
 keywords: python
 ---
 

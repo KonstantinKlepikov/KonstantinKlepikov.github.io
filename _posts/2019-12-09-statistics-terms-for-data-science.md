@@ -3,7 +3,7 @@ layout: post
 title: "Краткий справочник по терминам статистики, которые пригодятся для data science. Часть 1"
 date: 2019-12-15
 tags: statistics data-science machine-learning
-tag-for-sollecting: statistics
+tag-for-collecting: statistics
 keywords: Статистика data science машинное обучение machine-learning
 ---
 

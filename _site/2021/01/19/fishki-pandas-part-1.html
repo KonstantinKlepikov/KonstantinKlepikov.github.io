@@ -19,9 +19,9 @@
 <meta property="og:site_name" content="My deep learning" />
 <meta property="og:image" content="https://konstantinklepikov.github.io/assets/img/pandas01.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-01-19T00:00:00+02:00" />
+<meta property="article:published_time" content="2021-01-19T00:00:00+01:00" />
 <script type="application/ld+json">
-{"description":"Блог про нейронные сети и машинное обучение","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html","@type":"BlogPosting","headline":"Фишки pandas: часть 1","dateModified":"2021-01-19T00:00:00+02:00","datePublished":"2021-01-19T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html"},"image":"https://konstantinklepikov.github.io/assets/img/pandas01.jpg","@context":"https://schema.org"}</script>
+{"description":"Блог про нейронные сети и машинное обучение","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html","@type":"BlogPosting","headline":"Фишки pandas: часть 1","dateModified":"2021-01-19T00:00:00+01:00","datePublished":"2021-01-19T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2021/01/19/fishki-pandas-part-1.html"},"image":"https://konstantinklepikov.github.io/assets/img/pandas01.jpg","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="pandas, python">
@@ -104,9 +104,13 @@
         
       
         
+      
+        
+      
+        
         <li class="inline-block">
           <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
-            Все посты
+            Все статьи
           </a>
         </li>
         
@@ -219,8 +223,6 @@
       
         
       
-        
-      
       <li class="inline-block">
     <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="https://konstantinklepikov.github.io/myknowlegebase/">
         My knowlege base
@@ -235,14 +237,17 @@
       <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
   <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Фишки pandas: часть 1</h1>
   <div class="col-4 sm-width-full mt-1 border-top-thin">
-    <p class="py-2 bold h4"><time datetime="2021-01-19T00:00:00+02:00" itemprop="datePublished">Jan 19, 2021</time></p>
+    <p class="py-2 bold h4"><time datetime="2021-01-19T00:00:00+01:00" itemprop="datePublished">Jan 19, 2021</time></p>
     <p class="mb-3 h5">Теги:
     
       
-      <a href="/tag/pandas," title="pandas," class="link-tags">pandas,&nbsp;</a>
+      <a href="/tag/pandas" title="pandas" class="link-tags">pandas&nbsp;</a>
     
       
       <a href="/tag/python" title="python" class="link-tags">python&nbsp;</a>
+    
+      
+      <a href="/tag/additional" title="additional" class="link-tags">additional&nbsp;</a>
     
     </p>
   </div>
@@ -328,7 +333,7 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
 
 <p>Иногда нужно посмотреть на результат преобразований и убедиться, что нет пропусков или получена ожидаемая структура данных. Jupyter notebook сокращает вывод. Решение можно получить через option_context()</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pd</span><span class="p">.</span><span class="n">option_context</span><span class="p">(</span><span class="s">'display.max_rows'</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="s">'display.max_columns'</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span> 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">pd</span><span class="p">.</span><span class="n">option_context</span><span class="p">(</span><span class="s">'display.max_rows'</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="s">'display.max_columns'</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </code></pre></div></div>
 
@@ -351,6 +356,10 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
   <p class="h4 mt-2">Все статьи с тегом <a href="/tag/pandas" class="link-tags">pandas</a></p>
   <div class="prose mb-2">
     <ul>
+        
+        <li><a href="/2021/01/19/fishki-pandas-part-1.html" title="Фишки pandas: часть 1">Фишки pandas: часть 1</a> (19 Jan 2021)<br>
+            
+        </li>
         
         <li><a href="/2020/07/25/empty-data-processing-in-pandas.html" title="Обработка пропусков в Pandas">Обработка пропусков в Pandas</a> (25 Jul 2020)<br>
             

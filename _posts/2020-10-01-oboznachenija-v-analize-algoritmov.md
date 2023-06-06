@@ -3,7 +3,7 @@ layout: post
 title: "Обозначения в анализе алгоритмов"
 date: 2020-09-30
 tags: algorithms time-complexity
-tag-for-sollecting: algorithms
+tag-for-collecting: algorithms
 keywords: algorithms алгоритмы асимптотическая сложность O-большое
 image: /assets/img/011020-01.png
 ---

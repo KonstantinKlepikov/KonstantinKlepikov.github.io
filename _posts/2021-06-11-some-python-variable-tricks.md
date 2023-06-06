@@ -2,8 +2,8 @@
 layout: post
 title: "Несколько трюков с переменными в python"
 date: 2021-06-11
-tags: python
-tag-for-sollecting: python
+tags: python additional
+tag-for-collecting: python
 keywords: python
 image: /assets/img/110621-01.png
 ---

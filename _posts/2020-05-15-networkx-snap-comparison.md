@@ -2,8 +2,8 @@
 layout: post
 title: "Фреймворки Networkx и Snap для построения графов. Сравнение"
 date: 2020-05-15
-tags: networkx snap phyton graphs sc224w
-tag-for-sollecting: graphs
+tags: networkx snap phyton graphs sc224w additional
+tag-for-collecting: graphs
 keywords: теория графов построение графов графы фреймворк networkx snap sc224w
 image: /assets/img/150520banner.png
 ---

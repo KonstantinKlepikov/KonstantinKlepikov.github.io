@@ -3,7 +3,7 @@ layout: post
 title: "Теория сетей: базовые понятия и метрики"
 date: 2022-02-19
 tags: graph-theory
-tag-for-sollecting: graph-theory
+tag-for-collecting: graph-theory
 keywords: теория графов сети
 image: /assets/img/190222banner.png
 ---

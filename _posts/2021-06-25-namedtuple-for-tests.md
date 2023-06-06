@@ -2,8 +2,8 @@
 layout: post
 title: "Namedtuple для тестов в python"
 date: 2021-06-25
-tags: python, test-driven
-tag-for-sollecting: python
+tags: python, test-driven additional
+tag-for-collecting: python
 keywords: python, test drived development, namedtuple, разработка на оснвое тестирования
 image: /assets/img/25062021-01.jpg
 ---
@@ -40,8 +40,8 @@ some_data666 = ...
 ```python
 from collections import namedtuple
 
-FakeUser = namedtuple('user', 
-                      ['id', 'email'], 
+FakeUser = namedtuple('user',
+                      ['id', 'email'],
                       defaults=['example0@example.com']
                       )
 ```

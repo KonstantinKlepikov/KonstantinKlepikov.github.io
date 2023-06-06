@@ -15,3 +15,5 @@ permalink: /about/
 [github](https://github.com/KonstantinKlepikov "github")
 
 [мое резюме](../assets/public.pdf "мое резюме")
+
+[мой TG канал о геймдизайне](https://t.me/GamedevJourney "gamedev journey")

@@ -3,7 +3,7 @@ layout: post
 title: "Временная сложность алгоритмов машинного обучения"
 date: 2019-09-08
 tags: machine-learning algorithms time-complexity scikit-learn
-tag-for-sollecting: machine-learning
+tag-for-collecting: machine-learning
 keywords: машинное обучение machine learning временная сложность time complexity алгоритмы scikit-learn
 ---
 

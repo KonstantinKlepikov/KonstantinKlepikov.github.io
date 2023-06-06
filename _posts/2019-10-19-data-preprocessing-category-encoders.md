@@ -3,7 +3,7 @@ layout: post
 title: "Подготовка данных: кодирование категориальных признаков"
 date: 2019-10-28
 tags: preprocessing category-encoders sklearn scikit-learn ml-data
-tag-for-sollecting: category-encoders
+tag-for-collecting: category-encoders
 keywords: подготовка данных машинное обучение препроцессинг катигориальные признаки machine learning category encoders
 ---
 

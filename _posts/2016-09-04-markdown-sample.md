@@ -3,8 +3,8 @@ layout: post
 title:  "Markdown sample"
 date: 2016-09-04
 tags: blog-development
-tag-for-sollecting: blog-development
-keywords: 
+tag-for-collecting: blog-development
+keywords:
 published: false
 ---
 

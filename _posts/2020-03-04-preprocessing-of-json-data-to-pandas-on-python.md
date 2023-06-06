@@ -2,8 +2,8 @@
 layout: post
 title: "Как преобразовать вложенные структуры JSON в массив Pandas на Python"
 date: 2020-03-30
-tags: ml-data phyton preprocessing machine-learning pandas json
-tag-for-sollecting: preprocessing
+tags: ml-data phyton preprocessing machine-learning pandas json additional
+tag-for-collecting: preprocessing
 keywords: optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas
 ---
 
@@ -23,7 +23,7 @@ json_object = requests.get('http://api.duma.gov.ru/api/:token/deputies.json?app_
 
 Что содержалось в ответе?
 
-```
+```python
 ...
 {'id': '99100491',
   'name': 'Абдулатипов Рамазан Гаджимурадович',
@@ -42,7 +42,7 @@ json_object = requests.get('http://api.duma.gov.ru/api/:token/deputies.json?app_
 
 В этом примере мы наблюдаем вложенный список по ключу factions, в который помещены два словаря, агрегирующих данные о вхождении депутата во фракции. Такое вложение развернуть сразу не получится. Ситуация осложняется еще и тем, что по части депутатов ключ factions отсутствует.
 
-## Как преобразовать json в Pandas? 
+## Как преобразовать json в Pandas?
 
 Мы можем разобрать json-объект с помощью [pandas.json_normalize](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html) — метода, который разбирает структурированные данные из JSON в табличный формат, а также [json.load](https://docs.python.org/3/library/json.html), который десериализует текст или байткод, содержащий json-документ в python-объекты. Применим к нашему json-объекта.
 

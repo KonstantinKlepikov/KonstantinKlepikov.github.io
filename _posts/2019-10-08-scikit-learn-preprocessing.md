@@ -2,8 +2,8 @@
 layout: post
 title: "Особенности препроцессинга данных в scikit-learn"
 date: 2019-10-08
-tags: machine-learning scikit-learn ml-data preprocessing
-tag-for-sollecting: scikit-learn
+tags: machine-learning scikit-learn ml-data preprocessing additional
+tag-for-collecting: scikit-learn
 keywords: машинное обучение machine learning scikit-learn preprocessing препроцессинг
 ---
 

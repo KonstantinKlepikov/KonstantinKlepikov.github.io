@@ -3,7 +3,7 @@ layout: post
 title: "Термины статистики, которые пригодятся для data science. Часть 2"
 date: 2020-01-16
 tags: statistics data-science machine-learning
-tag-for-sollecting: statistics
+tag-for-collecting: statistics
 keywords: Статистика data science машинное обучение machine-learning
 ---
 

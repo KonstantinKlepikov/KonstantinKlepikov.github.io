@@ -2,9 +2,9 @@
 layout: post
 title: "Метрики оценки для отбора моделей в scikit-learn"
 date: 2019-08-09
-tags: scikit-learn phyton sklearn
-tag-for-sollecting: scikit-learn
-keywords: sklearn scikit-learn phyton машинное обучение machine learning data science 
+tags: scikit-learn phyton sklearn additional
+tag-for-collecting: scikit-learn
+keywords: sklearn scikit-learn phyton машинное обучение machine learning data science
 ---
 
 В scikit-learn можно воспользоваться встроенными метриками для отбора модели. Это можно сделать с помощью аргумента scoring, который доступен в том числе и для кросс-валидации и грид-серча. Список доступен в модуле sklearn.metrics.scorer

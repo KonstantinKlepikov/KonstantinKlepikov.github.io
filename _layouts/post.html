@@ -20,10 +20,10 @@ layout: default
     {% include umoney.html %}
 
 
-  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/{{ page.tag-for-sollecting }}" class="link-tags">{{ page.tag-for-sollecting }}</a></p>
+  <p class="h4 mt-2">Все статьи с тегом <a href="/tag/{{ page.tag-for-collecting }}" class="link-tags">{{ page.tag-for-collecting }}</a></p>
   <div class="prose mb-2">
     <ul>
-        {% for post in site.tags[page.tag-for-sollecting] %}
+        {% for post in site.tags[page.tag-for-collecting] %}
         <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> ({{ post.date | date_to_string }})<br>
             {{ post.description }}
         </li>

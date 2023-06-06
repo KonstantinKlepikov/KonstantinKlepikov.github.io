@@ -2,8 +2,8 @@
 layout: post
 title: "Фишки pandas: часть 1"
 date: 2021-01-19
-tags: pandas, python
-tag-for-sollecting: pandas
+tags: pandas python additional
+tag-for-collecting: pandas
 keywords: pandas, python
 image: /assets/img/pandas01.jpg
 ---
@@ -90,7 +90,7 @@ df[['this', 'that']] = df[['this', 'that']].astype('object').fillna(method="ffil
 Иногда нужно посмотреть на результат преобразований и убедиться, что нет пропусков или получена ожидаемая структура данных. Jupyter notebook сокращает вывод. Решение можно получить через option_context()
 
 ```python
-with pd.option_context('display.max_rows', None, 'display.max_columns', None): 
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):
     print(df)
 ```
 

@@ -2,8 +2,8 @@
 layout: post
 title: "Подготовка и оптимизация данных для задач машинного обучения"
 date: 2020-03-04
-tags: ml-data phyton preprocessing machine-learning pandas json
-tag-for-sollecting: preprocessing
+tags: ml-data phyton preprocessing machine-learning pandas json additional
+tag-for-collecting: preprocessing
 keywords: optimisation data preprocessing machine learning машинное обучение оптимизация подготовка данных pandas python
 ---
 
@@ -202,7 +202,7 @@ memory usage: 100.7 MB
 Изменим эту ситуацию и вот как: получим минимальное и максимальное значение в серии, затем сравним его с машинными лимитами для типов Numpy, после чего заменим на наименьшее.
 
 ```python
-numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64'] 
+numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 for col in df.columns:
     col_type = df[col].dtypes
     if col_type in numerics:
@@ -219,7 +219,7 @@ for col in df.columns:
             # аналогично для float
 ```
 
-Мы выполнили самопальный вариант понижающего преобразования, выиграв 74.4Mb. 
+Мы выполнили самопальный вариант понижающего преобразования, выиграв 74.4Mb.
 
 ```python
 numerics_part.info(memory_usage='deep', max_cols=0)

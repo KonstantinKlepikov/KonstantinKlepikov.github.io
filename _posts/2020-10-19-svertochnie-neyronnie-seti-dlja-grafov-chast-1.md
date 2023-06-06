@@ -3,7 +3,7 @@ layout: post
 title: "Сверточные нейронные сети для графов. Часть 1"
 date: 2020-10-19
 tags: neural-network graphs convolutional cs224w gcn embedding
-tag-for-sollecting: gcn
+tag-for-collecting: gcn
 keywords: Сверточная нейронная сеть граф graph convolutional neural network GCN эмбеддинги embedding
 image: /assets/img/191020banner.png
 ---

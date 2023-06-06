@@ -3,7 +3,7 @@ layout: post
 title: "Как сохранить знания с помощью foam и github"
 date: 2021-08-13
 tags: foam github zerocode knowlege-graph
-tag-for-sollecting: github
+tag-for-collecting: github
 keywords: mvp, github, МВП, прототип, foam, база знаний, knowlege base, обучение, knowlege graph, граф знаний, jekyll
 image: /assets/img/13082021-01.png
 ---

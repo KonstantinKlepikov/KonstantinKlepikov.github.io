@@ -18,9 +18,9 @@
 <meta property="og:url" content="https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html" />
 <meta property="og:site_name" content="My deep learning" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-30T00:00:00+03:00" />
+<meta property="article:published_time" content="2020-03-30T00:00:00+02:00" />
 <script type="application/ld+json">
-{"description":"Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html","@type":"BlogPosting","headline":"Как преобразовать вложенные структуры JSON в массив Pandas на Python","dateModified":"2020-03-30T00:00:00+03:00","datePublished":"2020-03-30T00:00:00+03:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"},"@context":"https://schema.org"}</script>
+{"description":"Наиболее часто встречаемая проблема — это вложенные структуры данных, которые поставляются в JSON формате по API. Пример таких структур можно посмотреть в статье подготовка и оптимизация данных для задач машинного обучения. В большинстве случаев требуются дополнительные действия для того, чтобы развернуть вложения в двумерном виде. В этой статье я покажу как это сделать.","author":{"@type":"Person","name":"Klepikov Konstantin"},"url":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html","@type":"BlogPosting","headline":"Как преобразовать вложенные структуры JSON в массив Pandas на Python","dateModified":"2020-03-30T00:00:00+02:00","datePublished":"2020-03-30T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://konstantinklepikov.github.io/2020/03/30/preprocessing-of-json-data-to-pandas-on-python.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta name="keywords" content="optimisation data preprocessing machine learning python json машинное обучение оптимизация подготовка данных pandas">
@@ -103,9 +103,13 @@
         
       
         
+      
+        
+      
+        
         <li class="inline-block">
           <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="/allposts/">
-            Все посты
+            Все статьи
           </a>
         </li>
         
@@ -218,8 +222,6 @@
       
         
       
-        
-      
       <li class="inline-block">
     <a class="align-middle link-primary mr-2 mr-lg-0 ml-lg-2" href="https://konstantinklepikov.github.io/myknowlegebase/">
         My knowlege base
@@ -234,7 +236,7 @@
       <article class="container px-2 mx-auto mb4" itemscope itemtype="http://schema.org/BlogPosting">
   <h1 class="h1 col-9 sm-width-full py-4 mt-3 inline-block" itemprop="name headline">Как преобразовать вложенные структуры JSON в массив Pandas на Python</h1>
   <div class="col-4 sm-width-full mt-1 border-top-thin">
-    <p class="py-2 bold h4"><time datetime="2020-03-30T00:00:00+03:00" itemprop="datePublished">Mar 30, 2020</time></p>
+    <p class="py-2 bold h4"><time datetime="2020-03-30T00:00:00+02:00" itemprop="datePublished">Mar 30, 2020</time></p>
     <p class="mb-3 h5">Теги:
     
       
@@ -255,6 +257,9 @@
       
       <a href="/tag/json" title="json" class="link-tags">json&nbsp;</a>
     
+      
+      <a href="/tag/additional" title="additional" class="link-tags">additional&nbsp;</a>
+    
     </p>
   </div>
 
@@ -274,20 +279,20 @@
 
 <p>Что содержалось в ответе?</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
-{'id': '99100491',
-  'name': 'Абдулатипов Рамазан Гаджимурадович',
-  'position': 'Депутат ГД',
-  'isCurrent': False,
-  'factions': [{'id': '72100020',
-    'name': 'Депутатская группа "Российские регионы"',
-    'startDate': '1996-01-16',
-    'endDate': '1997-11-12'},
-   {'id': '72100024',
-    'name': 'Фракция Всероссийской политической партии "ЕДИНАЯ РОССИЯ"',
-    'startDate': '2011-12-04',
-    'endDate': '2013-01-27'}]}
-...
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+<span class="p">{</span><span class="s">'id'</span><span class="p">:</span> <span class="s">'99100491'</span><span class="p">,</span>
+  <span class="s">'name'</span><span class="p">:</span> <span class="s">'Абдулатипов Рамазан Гаджимурадович'</span><span class="p">,</span>
+  <span class="s">'position'</span><span class="p">:</span> <span class="s">'Депутат ГД'</span><span class="p">,</span>
+  <span class="s">'isCurrent'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+  <span class="s">'factions'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'id'</span><span class="p">:</span> <span class="s">'72100020'</span><span class="p">,</span>
+    <span class="s">'name'</span><span class="p">:</span> <span class="s">'Депутатская группа "Российские регионы"'</span><span class="p">,</span>
+    <span class="s">'startDate'</span><span class="p">:</span> <span class="s">'1996-01-16'</span><span class="p">,</span>
+    <span class="s">'endDate'</span><span class="p">:</span> <span class="s">'1997-11-12'</span><span class="p">},</span>
+   <span class="p">{</span><span class="s">'id'</span><span class="p">:</span> <span class="s">'72100024'</span><span class="p">,</span>
+    <span class="s">'name'</span><span class="p">:</span> <span class="s">'Фракция Всероссийской политической партии "ЕДИНАЯ РОССИЯ"'</span><span class="p">,</span>
+    <span class="s">'startDate'</span><span class="p">:</span> <span class="s">'2011-12-04'</span><span class="p">,</span>
+    <span class="s">'endDate'</span><span class="p">:</span> <span class="s">'2013-01-27'</span><span class="p">}]}</span>
+<span class="p">...</span>
 </code></pre></div></div>
 
 <p>В этом примере мы наблюдаем вложенный список по ключу factions, в который помещены два словаря, агрегирующих данные о вхождении депутата во фракции. Такое вложение развернуть сразу не получится. Ситуация осложняется еще и тем, что по части депутатов ключ factions отсутствует.</p>

@@ -3,7 +3,7 @@ layout: post
 title: "Как понять translating алгоритмы для графов?"
 date: 2020-07-13
 tags: graphs sc224w transe algorithms graph-theory
-tag-for-sollecting: transe
+tag-for-collecting: transe
 keywords: теория графов графы translating TransE sc224w эмбеддинг embedding
 image: /assets/img/130720banner.png
 ---

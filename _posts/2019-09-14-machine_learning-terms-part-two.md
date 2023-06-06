@@ -3,7 +3,7 @@ layout: post
 title: "Основные термины машинного обучения. Часть №2"
 date: 2019-09-14
 tags: machine-learning
-tag-for-sollecting: machine-learning
+tag-for-collecting: machine-learning
 keywords: машинное обучение machine learning data science классификация регрессия Гудфеллоу
 ---
 

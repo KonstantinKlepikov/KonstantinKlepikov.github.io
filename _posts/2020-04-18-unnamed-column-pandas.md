@@ -2,8 +2,8 @@
 layout: post
 title: "Столбец Unnamed в датафрейме Pandas"
 date: 2020-04-18
-tags: pandas preprocessing phyton
-tag-for-sollecting: preprocessing
+tags: pandas preprocessing phyton additional
+tag-for-collecting: preprocessing
 keywords: python подготовка данных pandas csv read_csv
 image: /assets/img/250720banner.png
 ---
